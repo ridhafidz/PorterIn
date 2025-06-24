@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Detail Produk - PorterIn</title>
+  <meta name="description" content="Detail dan pemesanan alat pendakian berkualitas dari PorterIn">
+  <meta name="keywords" content="detail produk, sewa alat pendakian, rental gear, porterin">
+
+  <!-- Favicons -->
+  <link href="assets/img/icon-lagi1.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --accent-color: #009961;
+      --secondary-color: #4a7c59;
+      --tertiary-color: #ff6b35;
+    }
+
+    .page-title {
+      background: linear-gradient(rgba(0, 153, 97, 0.8), rgba(74, 124, 89, 0.8)), url('/placeholder.svg?height=400&width=1200&text=Detail+Produk');
+      background-size: cover;
+      background-position: center;
+      padding: 120px 0 80px 0;
+      color: white;
+    }
+
+    .wishlist-icon, .cart-icon {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: all 0.3s ease-in-out;
+      background: transparent;
+    }
+
+    .wishlist-icon:hover, .cart-icon:hover {
+      color: #ffffff;
+      background: var(--accent-color);
+      box-shadow: 0 0 12px 3px rgba(0, 153, 97, 0.4);
+      transform: rotate(8deg) scale(1.2);
+    }
+
+    .wishlist-count, .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--tertiary-color);
+      color: #fff;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transition: all 0.3s ease;
+    }
+
+    .wishlist-icon:hover .wishlist-count,
+    .cart-icon:hover .cart-count {
+      transform: scale(1.3) rotate(10deg);
+      box-shadow: 0 2px 10px rgba(0, 153, 97, 0.6);
+    }
+
+    .product-detail {
+      padding: 40px 0;
+    }
+
+    .product-image {
+      height: 400px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .product-info h2 {
+      color: var(--accent-color);
+      margin-bottom: 20px;
+    }
+
+    .product-info ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .product-info ul li {
+      margin-bottom: 10px;
+    }
+
+    .product-info ul li i {
+      color: var(--accent-color);
+      margin-right: 10px;
+    }
+
+    .price {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent-color);
+      margin-bottom: 10px;
+    }
+
+    .product-rating {
+      color: var(--accent-color);
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    .product-rating .star {
+      margin-right: 2px;
+    }
+
+    .order-form {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .order-form label {
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    .order-form .form-control {
+      border-radius: 10px;
+    }
+
+    .reviews-section {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      margin-top: 20px;
+    }
+
+    .reviews-section .rating {
+      color: var(--accent-color);
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .reviews-section .rating .star {
+      color: var(--accent-color);
+    }
+
+    .reviews-section .review-item {
+      margin-bottom: 15px;
+      padding: 10px;
+      background: white;
+      border-radius: 10px;
+    }
+
+    .thumbnail-container {
+      margin-top: 20px;
+    }
+
+    .thumbnail {
+      height: 80px;
+      width: 80px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 10px;
+      margin-right: 10px;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .thumbnail.active {
+      border-color: var(--accent-color);
+    }
+
+    .btn-order {
+      background: var(--accent-color);
+      border: none;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-order:hover {
+      background: var(--secondary-color);
+      transform: translateY(-2px);
+    }
+
+    .add-review-form {
+      margin-top: 15px;
+    }
+
+    .add-review-form textarea {
+      resize: none;
+      border-radius: 10px;
+    }
+
+    .star-rating {
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .star-rating .star {
+      margin-right: 5px;
+    }
+
+    .star-rating .star.filled {
+      color: var(--accent-color);
+    }
+
+    .review-item .star-rating {
+      color: var(--accent-color); /* Mengatur warna bintang di review menjadi hijau */
+    }
+
+    .review-item .star-rating .star {
+      color: var(--accent-color); /* Pastikan semua bintang di review hijau */
+    }
+
+    .review-item .star-rating .star:not(.filled) {
+      color: #ccc; /* Bintang kosong jadi abu-abu */
+    }
+
+    .mountain-notification {
+      position: fixed;
+      top: -100px;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      transition: top 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      margin: 0 auto;
+      width: 90%;
+      max-width: 500px;
+      opacity: 0;
+    }
+
+    .mountain-notification.show {
+      top: 80px;
+      opacity: 1;
+    }
+
+    .mountain-notification .notification-content {
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mountain-notification.add-animation .notification-content {
+      background: linear-gradient(135deg, #2ecc71, #27ae60);
+      color: white;
+    }
+
+    .mountain-notification.remove-animation .notification-content {
+      background: linear-gradient(135deg, #7f8c8d, #95a5a6);
+      color: white;
+    }
+
+    .mountain-notification .notification-content::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='rgba(255,255,255,0.1)' d='M0,224L60,213.3C120,203,240,181,360,181.3C480,181,600,203,720,213.3C840,224,960,224,1080,208C1200,192,1320,160,1380,144L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+      background-size: cover;
+      opacity: 0.3;
+      z-index: 0;
+    }
+
+    .mountain-notification .notification-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      margin-right: 15px;
+      z-index: 1;
+    }
+
+    .mountain-notification .notification-icon i {
+      font-size: 20px;
+    }
+
+    .mountain-notification .notification-text {
+      flex: 1;
+      z-index: 1;
+    }
+
+    .mountain-notification .notification-text h5 {
+      margin: 0 0 5px;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .mountain-notification .notification-text p {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .mountain-notification .notification-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 5px;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+      z-index: 1;
+    }
+
+    .mountain-notification .notification-close:hover {
+      opacity: 1;
+    }
+
+    @keyframes heartBeat {
+      0% { transform: scale(1); }
+      14% { transform: scale(1.3); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.3); }
+      70% { transform: scale(1); }
+    }
+
+    @keyframes heartRemove {
+      0% { transform: scale(1); }
+      20% { transform: scale(0.8); }
+      40% { transform: scale(1.1); }
+      60% { transform: scale(0.9); }
+      80% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .star-rating {
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .star-rating .star {
+      margin-right: 5px;
+    }
+
+    .star-rating .star.filled {
+      color: var(--accent-color);
+    }
+
+    .review-item .star-rating .star {
+      color: var(--accent-color); /* Pastikan semua bintang di review hijau */
+    }
+
+    .review-item .star-rating .star:not(.filled) {
+      color: #ccc; /* Bintang kosong jadi abu-abu */
+    }
+
+    .calendar-day.busy {
+      background: #eee;
+      color: #aaa;
+      cursor: not-allowed;
+      text-decoration: line-through;
+    }
+    .calendar-day.selected {
+      background: var(--accent-color);
+      color: #fff;
+    }
+    .calendar-day.available:hover {
+      background: var(--secondary-color);
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body class="portfolio-details-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+        <h1 class="sitename">PorterIn</h1>
+      </a>
+      
+       <!-- Wishlist & Cart icons moved before navmenu -->
+    <div class="d-flex align-items-center order-2 order-xl-3 me-2">
+      <a href="#" class="me-2 position-relative wishlist-icon" onclick="toggleWishlist(event)">
+        <i class="bi bi-heart-fill fs-5"></i>
+        <span class="wishlist-count" id="wishlist-count-header">0</span>
+      </a>
+      <a href="#" class="me-2 position-relative cart-icon" onclick="toggleCart(event)">
+        <i class="bi bi-bag-check-fill fs-5"></i>
+        <span class="cart-count" id="cart-count-header">0</span>
+      </a>
+    </div>
+
+      <nav id="navmenu" class="navmenu order-3 order-xl-2">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li class="dropdown"><a href="rental-gear.html" class="active"><span>Produk</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="katalog-gunung.html">Katalog Gunung</a></li>
+              <li><a href="katalog-porter.html">Porter</a></li>
+              <li><a href="rental-gear.html">Sewa Gear Pendakian</a></li>
+              <li><a href="#">Simulasi Pendakian</a></li>
+            </ul>
+          </li>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="index.html#history">History</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Mountain Notification -->
+  <div id="mountain-notification" class="mountain-notification">
+    <div class="notification-content">
+      <div class="notification-icon">
+        <i id="notification-icon" class="bi bi-check-circle-fill"></i>
+      </div>
+      <div class="notification-text">
+        <h5 id="notification-title">Review Berhasil Diposting</h5>
+        <p id="notification-message"></p>
+      </div>
+      <button id="notification-close" class="notification-close">
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+  </div>
+
+  <main class="main">
+    <!-- Page Title -->
+    <div class="page-title dark-background" data-aos="fade"  style="background-image: url(assets/img/gear.jpeg);">
+      <div class="container position-relative">
+        <h1>Detail Produk</h1>
+        <p>Temukan peralatan pendakian berkualitas dari berbagai brand ternama</p>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="rental-gear.html">Produk</a></li>
+            <li class="current">Detail Produk</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- Product Detail Section -->
+    <section class="product-detail">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6" data-aos="fade-up">
+            <div class="product-image" id="productImage"></div>
+            <div class="thumbnail-container d-flex mt-3" id="thumbnailContainer"></div>
+          </div>
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="product-info">
+              <h2 id="productName"></h2>
+              <p class="text-muted" id="productBrand"></p>
+              <div class="price" id="productPrice"></div>
+              <div class="product-rating" id="productRating"></div>
+              <ul id="productFeatures">
+                <!-- Features will be populated dynamically -->
+              </ul>
+            </div>
+            <div class="order-form mt-4" data-aos="fade-up" data-aos-delay="200">
+              <h3>Pemesanan</h3>
+              <form id="orderForm">
+                <div class="mb-3">
+                  <label class="form-label">Pilih Tanggal Sewa</label>
+                  <div id="calendar-grid"></div>
+                  <input type="hidden" id="selectedStartDate">
+                  <input type="hidden" id="selectedEndDate">
+                  <div id="selected-date-info" style="display:none;">
+                    <small>Tanggal sewa: <span id="selected-date"></span></small>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="pickupDate" class="form-label">Tanggal Pengambilan</label>
+                  <input type="date" class="form-control" id="pickupDate" required>
+                </div>
+                <button type="submit" class="btn btn-order w-100">Konfirmasi Pemesanan</button>
+              </form>
+            </div>
+            <div class="reviews-section mt-4" data-aos="fade-up" data-aos-delay="300">
+              <h3>Rating & Review</h3>
+              <div class="rating mb-3">
+                <span id="starRating"></span> <span id="averageRating"></span>/<span id="ratingMax"></span> (<span id="reviewCount"></span> reviews)
+              </div>
+              <div id="reviewsList"></div>
+              <div class="add-review-form">
+                <h4>Tambahkan Review</h4>
+                <form id="reviewForm">
+                  <div class="mb-3">
+                    <label for="rating" class="form-label">Rating (1-5)</label>
+                    <input type="number" class="form-control" id="rating" name="rating" min="1" max="5" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="reviewText" class="form-label">Ulasan</label>
+                    <textarea class="form-control" id="reviewText" rows="3" required></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-order">Kirim Review</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer" class="footer dark-background">
+    <div class="container">
+      <h3 class="sitename">PorterIn</h3>
+      <p>Platform terpercaya untuk petualangan pendakian gunung di Indonesia. Wujudkan impian mendaki Anda bersama kami.</p>
+      <div class="social-links d-flex justify-content-center">
+        <a href=""><i class="bi bi-twitter-x"></i></a>
+        <a href=""><i class="bi bi-facebook"></i></a>
+        <a href=""><i class="bi bi-instagram"></i></a>
+        <a href=""><i class="bi bi-youtube"></i></a>
+        <a href=""><i class="bi bi-linkedin"></i></a>
+      </div>
+      <div class="container">
+        <div class="copyright">
+          <span>Copyright</span> <strong class="px-1 sitename">PorterIn</strong> <span>All Rights Reserved</span>
+        </div>
+        <div class="credits">
+          Designed with <i class="bi bi-heart-fill text-danger"></i> for Mountain Lovers
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <script>
+    // Hapus semua data dummy
+    // let reviews = [ ... ]; // HAPUS INI
+
+    let cartCount = 0;
+    let cartItems = [];
+    let wishlistCount = 0;
+    let wishlistItems = [];
+    let reviews = [];
+
+    let notificationTimeout;
+    let currentProduct = {};
+
+    const gearList = JSON.parse(localStorage.getItem('gears')) || [];
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get product details from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      // Saat mencari produk
+      const gearId = urlParams.get('id');
+      const found = gearList.find(g => String(g.id) === String(gearId));
+      let gear = gearList[0]; // default
+
+      if (gearId) {
+        if (found) gear = found;
+      }
+
+      currentProduct = gear;
+
+      // Load reviews per gear
+      const reviewKey = `gearReviews_${String(currentProduct.id)}`;
+      reviews = JSON.parse(localStorage.getItem(reviewKey)) || [];
+
+      populateProductDetails();
+
+      // Update order summary on duration change
+      const durationInput = document.getElementById('duration');
+      durationInput.addEventListener('input', updateOrderSummary);
+
+      // Handle form submission
+      const orderForm = document.getElementById('orderForm');
+      orderForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const startDate = document.getElementById('selectedStartDate').value;
+        const endDate = document.getElementById('selectedEndDate').value || startDate;
+        const pickupDate = document.getElementById('pickupDate').value;
+
+        if (!startDate) {
+          showMountainNotification('error', 'Silakan pilih tanggal sewa pada kalender!');
+          return;
+        }
+
+        // Simpan ke bookedDates di localStorage (admin)
+        const gears = JSON.parse(localStorage.getItem('gears')) || [];
+        const idx = gears.findIndex(g => g.id === currentProduct.id);
+        if (idx !== -1) {
+          // Tambahkan tanggal sewa ke bookedDates
+          if (!Array.isArray(gears[idx].bookedDates)) gears[idx].bookedDates = [];
+          let d = new Date(startDate);
+          const end = new Date(endDate);
+          while (d <= end) {
+            const dateStr = [
+              d.getFullYear(),
+              String(d.getMonth() + 1).padStart(2, '0'),
+              String(d.getDate()).padStart(2, '0')
+            ].join('-');
+            if (!gears[idx].bookedDates.includes(dateStr)) {
+              gears[idx].bookedDates.push(dateStr);
+            }
+            d.setDate(d.getDate() + 1);
+          }
+          // Tambahkan tanggal pengambilan ke pickupDates
+          if (!Array.isArray(gears[idx].pickupDates)) gears[idx].pickupDates = [];
+          if (pickupDate && !gears[idx].pickupDates.includes(pickupDate)) {
+            gears[idx].pickupDates.push(pickupDate);
+          }
+          localStorage.setItem('gears', JSON.stringify(gears));
+        }
+
+        const duration = document.getElementById('duration').value;
+        const total = currentProduct.price * duration;
+
+        const item = {
+          id: Date.now(),
+          name: `Sewa: ${currentProduct.name}`,
+          price: currentProduct.price,
+          quantity: 1,
+          duration: duration,
+          pickupDate: pickupDate,
+          total: total
+        };
+        cartItems.push(item);
+        cartCount++;
+        updateCartCount();
+
+        showMountainNotification('add', `${currentProduct.name} berhasil ditambahkan ke keranjang untuk ${duration} hari! Total: Rp ${total.toLocaleString('id-ID')}`);
+        orderForm.reset();
+      });
+
+      // Initialize thumbnail click event and set default image
+      const thumbnails = document.querySelectorAll('.thumbnail');
+      if (thumbnails.length > 0) {
+        const firstImageUrl = thumbnails[0].style.backgroundImage.slice(4, -1).replace(/"/g, "");
+        document.getElementById('productImage').style.backgroundImage = `url(${firstImageUrl})`;
+      }
+      thumbnails.forEach(thumbnail => {
+        thumbnail.addEventListener('click', () => {
+          const imageUrl = thumbnail.style.backgroundImage.slice(4, -1).replace(/"/g, "");
+          document.getElementById('productImage').style.backgroundImage = `url(${imageUrl})`;
+          thumbnails.forEach(t => t.classList.remove('active'));
+          thumbnail.classList.add('active');
+        });
+      });
+      // Handle review submission
+      const reviewForm = document.getElementById('reviewForm');
+      reviewForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const rating = parseInt(document.getElementById('rating').value, 10);
+        const reviewText = document.getElementById('reviewText').value;
+        const date = new Date().toISOString().split('T')[0];
+
+        if (rating >= 1 && rating <= 5 && reviewText.trim()) {
+          reviews.push({ user: `User${reviews.length + 1}`, rating, text: reviewText, date });
+          localStorage.setItem(reviewKey, JSON.stringify(reviews));
+          updateReviews();
+          reviewForm.reset();
+          showMountainNotification('review', 'Review Anda berhasil diposting!');
+        }
+      });
+
+      // Initialize reviews
+      updateReviews();
+
+      // Initialize AOS
+      AOS.init();
+    });
+
+    function populateProductDetails() {
+      const nameElement = document.getElementById('productName');
+      const brandElement = document.getElementById('productBrand');
+      const priceElement = document.getElementById('productPrice');
+      const imageElement = document.getElementById('productImage');
+      const ratingElement = document.getElementById('productRating');
+
+      nameElement.textContent = currentProduct.name;
+      brandElement.innerHTML = currentProduct.brand ? `<i class="bi bi-box-seam"></i> ${currentProduct.brand}` : '';
+      priceElement.innerHTML = `Rp ${currentProduct.price.toLocaleString('id-ID')} <small class="text-muted">per hari</small>`;
+
+      // --- Ubah thumbnail agar berisi gambar dari gear terkait ---
+      const thumbnailContainer = document.getElementById('thumbnailContainer');
+      thumbnailContainer.innerHTML = '';
+      // Gunakan array gambar dari currentProduct.images, fallback ke currentProduct.image jika tidak ada
+      let images = [];
+      if (Array.isArray(currentProduct.images) && currentProduct.images.length > 0) {
+        images = currentProduct.images;
+      } else if (currentProduct.image) {
+        images = [currentProduct.image];
+      }
+      images.forEach((img, idx) => {
+        const thumb = document.createElement('div');
+        thumb.className = 'thumbnail' + (idx === 0 ? ' active' : '');
+        thumb.style.backgroundImage = `url('${img}')`;
+        thumb.addEventListener('click', () => {
+          imageElement.style.backgroundImage = `url('${img}')`;
+          document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+          thumb.classList.add('active');
+        });
+        thumbnailContainer.appendChild(thumb);
+      });
+      // Set gambar utama ke gambar pertama
+      if (images.length > 0) {
+        imageElement.style.backgroundImage = `url('${images[0]}')`;
+      } else {
+        imageElement.style.backgroundImage = '';
+      }
+
+      // Add product rating with stars
+      const averageRating = reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length || 0;
+      const stars = document.createElement('span');
+      for (let i = 1; i <= 5; i++) {
+        const star = document.createElement('i');
+        star.className = `bi bi-star-fill star ${i <= Math.round(averageRating) ? '' : 'text-muted'}`;
+        stars.appendChild(star);
+      }
+      stars.innerHTML += ` <span>${averageRating.toFixed(1)}/5 (${reviews.length} reviews)</span>`;
+      ratingElement.innerHTML = '';
+      ratingElement.appendChild(stars);
+
+      const featuresList = document.getElementById('productFeatures');
+      featuresList.innerHTML = '';
+      const features = gear.features || (gear.specs ? gear.specs.split('\n') : []);
+      features.forEach(feature => {
+        const li = document.createElement('li');
+        li.innerHTML = `<i class="bi bi-check-circle"></i> ${feature}`;
+        featuresList.appendChild(li);
+      });
+    }
+
+    function updateOrderSummary() {
+      const duration = document.getElementById('duration').value;
+    }
+
+    function updateReviews() {
+      const reviewKey = `gearReviews_${String(currentProduct.id)}`;
+      reviews = JSON.parse(localStorage.getItem(reviewKey)) || [];
+
+      const starRating = document.getElementById('starRating');
+      const averageRatingElem = document.getElementById('averageRating');
+      const reviewCountElem = document.getElementById('reviewCount');
+      const ratingMaxElem = document.getElementById('ratingMax');
+      const reviewsList = document.getElementById('reviewsList');
+
+      // Hitung rata-rata rating
+      const averageRating = reviews.length
+        ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length
+        : 0;
+
+      // Cari rating maksimum dari review, default 5 jika belum ada review
+      const ratingMax = reviews.length
+        ? Math.max(...reviews.map(r => r.rating))
+        : 5;
+
+      // Tampilkan bintang
+      starRating.innerHTML = '';
+      for (let i = 1; i <= ratingMax; i++) {
+        const star = document.createElement('i');
+        star.className = `bi bi-star-fill star ${i <= Math.round(averageRating) ? '' : 'text-muted'}`;
+        starRating.appendChild(star);
+      }
+
+      // Tampilkan angka rating, jumlah reviewer, dan rating max
+      averageRatingElem.textContent = averageRating.toFixed(1);
+      reviewCountElem.textContent = reviews.length;
+      ratingMaxElem.textContent = ratingMax;
+
+      // Tampilkan daftar review
+      reviewsList.innerHTML = '';
+      reviews.forEach(review => {
+        const reviewItem = document.createElement('div');
+        reviewItem.className = 'review-item';
+        const stars = document.createElement('span');
+        stars.className = 'star-rating';
+        for (let i = 1; i <= 5; i++) {
+          const star = document.createElement('span');
+          star.className = 'star';
+          star.innerHTML = '★';
+          if (i <= review.rating) {
+            star.classList.add('filled');
+          }
+          stars.appendChild(star);
+        }
+        reviewItem.innerHTML = `<p><strong>${review.user}</strong> - `;
+        reviewItem.appendChild(stars);
+        reviewItem.innerHTML += ` - "${review.text}" (<span class="text-muted">${review.date}</span>)</p>`;
+        reviewsList.appendChild(reviewItem);
+      });
+    }
+
+    function addToWishlist(gearId) {
+      const index = wishlistItems.indexOf(gearId);
+      const button = event.currentTarget.querySelector('i');
+      
+      if (index === -1) {
+        wishlistItems.push(gearId);
+        wishlistCount++;
+        updateWishlistCount();
+        button.classList.remove('bi-heart');
+        button.classList.add('bi-heart-fill', 'text-danger');
+        showMountainNotification('add', 'Alat berhasil ditambahkan ke wishlist Anda!', currentProduct.name);
+      } else {
+        wishlistItems.splice(index, 1);
+        wishlistCount--;
+        updateWishlistCount();
+        button.classList.remove('bi-heart-fill', 'text-danger');
+        button.classList.add('bi-heart');
+        showMountainNotification('remove', 'Alat berhasil dihapus dari wishlist Anda.', currentProduct.name);
+      }
+    }
+
+    function getProductId() {
+      return currentProduct.name.toLowerCase().replace(/ /g, '-');
+    }
+
+    function updateWishlistCount() {
+      document.getElementById('wishlist-count-header').textContent = wishlistCount;
+    }
+
+    function updateCartCount() {
+      document.getElementById('cart-count-header').textContent = cartCount;
+    }
+
+    function toggleWishlist(event) {
+      event.preventDefault();
+      if (wishlistItems.length > 0) {
+        alert(`Wishlist Anda (${wishlistCount} item):\n${wishlistItems.join('\n')}`);
+      } else {
+        alert('Wishlist Anda masih kosong');
+      }
+    }
+
+    function toggleCart(event) {
+      event.preventDefault();
+      if (cartItems.length > 0) {
+        let cartSummary = `Keranjang Anda (${cartCount} item):\n\n`;
+        let total = 0;
+        cartItems.forEach(item => {
+          cartSummary += `${item.name} - ${item.duration} hari - Rp ${item.total.toLocaleString('id-ID')}\n`;
+          total += item.total;
+        });
+        cartSummary += `\nTotal Keseluruhan: Rp ${total.toLocaleString('id-ID')}`;
+        alert(cartSummary);
+      } else {
+        alert('Keranjang Anda masih kosong');
+      }
+    }
+
+    function showMountainNotification(type, message) {
+      const notification = document.getElementById('mountain-notification');
+      const notificationTitle = document.getElementById('notification-title');
+      const notificationMessage = document.getElementById('notification-message');
+      const notificationIcon = document.getElementById('notification-icon');
+      
+      if (notificationTimeout) {
+        clearTimeout(notificationTimeout);
+      }
+      
+      if (type === 'add') {
+        notificationTitle.textContent = 'Ditambahkan ke Keranjang';
+        notificationMessage.textContent = message;
+        notificationIcon.className = 'bi bi-bag-check-fill';
+        notification.className = 'mountain-notification show add-animation';
+      } else if (type === 'review') {
+        notificationTitle.textContent = 'Review Berhasil Diposting';
+        notificationMessage.textContent = message;
+        notificationIcon.className = 'bi bi-check-circle-fill';
+        notification.className = 'mountain-notification show add-animation';
+      } else {
+        notificationTitle.textContent = 'Dihapus dari Wishlist';
+        notificationMessage.textContent = message;
+        notificationIcon.className = 'bi bi-heart';
+        notification.className = 'mountain-notification show remove-animation';
+      }
+      
+      notificationTimeout = setTimeout(hideNotification, 4000);
+    }
+    
+    function hideNotification() {
+      const notification = document.getElementById('mountain-notification');
+      notification.className = 'mountain-notification';
+    }
+
+    // Helper functions to populate dynamic content
+    gearList.forEach(gear => {
+      gear.images = gear.images || (gear.image ? [gear.image] : []);
+    });
+
+    function initializeCalendar(gear) {
+      const calendarGrid = document.getElementById('calendar-grid');
+      if (!calendarGrid) return;
+
+      let currentMonth = (new Date()).getMonth();
+      let currentYear = (new Date()).getFullYear();
+      let startDate = null;
+      let endDate = null;
+
+      // Ambil tanggal yang sudah dibooking dari admin
+      const bookedDates = Array.isArray(gear.bookedDates) ? gear.bookedDates : [];
+
+      function renderCalendar(month, year) {
+        calendarGrid.innerHTML = '';
+        const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const today = new Date();
+        today.setHours(0,0,0,0);
+
+        // Header bulan
+        calendarGrid.innerHTML += `
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary" id="prev-month">&lt;</button>
+            <span><strong>${monthNames[month]} ${year}</strong></span>
+            <button type="button" class="btn btn-sm btn-outline-secondary" id="next-month">&gt;</button>
+          </div>
+          <div class="d-flex mb-1" style="gap:2px;">
+            <div class="calendar-day text-center" style="width:32px;">Min</div>
+            <div class="calendar-day text-center" style="width:32px;">Sen</div>
+            <div class="calendar-day text-center" style="width:32px;">Sel</div>
+            <div class="calendar-day text-center" style="width:32px;">Rab</div>
+            <div class="calendar-day text-center" style="width:32px;">Kam</div>
+            <div class="calendar-day text-center" style="width:32px;">Jum</div>
+            <div class="calendar-day text-center" style="width:32px;">Sab</div>
+          </div>
+          <div class="calendar-days d-flex flex-wrap" style="gap:2px;"></div>
+        `;
+
+        const daysContainer = calendarGrid.querySelector('.calendar-days');
+        for (let i = 0; i < firstDay; i++) {
+          daysContainer.innerHTML += `<div class="calendar-day" style="width:32px;height:32px;"></div>`;
+        }
+
+        for (let date = 1; date <= daysInMonth; date++) {
+          const cellDate = new Date(year, month, date);
+          cellDate.setHours(0,0,0,0);
+          const dateStr = [
+            cellDate.getFullYear(),
+            String(cellDate.getMonth() + 1).padStart(2, '0'),
+            String(cellDate.getDate()).padStart(2, '0')
+          ].join('-');
+          const isPast = cellDate < today;
+          const isBooked = bookedDates.includes(dateStr);
+          let dayClass = 'calendar-day';
+          if (isPast) dayClass += ' busy';
+          else if (isBooked) dayClass += ' busy';
+          else dayClass += ' available';
+
+          // Range selection
+          let selected = '';
+          if (startDate && endDate) {
+            const d = cellDate.getTime();
+            if (d >= startDate.getTime() && d <= endDate.getTime()) selected = ' selected';
+          } else if (startDate && cellDate.getTime() === startDate.getTime()) {
+            selected = ' selected';
+          }
+
+          daysContainer.innerHTML += `<div class="${dayClass}${selected}" style="width:32px;height:32px;line-height:32px;cursor:pointer;" data-date="${dateStr}">${date}</div>`;
+        }
+
+        // Event prev/next
+        calendarGrid.querySelector('#prev-month').onclick = () => {
+          currentMonth--;
+          if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+          renderCalendar(currentMonth, currentYear);
+        };
+        calendarGrid.querySelector('#next-month').onclick = () => {
+          currentMonth++;
+          if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+          renderCalendar(currentMonth, currentYear);
+        };
+
+        // Event pilih tanggal
+        daysContainer.querySelectorAll('.calendar-day.available').forEach(day => {
+          day.onclick = function() {
+            const dateStr = this.getAttribute('data-date');
+            // Buat Date lokal (YYYY-MM-DD)
+            const [year, month, dayNum] = dateStr.split('-').map(Number);
+            const clickedDate = new Date(year, month - 1, dayNum);
+            if (!startDate || (startDate && endDate)) {
+              startDate = clickedDate;
+              endDate = null;
+            } else if (clickedDate > startDate) {
+              endDate = clickedDate;
+            } else {
+              startDate = clickedDate;
+              endDate = null;
+            }
+            updateSelectedDateInfo();
+            renderCalendar(currentMonth, currentYear);
+          };
+        });
+      }
+
+      function updateSelectedDateInfo() {
+        const info = document.getElementById('selected-date-info');
+        const span = document.getElementById('selected-date');
+        if (startDate && endDate) {
+          span.textContent = `${startDate.toLocaleDateString('id-ID')} - ${endDate.toLocaleDateString('id-ID')}`;
+          info.style.display = 'block';
+          document.getElementById('selectedStartDate').value = startDate.toISOString().split('T')[0];
+          document.getElementById('selectedEndDate').value = endDate.toISOString().split('T')[0];
+        } else if (startDate) {
+          span.textContent = `${startDate.toLocaleDateString('id-ID')}`;
+          info.style.display = 'block';
+          document.getElementById('selectedStartDate').value = [
+  startDate.getFullYear(),
+  String(startDate.getMonth() + 1).padStart(2, '0'),
+  String(startDate.getDate()).padStart(2, '0')
+].join('-');
+          document.getElementById('selectedEndDate').value = '';
+        } else {
+          info.style.display = 'none';
+          document.getElementById('selectedStartDate').value = '';
+          document.getElementById('selectedEndDate').value = '';
+        }
+      }
+
+      renderCalendar(currentMonth, currentYear);
+    }
+
+    // Panggil di DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // ...existing code...
+      initializeCalendar(currentProduct);
+      // ...existing code...
+    });
+  </script>
+
+  <style>
+    .mountain-notification {
+      position: fixed;
+      top: -100px;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      transition: top 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      margin: 0 auto;
+      width: 90%;
+      max-width: 500px;
+      opacity: 0;
+    }
+
+    .mountain-notification.show {
+      top: 80px;
+      opacity: 1;
+    }
+
+    .mountain-notification .notification-content {
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mountain-notification.add-animation .notification-content {
+      background: linear-gradient(135deg, #2ecc71, #27ae60);
+      color: white;
+    }
+
+    .mountain-notification.remove-animation .notification-content {
+      background: linear-gradient(135deg, #7f8c8d, #95a5a6);
+      color: white;
+    }
+
+    .mountain-notification .notification-content::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='rgba(255,255,255,0.1)' d='M0,224L60,213.3C120,203,240,181,360,181.3C480,181,600,203,720,213.3C840,224,960,224,1080,208C1200,192,1320,160,1380,144L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+      background-size: cover;
+      opacity: 0.3;
+      z-index: 0;
+    }
+
+    .mountain-notification .notification-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      margin-right: 15px;
+      z-index: 1;
+    }
+
+    .mountain-notification .notification-icon i {
+      font-size: 20px;
+    }
+
+    .mountain-notification .notification-text {
+      flex: 1;
+      z-index: 1;
+    }
+
+    .mountain-notification .notification-text h5 {
+      margin: 0 0 5px;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .mountain-notification .notification-text p {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .mountain-notification .notification-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 5px;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+      z-index: 1;
+    }
+
+    .mountain-notification .notification-close:hover {
+      opacity: 1;
+    }
+
+    @keyframes heartBeat {
+      0% { transform: scale(1); }
+      14% { transform: scale(1.3); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.3); }
+      70% { transform: scale(1); }
+    }
+
+    @keyframes heartRemove {
+      0% { transform: scale(1); }
+      20% { transform: scale(0.8); }
+      40% { transform: scale(1.1); }
+      60% { transform: scale(0.9); }
+      80% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+  </style>
+</body>
+
+</html>

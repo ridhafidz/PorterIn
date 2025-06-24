@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Sewa Alat Pendakian - PorterIn</title>
+  <meta name="description" content="Sewa alat pendakian berkualitas dari berbagai brand ternama bersama PorterIn">
+  <meta name="keywords" content="sewa alat pendakian, rental gear, rei, consina, outdoor products, osprey, eiger, north face, fjallraven, paket peralatan">
+
+  <!-- Favicons -->
+  <link href="assets/img/icon-lagi1.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --accent-color: #009961;
+      --secondary-color: #4a7c59;
+      --tertiary-color: #ff6b35;
+    }
+
+    /* CSS for Wishlist and Cart Icons */
+    .wishlist-icon, .cart-icon {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: all 0.3s ease-in-out;
+      background: transparent;
+    }
+
+    .wishlist-icon:hover, .cart-icon:hover {
+      color: #ffffff;
+      background: var(--accent-color);
+      box-shadow: 0 0 12px 3px rgba(0, 153, 97, 0.4);
+      transform: rotate(8deg) scale(1.2);
+    }
+
+    .wishlist-count, .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--tertiary-color);
+      color: #fff;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transition: all 0.3s ease;
+    }
+
+    .wishlist-icon:hover .wishlist-count,
+    .cart-icon:hover .cart-count {
+      transform: scale(1.3) rotate(10deg);
+      box-shadow: 0 2px 10px rgba(0, 153, 97, 0.6);
+    }
+
+    .page-title {
+      background: linear-gradient(rgba(0, 153, 97, 0.8), rgba(74, 124, 89, 0.8)), url('https://placehold.co/1200x400/3a3a3a/ffffff?text=Sewa+Alat+Pendakian');
+      background-size: cover;
+      background-position: center;
+      padding: 120px 0 80px 0;
+      color: white;
+    }
+
+    .gear-card {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      margin-bottom: 30px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+     .gear-card .card-body {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .gear-card .card-body .d-flex.gap-2 {
+        margin-top: auto;
+    }
+
+    .gear-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    }
+
+    .gear-image {
+      height: 250px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .gear-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: var(--tertiary-color);
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .gear-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-color);
+    }
+
+    .btn-rent {
+      background: var(--accent-color);
+      border: none;
+      color: white;
+      padding: 10px 25px;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .btn-rent:hover {
+      background: var(--secondary-color);
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    .filter-group {
+        margin-bottom: 20px;
+    }
+    .filter-group h6 {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 10px;
+    }
+
+    .filter-btn {
+      background: white;
+      border: 2px solid #ddd;
+      color: #555;
+      padding: 8px 15px;
+      margin: 5px;
+      border-radius: 25px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--accent-color);
+      color: white;
+      border-color: var(--accent-color);
+    }
+
+    .isotope-container .col-12 { text-align: center; font-size: 1.2rem; color: #6c757d;}
+
+    /* Custom Notification Styles */
+    .custom-notification {
+        position: fixed;
+        top: -150px; /* Start off-screen */
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 15px 25px;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        z-index: 10000;
+        transition: top 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.5s;
+        opacity: 0;
+        min-width: 350px;
+    }
+
+    .custom-notification.show {
+        top: 20px;
+        opacity: 1;
+    }
+
+    .custom-notification .icon {
+        font-size: 24px;
+        margin-right: 15px;
+    }
+    
+    .custom-notification.success {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .custom-notification.info {
+        background-color: #0dcaf0;
+        color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+     <div class="container d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+        <h1 class="sitename">PorterIn</h1>
+      </a>
+    <div class="d-flex align-items-center order-2 order-xl-3 me-2">
+      <a href="#" class="me-2 position-relative wishlist-icon" onclick="toggleWishlist(event)">
+        <i class="bi bi-heart-fill fs-5"></i>
+        <span class="wishlist-count" id="wishlist-count-header">0</span>
+      </a>
+      <a href="#" class="me-2 position-relative cart-icon" onclick="toggleCart(event)">
+        <i class="bi bi-bag-check-fill fs-5"></i>
+        <span class="cart-count" id="cart-count-header">0</span>
+      </a>
+    </div>
+
+      <nav id="navmenu" class="navmenu order-3 order-xl-2">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li class="dropdown"><a href="#" class="active"><span>Produk</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="katalog-gunung.html">Katalog Gunung</a></li>
+              <li><a href="katalog-porter.html">Porter</a></li>
+              <li><a href="katalog-gear.html" class="active">Sewa Gear Pendakian</a></li>
+              <li><a href="#">Simulasi Pendakian</a></li>
+            </ul>
+          </li>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="index.html#history">History</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Notification Element -->
+  <div id="custom-notification" class="custom-notification">
+    <div id="notification-icon" class="icon"></div>
+    <div id="notification-message"></div>
+  </div>
+
+
+  <main class="main">
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/img/gear.jpeg);">
+      <div class="container position-relative">
+        <h1>Sewa Alat Pendakian</h1>
+        <p>Temukan peralatan pendakian berkualitas dari berbagai brand ternama</p>
+      </div>
+    </div>
+
+    <!-- Search and Filter Section -->
+    <section class="search-filter-section">
+      <div class="container">
+        <div class="search-box" data-aos="fade-up">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Cari alat pendakian..." id="searchInput">
+            <button class="btn btn-outline-secondary" type="button" id="searchBtn"><i class="bi bi-search"></i></button>
+          </div>
+        </div>
+        
+        <!-- Filter Buttons by Brand -->
+        <div class="filter-group text-center" data-aos="fade-up" data-aos-delay="100">
+            <div id="filter-buttons-brand">
+                 <button class="filter-btn active" data-filter="*">Semua Brand</button>
+                 <button class="filter-btn" data-filter=".eiger">Eiger</button>
+                 <button class="filter-btn" data-filter=".rei">Rei</button>
+                 <button class="filter-btn" data-filter=".consina">Consina</button>
+                 <button class="filter-btn" data-filter=".osprey">Osprey</button>
+                 <button class="filter-btn" data-filter=".the-north-face">The North Face</button>
+                 <button class="filter-btn" data-filter=".outdoor-pro">Outdoor Pro</button>
+                 <button class="filter-btn" data-filter=".fjallraven">Fjällräven</button>
+                 <button class="filter-btn" data-filter=".lainnya">Lainnya</button>
+            </div>
+        </div>
+        
+        <!-- Filter Buttons by Type -->
+        <div class="filter-group text-center" data-aos="fade-up" data-aos-delay="200">
+            <div id="filter-buttons-type">
+                 <button class="filter-btn active" data-filter="*">Semua Tipe</button>
+                 <button class="filter-btn" data-filter=".individu">Individu</button>
+                 <button class="filter-btn" data-filter=".paket-pemula">Paket Pemula</button>
+                 <button class="filter-btn" data-filter=".paket-pro">Paket Pro</button>
+            </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Gear Section -->
+    <section id="gears" class="section pt-0">
+      <div class="container">
+        <div class="row isotope-container" data-aos="fade-up" data-aos-delay="300" id="gearContainer">
+          <!-- DYNAMIC CONTENT HERE -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer" class="footer dark-background">
+      <div class="container">
+       <h3 class="sitename">PorterIn</h3>
+       <p>Platform terpercaya untuk petualangan pendakian gunung di Indonesia. Wujudkan impian mendaki Anda bersama kami.</p>
+       <div class="social-links d-flex justify-content-center">
+         <a href=""><i class="bi bi-twitter-x"></i></a>
+         <a href=""><i class="bi bi-facebook"></i></a>
+         <a href=""><i class="bi bi-instagram"></i></a>
+         <a href=""><i class="bi bi-youtube"></i></a>
+         <a href=""><i class="bi bi-linkedin"></i></a>
+       </div>
+       <div class="container">
+         <div class="copyright">
+           <span>Copyright</span> <strong class="px-1 sitename">PorterIn</strong> <span>All Rights Reserved</span>
+         </div>
+         <div class="credits">
+           Designed with <i class="bi bi-heart-fill text-danger"></i> for Mountain Lovers
+         </div>
+       </div>
+     </div>
+  </footer>
+
+  <!-- Vendor JS Files and Main JS File -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/js/main.js"></script>
+
+ <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // --- MAIN EXECUTION ---
+      try {
+        renderGearItems();
+        initializeIsotopeAndFilters();
+      } catch (error) {
+        console.error("Terjadi error fatal:", error);
+        document.getElementById('gearContainer').innerHTML = '<div class="col-12"><p>Gagal memuat halaman. Silakan periksa konsol untuk detail error.</p></div>';
+      }
+      // --- END OF MAIN EXECUTION ---
+
+      function renderGearItems() {
+        const gearContainer = document.getElementById('gearContainer');
+        if (!gearContainer) return;
+        const gears = JSON.parse(localStorage.getItem('gears')) || [];
+
+        if (gears.length === 0) {
+          gearContainer.innerHTML = '<div class="col-12"><p>Belum ada alat yang tersedia untuk disewa.</p></div>';
+          return;
+        }
+
+        gearContainer.innerHTML = '';
+        gears.forEach(gear => {
+          const imageSrc = gear.image || `https://placehold.co/600x400/009961/FFFFFF?text=${encodeURIComponent(gear.name)}`;
+          const formattedPrice = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(gear.price);
+          
+          // Ambil rating dari review user
+          let rating = '-';
+          try {
+            const reviewKey = `gearReviews_${gear.id}`;
+            const reviews = JSON.parse(localStorage.getItem(reviewKey)) || [];
+            if (reviews.length) {
+              const avg = reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / reviews.length;
+              rating = avg.toFixed(1);
+            }
+          } catch {}
+
+          const brandClass = gear.brand ? gear.brand.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-') : 'lainnya';
+          const typeClass = gear.type ? gear.type.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-') : 'individu';
+
+          let specificationsHTML = '';
+          if (gear.specs && typeof gear.specs === 'string' && gear.specs.trim() !== '') {
+            const specsArray = gear.specs.split('\n').filter(spec => spec.trim() !== '');
+            specificationsHTML = '<ul class="list-unstyled mb-3">';
+            specsArray.forEach(spec => {
+              specificationsHTML += `<li><i class="bi bi-check-circle text-success"></i> ${spec.trim()}</li>`;
+            });
+            specificationsHTML += '</ul>';
+          }
+
+          const card = document.createElement('div');
+          card.className = `col-lg-4 col-md-6 isotope-item ${brandClass} ${typeClass}`;
+          card.setAttribute('data-name', `${gear.name.toLowerCase()} ${gear.brand ? gear.brand.toLowerCase() : ''} ${gear.type ? gear.type.toLowerCase() : ''}`);
+          card.innerHTML = `
+            <div class="gear-card">
+              <div class="gear-image" style="background-image: url('${imageSrc}');">
+                <div class="gear-badge">${gear.type || 'Individu'}</div>
+              </div>
+              <div class="card-body p-4">
+                <h5 class="card-title">${gear.name}</h5>
+                <p class="text-muted mb-2"><i class="bi bi-shield-check"></i> Brand: <strong>${gear.brand || 'N/A'}</strong></p>
+                ${specificationsHTML} 
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div class="gear-price">${formattedPrice}</div>
+                  <small class="text-muted">per hari</small>
+                </div>
+                <div class="mb-3">
+                  <span class="product-rating">
+                    <i class="bi bi-star-fill text-warning"></i> ${rating === '-' ? 'Belum ada rating' : rating + '/5'}
+                  </span>
+                </div>
+                <div class="d-flex gap-2">
+                  <a href="detail-gear.html?id=${gear.id}" class="btn btn-rent flex-grow-1">Sewa Sekarang</a>
+                  <button class="btn btn-outline-secondary" onclick="addToWishlist(this, '${gear.id}')">
+                    <i class="bi ${wishlist.includes(gear.id) ? 'bi-heart-fill text-danger' : 'bi-heart'}"></i>
+                  </button>
+                </div>
+              </div>
+            </div>`;
+          gearContainer.appendChild(card);
+        });
+      }
+
+      function initializeIsotopeAndFilters() {
+        const grid = document.querySelector('.isotope-container');
+        if (!grid) return;
+
+        imagesLoaded(grid, function () {
+          const iso = new Isotope(grid, {
+            itemSelector: '.isotope-item',
+            layoutMode: 'fitRows'
+          });
+
+          const filters = { brand: '*', type: '*' };
+          const searchInput = document.getElementById('searchInput');
+
+          function applyFilters() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            iso.arrange({
+              filter: function(item) {
+                const brandMatch = filters.brand === '*' || item.matches(filters.brand);
+                const typeMatch = filters.type === '*' || item.matches(filters.type);
+                const searchMatch = searchTerm === '' || item.getAttribute('data-name').toLowerCase().includes(searchTerm);
+                return brandMatch && typeMatch && searchMatch;
+              }
+            });
+          }
+
+          function setupFilterGroup(containerId, filterGroup) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.addEventListener('click', function(e) {
+              if (e.target.classList.contains('filter-btn')) {
+                container.querySelector('.active').classList.remove('active');
+                e.target.classList.add('active');
+                filters[filterGroup] = e.target.getAttribute('data-filter');
+                applyFilters();
+              }
+            });
+          }
+
+          setupFilterGroup('filter-buttons-brand', 'brand');
+          setupFilterGroup('filter-buttons-type', 'type');
+          
+          searchInput.addEventListener('keyup', applyFilters);
+          document.getElementById('searchBtn').addEventListener('click', applyFilters);
+        });
+      }
+    });
+
+    // --- Notification and Wishlist Logic ---
+    let notificationTimeout;
+    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    
+    function showNotification(type, message) {
+        const notification = document.getElementById('custom-notification');
+        const iconElement = document.getElementById('notification-icon');
+        const messageElement = document.getElementById('notification-message');
+
+        // Clear previous timeout if it exists
+        if (notificationTimeout) {
+            clearTimeout(notificationTimeout);
+        }
+
+        // Set content and style based on type
+        if (type === 'success') {
+            notification.className = 'custom-notification success';
+            iconElement.innerHTML = '<i class="bi bi-heart-fill"></i>';
+            messageElement.textContent = `${message} ditambahkan ke wishlist!`;
+        } else {
+            notification.className = 'custom-notification info';
+            iconElement.innerHTML = '<i class="bi bi-trash-fill"></i>';
+            messageElement.textContent = `${message} dihapus dari wishlist.`;
+        }
+        
+        // Show notification
+        notification.classList.add('show');
+
+        // Hide notification after 3 seconds
+        notificationTimeout = setTimeout(() => {
+            notification.classList.remove('show');
+        }, 3000);
+    }
+    
+    function addToWishlist(buttonElement, gearId) {
+      const icon = buttonElement.querySelector('i');
+      const idx = wishlist.indexOf(gearId);
+      if (idx === -1) {
+        // Add to wishlist
+        wishlist.push(gearId);
+        icon.classList.remove('bi-heart');
+        icon.classList.add('bi-heart-fill', 'text-danger');
+        showNotification('success', buttonElement.closest('.card-title')?.textContent || 'Produk');
+      } else {
+        // Remove from wishlist
+        wishlist.splice(idx, 1);
+        icon.classList.remove('bi-heart-fill', 'text-danger');
+        icon.classList.add('bi-heart');
+        showNotification('info', buttonElement.closest('.card-title')?.textContent || 'Produk');
+      }
+      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      updateWishlistCount();
+    }
+    
+    function updateWishlistCount() {
+      document.getElementById('wishlist-count-header').textContent = wishlist.length;
+    }
+
+    // Panggil saat halaman load
+    updateWishlistCount();
+    
+    function toggleCart(event) { event.preventDefault(); alert('Tampilkan keranjang.'); }
+    function toggleWishlist(event) { event.preventDefault(); alert('Tampilkan wishlist.'); }
+ </script>
+
+</body>
+
+</html>

@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Articles - PorterIn Admin</title>
+
+  <!-- Favicons -->
+  <link href="../assets/img/icon-lagi1.png" rel="icon">
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- SweetAlert2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    .sidebar {
+      width: 240px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background-color: #212529;
+      padding-top: 60px;
+      transition: all 0.3s;
+      z-index: 1100;
+    }
+    .sidebar a {
+      display: block;
+      padding: 12px 20px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+    .sidebar a.active, .sidebar a:hover {
+      background-color: #343a40;
+    }
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 240px;
+      right: 0;
+      height: 60px;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      border-bottom: 1px solid #dee2e6;
+      z-index: 1000;
+      transition: all 0.3s;
+    }
+    .main-content {
+      margin-left: 240px;
+      padding: 80px 20px 20px;
+      transition: all 0.3s;
+    }
+    .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+    .modal .form-control {
+      border-radius: 0.5rem;
+    }
+    .user-image {
+      max-width: 50px;
+      max-height: 50px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    /* Overlay */
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1050;
+      transition: all 0.3s;
+    }
+    .overlay.active {
+      display: block;
+    }
+    /* Media Queries */
+    @media (max-width: 992px) {
+      .sidebar {
+        left: -240px;
+        width: 240px;
+        transition: left 0.3s;
+        z-index: 1100;
+      }
+      .sidebar.active {
+        left: 0;
+      }
+      .main-content,
+      .topbar {
+        margin-left: 0 !important;
+        left: 0 !important;
+      }
+      .overlay {
+        display: none;
+        z-index: 1099;
+      }
+      .overlay.active {
+        display: block;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.3);
+      }
+    }
+    @media (max-width: 768px) {
+      .main-content {
+        padding-top: 100px;
+      }
+      .sidebar {
+        width: 200px;
+      }
+      .sidebar.active {
+        width: 200px;
+      }
+      .topbar {
+        left: 0;
+      }
+    }
+    @media (max-width: 576px) {
+      .main-content {
+        padding: 60px 5px 10px;
+      }
+      .sidebar {
+        width: 160px;
+      }
+      .sidebar.active {
+        width: 160px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <a href="/admin/dashboard.html"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+  <a href="users.html"><i class="bi bi-people me-2"></i>Users</a>
+  <a href="#" data-bs-toggle="collapse" data-bs-target="#productsSubmenu"><i class="bi bi-box-seam me-2"></i>Products</a>
+  <div class="collapse ps-3 show" id="productsSubmenu">
+    <a href="mountains.html">Mountains</a>
+    <a href="porter.html">Porters</a>
+    <a href="gears.html">Gears</a>
+    <a href="simulations.html">Simulations</a>
+  </div>
+  <a href="/admin/articles.html" class="active"><i class="bi bi-newspaper me-2"></i>Articles</a>
+  <a href="orders.html"><i class="bi bi-cart3 me-2"></i>Orders</a>
+  <a href="/index.html"><i class="bi bi-box-arrow-left me-2"></i>Logout</a>
+</div>
+
+<!-- Overlay -->
+<div class="overlay" id="sidebarOverlay"></div>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="d-flex align-items-center">
+    <button class="btn btn-dark d-md-none" id="sidebarToggle">
+      <i class="bi bi-list"></i>
+    </button>
+    <div class="brand ms-2 fw-bold">PorterIn Admin</div>
+  </div>
+  <div class="d-flex align-items-center">
+    <img src="/assets/img/testimonials/testimonials-2.jpg" class="rounded-circle me-2" width="40" height="40" />
+    <span>Admin</span>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+      <h3 class="mb-0">Manajemen Artikel</h3>
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#articleModal" onclick="openAddModal()">
+        <i class="bi bi-plus"></i> Tambah Artikel
+      </button>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>ID</th>
+                <th>Gambar</th>
+                <th>Judul</th>
+                <th>Kategori</th>
+                <th>Status</th>
+                <th>Cuplikan</th>
+                <th>Konten</th>
+                <th>Penulis</th>
+                <th>Foto Penulis</th>
+                <th>Sosial Media</th>
+                <th>Tag</th>
+                <th>Tanggal</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="articleList"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Tambah/Edit Artikel -->
+<div class="modal fade" id="articleModal" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <form class="modal-content" id="articleForm">
+      <div class="modal-header">
+        <h5 class="modal-title" id="articleModalLabel">Tambah Artikel</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body row g-3">
+        <input type="hidden" id="articleId">
+        <div class="col-md-6">
+          <label class="form-label">Judul Artikel</label>
+          <input type="text" class="form-control" id="title" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Kategori</label>
+          <select class="form-select" id="category" required>
+            <option value="">Pilih Kategori</option>
+            <option value="Gunung">Gunung</option>
+            <option value="Peralatan">Peralatan</option>
+            <option value="Pendakian">Pendakian</option>
+            <option value="Tips and Tricks">Tips and Tricks</option>
+            <option value="Seputar Porter">Seputar Porter</option>
+            <option value="PorterIn">PorterIn</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Status</label>
+          <select class="form-select" id="status" required>
+            <option value="draft">Draft</option>
+            <option value="dipublikasi">Dipublikasi</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Tanggal</label>
+          <input type="date" class="form-control" id="date" required>
+        </div>
+        <div class="col-12">
+          <label class="form-label">Cuplikan Artikel</label>
+          <textarea class="form-control" id="snippet" maxlength="200" required></textarea>
+          <small class="text-muted">Maksimal 200 karakter.</small>
+        </div>
+        <div class="col-12">
+          <label class="form-label">Konten Artikel</label>
+          <textarea class="form-control" id="content" rows="5" required></textarea>
+        </div>
+        <div class="col-12">
+          <label class="form-label">Gambar Artikel</label>
+          <input type="file" class="form-control" id="image" accept="image/*">
+          <img id="previewImg" src="" alt="" class="mt-2 d-none" style="max-width:120px;max-height:80px;">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Penulis (Author)</label>
+          <input type="text" class="form-control" id="author" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Foto Author</label>
+          <input type="file" class="form-control" id="authorPhoto" accept="image/*">
+          <img id="previewAuthorPhoto" src="" alt="" class="mt-2 d-none" style="max-width:60px;max-height:60px;border-radius:50%;">
+        </div>
+        <div class="col-12">
+          <label class="form-label">Sosial Media Author</label>
+          <div class="row g-2">
+            <div class="col-md-4">
+              <input type="text" class="form-control" id="authorInstagram" placeholder="Instagram (username)">
+            </div>
+            <div class="col-md-4">
+              <input type="text" class="form-control" id="authorX" placeholder="X/Twitter (username)">
+            </div>
+            <div class="col-md-4">
+              <input type="text" class="form-control" id="authorLinkedin" placeholder="LinkedIn (username)">
+            </div>
+            <div class="col-md-4">
+              <input type="text" class="form-control" id="authorFacebook" placeholder="Facebook (username)">
+            </div>
+            <div class="col-md-4">
+              <input type="text" class="form-control" id="authorTiktok" placeholder="TikTok (username)">
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <label class="form-label">Tag (pisahkan dengan koma)</label>
+          <input type="text" class="form-control" id="tags" placeholder="Contoh: hiking, tips, porter">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script>
+  let users = JSON.parse(localStorage.getItem('users')) || [];
+
+  function saveToLocal() {
+    localStorage.setItem('users', JSON.stringify(users));
+  }
+
+  function toBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  }
+
+  function renderTable() {
+    const list = document.getElementById('userList');
+    list.innerHTML = '';
+    users.forEach((user, i) => {
+      const photoSrc = user.photo || 'https://via.placeholder.com/50x50?text=No+Image';
+      const maskedPassword = '*'.repeat(user.password.length); // Mask password with *
+      list.innerHTML += `
+        <tr>
+          <td><img src="${photoSrc}" alt="${user.username}" class="user-image"></td>
+          <td>${user.username}</td>
+          <td>${user.email}</td>
+          <td>${maskedPassword}</td>
+          <td>${user.role || 'user'}</td> <!-- Default to 'user' if role is undefined -->
+          <td>
+            <button class="btn btn-sm btn-warning me-1" onclick="editUser(${i})"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-sm btn-danger" onclick="deleteUser(${i})"><i class="bi bi-trash"></i></button>
+          </td>
+        </tr>`;
+    });
+  }
+
+  document.getElementById('userForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const username = document.getElementById('userUsername').value.trim();
+    const email = document.getElementById('userEmail').value.trim();
+    const password = document.getElementById('userPassword').value;
+    const role = document.getElementById('userRole').value;
+    const index = document.getElementById('userIndex').value;
+    const photoInput = document.getElementById('userPhoto');
+    let photo = users[index]?.photo || '';
+
+    if (!username || !email || !password) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Please fill in all fields.',
+        confirmButtonColor: '#47b2e4',
+      });
+      return;
+    }
+
+    if (photoInput.files && photoInput.files[0]) {
+      const file = photoInput.files[0];
+      if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Please upload a JPG or PNG image.',
+          confirmButtonColor: '#47b2e4',
+        });
+        return;
+      }
+      if (file.size > 2 * 1024 * 1024) { // 2MB limit
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Image size must be less than 2MB.',
+          confirmButtonColor: '#47b2e4',
+        });
+        return;
+      }
+      photo = await toBase64(file);
+    }
+
+    const userData = { username, email, password, role, photo };
+
+    if (index === '') {
+      users.push(userData);
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'User added successfully!',
+        confirmButtonColor: '#47b2e4',
+      });
+      // Trigger custom event for dashboard activity log
+      window.dispatchEvent(new CustomEvent('userCreated', { detail: { username } }));
+    } else {
+      users[index] = userData;
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'User updated successfully!',
+        confirmButtonColor: '#47b2e4',
+      });
+    }
+
+    saveToLocal();
+    renderTable();
+
+    document.getElementById('userForm').reset();
+    document.getElementById('userIndex').value = '';
+    const modal = bootstrap.Modal.getInstance(document.getElementById('addUserModal'));
+    modal.hide();
+  });
+
+  function editUser(index) {
+    const user = users[index];
+    document.getElementById('userUsername').value = user.username;
+    document.getElementById('userEmail').value = user.email;
+    document.getElementById('userPassword').value = user.password; // Show original password for editing
+    document.getElementById('userRole').value = user.role || 'user'; // Default to 'user' if role is undefined
+    document.getElementById('userIndex').value = index;
+    new bootstrap.Modal(document.getElementById('addUserModal')).show();
+  }
+
+  function deleteUser(index) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won’t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const deletedUsername = users[index].username;
+        users.splice(index, 1);
+        saveToLocal();
+        renderTable();
+        Swal.fire({
+          icon: 'success',
+          title: 'Deleted',
+          text: 'User deleted successfully!',
+          confirmButtonColor: '#47b2e4',
+        });
+        // Trigger custom event for dashboard activity log
+        window.dispatchEvent(new CustomEvent('userDeleted', { detail: { username: deletedUsername } }));
+      }
+    });
+  }
+
+  // Toggle sidebar dan overlay untuk mobile
+  document.getElementById('sidebarToggle').addEventListener('click', function() {
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const mainContent = document.querySelector('.main-content');
+    const topbar = document.querySelector('.topbar');
+
+    sidebar.classList.toggle('active');
+    overlay.classList.toggle('active');
+    mainContent.classList.toggle('sidebar-active');
+    topbar.classList.toggle('sidebar-active');
+  });
+
+  // Tutup sidebar dan overlay saat klik overlay
+  document.getElementById('sidebarOverlay').addEventListener('click', function() {
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const mainContent = document.querySelector('.main-content');
+    const topbar = document.querySelector('.topbar');
+
+    sidebar.classList.remove('active');
+    overlay.classList.remove('active');
+    mainContent.classList.remove('sidebar-active');
+    topbar.classList.remove('sidebar-active');
+  });
+
+  renderTable();
+</script>
+<script>
+  let articles = JSON.parse(localStorage.getItem('articles')) || [];
+  let editIndex = null;
+
+  function renderArticles() {
+    const list = document.getElementById('articleList');
+    list.innerHTML = '';
+    if (articles.length === 0) {
+      list.innerHTML = `<tr><td colspan="13" class="text-center text-muted">Belum ada artikel.</td></tr>`;
+      return;
+    }
+    articles.forEach((a, i) => {
+      list.innerHTML += `
+        <tr>
+          <td>${a.id || '-'}</td>
+          <td>${a.image ? `<img src="${a.image}" class="user-image">` : '-'}</td>
+          <td>${a.title}</td>
+          <td>${a.category}</td>
+          <td>
+            <span class="badge ${a.status === 'dipublikasi' ? 'bg-success' : 'bg-secondary'}">
+              ${a.status.charAt(0).toUpperCase() + a.status.slice(1)}
+            </span>
+          </td>
+          <td>${a.snippet}</td>
+          <td><div style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${a.content}">${a.content}</div></td>
+          <td>${a.author || '-'}</td>
+          <td>${a.authorPhoto ? `<img src="${a.authorPhoto}" style="width:40px;height:40px;border-radius:50%;">` : '-'}</td>
+          <td>
+            ${a.authorInstagram ? `<a href="https://instagram.com/${a.authorInstagram}" target="_blank"><i class="bi bi-instagram"></i></a> ` : ''}
+            ${a.authorX ? `<a href="https://x.com/${a.authorX}" target="_blank"><i class="bi bi-twitter-x"></i></a> ` : ''}
+            ${a.authorLinkedin ? `<a href="https://linkedin.com/in/${a.authorLinkedin}" target="_blank"><i class="bi bi-linkedin"></i></a> ` : ''}
+            ${a.authorFacebook ? `<a href="https://facebook.com/${a.authorFacebook}" target="_blank"><i class="bi bi-facebook"></i></a> ` : ''}
+            ${a.authorTiktok ? `<a href="https://tiktok.com/@${a.authorTiktok}" target="_blank"><i class="bi bi-tiktok"></i></a> ` : ''}
+          </td>
+          <td>${a.tags ? a.tags : '-'}</td>
+          <td>${a.date}</td>
+          <td>
+            <button class="btn btn-warning btn-sm me-1" onclick="editArticle(${i})"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-danger btn-sm" onclick="deleteArticle(${i})"><i class="bi bi-trash"></i></button>
+          </td>
+        </tr>
+      `;
+    });
+  }
+
+  document.getElementById('image').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        document.getElementById('previewImg').src = evt.target.result;
+        document.getElementById('previewImg').classList.remove('d-none');
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  document.getElementById('authorPhoto').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        document.getElementById('previewAuthorPhoto').src = evt.target.result;
+        document.getElementById('previewAuthorPhoto').classList.remove('d-none');
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  function openAddModal() {
+    editIndex = null;
+    document.getElementById('articleModalLabel').textContent = 'Tambah Artikel';
+    document.getElementById('articleForm').reset();
+    document.getElementById('previewImg').src = '';
+    document.getElementById('previewImg').classList.add('d-none');
+    document.getElementById('previewAuthorPhoto').src = '';
+    document.getElementById('previewAuthorPhoto').classList.add('d-none');
+    document.getElementById('articleId').value = '';
+  }
+
+  function editArticle(idx) {
+    editIndex = idx;
+    const a = articles[idx];
+    document.getElementById('articleModalLabel').textContent = 'Edit Artikel';
+    document.getElementById('articleId').value = a.id || '';
+    document.getElementById('title').value = a.title;
+    document.getElementById('category').value = a.category;
+    document.getElementById('status').value = a.status;
+    document.getElementById('snippet').value = a.snippet;
+    document.getElementById('content').value = a.content;
+    document.getElementById('date').value = a.date;
+    document.getElementById('author').value = a.author || '';
+    document.getElementById('authorInstagram').value = a.authorInstagram || '';
+    document.getElementById('authorX').value = a.authorX || '';
+    document.getElementById('authorLinkedin').value = a.authorLinkedin || '';
+    document.getElementById('authorFacebook').value = a.authorFacebook || '';
+    document.getElementById('authorTiktok').value = a.authorTiktok || '';
+    document.getElementById('tags').value = a.tags || '';
+    if (a.image) {
+      document.getElementById('previewImg').src = a.image;
+      document.getElementById('previewImg').classList.remove('d-none');
+    } else {
+      document.getElementById('previewImg').src = '';
+      document.getElementById('previewImg').classList.add('d-none');
+    }
+    if (a.authorPhoto) {
+      document.getElementById('previewAuthorPhoto').src = a.authorPhoto;
+      document.getElementById('previewAuthorPhoto').classList.remove('d-none');
+    } else {
+      document.getElementById('previewAuthorPhoto').src = '';
+      document.getElementById('previewAuthorPhoto').classList.add('d-none');
+    }
+    new bootstrap.Modal(document.getElementById('articleModal')).show();
+  }
+
+  document.getElementById('articleForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const id = document.getElementById('articleId').value || Date.now().toString();
+    const title = document.getElementById('title').value.trim();
+    const category = document.getElementById('category').value;
+    const status = document.getElementById('status').value;
+    const snippet = document.getElementById('snippet').value.trim();
+    const content = document.getElementById('content').value.trim();
+    const date = document.getElementById('date').value;
+    const author = document.getElementById('author').value.trim();
+    const authorInstagram = document.getElementById('authorInstagram').value.trim();
+    const authorX = document.getElementById('authorX').value.trim();
+    const authorLinkedin = document.getElementById('authorLinkedin').value.trim();
+    const authorFacebook = document.getElementById('authorFacebook').value.trim();
+    const authorTiktok = document.getElementById('authorTiktok').value.trim();
+    const tags = document.getElementById('tags').value.trim();
+    let image = document.getElementById('previewImg').src || '';
+    let authorPhoto = document.getElementById('previewAuthorPhoto').src || '';
+
+    // Handle upload gambar artikel
+    const fileInput = document.getElementById('image');
+    const authorPhotoInput = document.getElementById('authorPhoto');
+    let imageDone = false, authorPhotoDone = false;
+
+    function saveIfReady() {
+      if (imageDone && authorPhotoDone) {
+        const articleData = {
+          id, title, category, status, snippet, content, date, image,
+          author, authorPhoto, authorInstagram, authorX, authorLinkedin, authorFacebook, authorTiktok, tags
+        };
+        if (editIndex !== null) {
+          articles[editIndex] = articleData;
+        } else {
+          articles.push(articleData);
+        }
+        localStorage.setItem('articles', JSON.stringify(articles));
+        renderArticles();
+        bootstrap.Modal.getInstance(document.getElementById('articleModal')).hide();
+      }
+    }
+
+    // Proses upload gambar artikel
+    if (fileInput.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        image = evt.target.result;
+        imageDone = true;
+        saveIfReady();
+      };
+      reader.readAsDataURL(fileInput.files[0]);
+    } else {
+      imageDone = true;
+    }
+
+    // Proses upload foto author
+    if (authorPhotoInput.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        authorPhoto = evt.target.result;
+        authorPhotoDone = true;
+        saveIfReady();
+      };
+      reader.readAsDataURL(authorPhotoInput.files[0]);
+    } else {
+      authorPhotoDone = true;
+    }
+
+    // Jika tidak ada upload baru, langsung simpan
+    saveIfReady();
+  });
+
+  renderArticles();
+</script>
+<script>
+  // Pastikan DOM sudah siap
+  document.addEventListener('DOMContentLoaded', function() {
+    const sidebarToggleBtn = document.getElementById('sidebarToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const mainContent = document.querySelector('.main-content');
+    const topbar = document.querySelector('.topbar');
+
+    // Toggle sidebar
+    sidebarToggleBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      sidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
+      mainContent.classList.toggle('sidebar-active');
+      topbar.classList.toggle('sidebar-active');
+    });
+
+    // Tutup sidebar saat klik overlay
+    overlay.addEventListener('click', function() {
+      sidebar.classList.remove('active');
+      overlay.classList.remove('active');
+      mainContent.classList.remove('sidebar-active');
+      topbar.classList.remove('sidebar-active');
+    });
+
+    // Opsional: tutup sidebar jika resize ke desktop
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 992) {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+        mainContent.classList.remove('sidebar-active');
+        topbar.classList.remove('sidebar-active');
+      }
+    });
+  });
+</script>
+</body>
+</html>

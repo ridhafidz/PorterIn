@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Mountains - PorterIn Admin</title>
+
+  <!-- Favicons -->
+  <link href="../assets/img/icon-lagi1.png" rel="icon">
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- SweetAlert2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+    }
+    .sidebar {
+      width: 240px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background-color: #212529;
+      padding-top: 60px;
+      transition: all 0.3s;
+      z-index: 1100;
+      overflow-x: hidden;
+    }
+    .sidebar a {
+      display: block;
+      padding: 12px 20px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+    .sidebar a.active, .sidebar a:hover {
+      background-color: #343a40;
+    }
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 240px;
+      right: 0;
+      height: 60px;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      border-bottom: 1px solid #dee2e6;
+      z-index: 1000;
+      transition: all 0.3s;
+    }
+    .main-content {
+      margin-left: 240px;
+      padding: 80px 20px 20px;
+      transition: all 0.3s;
+    }
+    .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+    .modal .form-control, .modal .form-select {
+      border-radius: 0.5rem;
+    }
+    .mountain-image {
+      max-width: 100px;
+      max-height: 100px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1050;
+      transition: all 0.3s;
+    }
+    .overlay.active {
+      display: block;
+    }
+    @media (max-width: 768px) {
+        .sidebar {
+          width: 0;
+          left: 0;
+          overflow: hidden;
+          padding-top: 60px;
+          transition: width 0.3s;
+        }
+        .sidebar.active {
+          width: 200px;
+          overflow: visible;
+        }
+        .main-content {
+          margin-left: 0;
+        }
+        .topbar {
+          left: 0;
+        }
+        .mountain-image {
+            max-width: 80px;
+            max-height: 80px;
+        }
+    }
+     @media (max-width: 576px) {
+        .main-content {
+            padding-top: 80px;
+        }
+        .mountain-image {
+            max-width: 60px;
+            max-height: 60px;
+        }
+     }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <a href="/admin/dashboard.html"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+  <a href="users.html"><i class="bi bi-people me-2"></i>Users</a>
+  <a href="#" data-bs-toggle="collapse" data-bs-target="#productsSubmenu"><i class="bi bi-box-seam me-2"></i>Products</a>
+  <div class="collapse ps-3 show" id="productsSubmenu">
+    <a href="manage-mountains.html" class="active">Mountains</a>
+    <a href="porter.html">Porters</a>
+    <a href="gears.html">Gears</a>
+    <a href="simulations.html">Simulations</a>
+  </div>
+  <a href="/admin/articles.html"><i class="bi bi-newspaper me-2"></i>Articles</a>
+  <a href="orders.html"><i class="bi bi-cart3 me-2"></i>Transactions</a>
+  <a href="/index.html"><i class="bi bi-box-arrow-left me-2"></i>Logout</a>
+</div>
+
+<!-- Overlay -->
+<div class="overlay" id="sidebarOverlay"></div>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="d-flex align-items-center">
+    <button class="btn btn-dark d-md-none" id="sidebarToggle">
+      <i class="bi bi-list"></i>
+    </button>
+    <div class="brand ms-2 fw-bold">PorterIn Admin</div>
+  </div>
+  <div class="d-flex align-items-center">
+    <img src="https://placehold.co/40x40/212529/FFFFFF?text=A" class="rounded-circle me-2" alt="Admin"/>
+    <span>Admin</span>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3>Manage Mountains</h3>
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMountainModal"><i class="bi bi-plus-lg"></i> Add Mountain</button>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover" id="mountainTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Gambar</th>
+                <th>Nama Paket</th>
+                <th>Lokasi</th>
+                <th>Harga</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="mountainList">
+              <!-- Mountain rows will be added via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Add/Edit -->
+<div class="modal fade" id="addMountainModal" tabindex="-1" aria-labelledby="addMountainModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addMountainModalLabel">Add/Edit Mountain</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="mountainForm">
+          <input type="hidden" id="mountainIndex" />
+          
+          <div class="mb-3">
+            <label for="mountainName" class="form-label">Nama Paket</label>
+            <input type="text" class="form-control" id="mountainName" required />
+          </div>
+
+           <div class="mb-3">
+            <label for="mountainDescription" class="form-label">Deskripsi</label>
+            <textarea class="form-control" id="mountainDescription" rows="3" placeholder="Deskripsi singkat tentang paket pendakian..."></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="mountainLocation" class="form-label">Lokasi</label>
+            <input type="text" class="form-control" id="mountainLocation" required />
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="mountainDifficulty" class="form-label">Tingkat Kesulitan</label>
+              <select class="form-select" id="mountainDifficulty" required>
+                <option value="Pemula">Pemula</option>
+                <option value="Menengah">Menengah</option>
+                <option value="Ekstrem">Ekstrem</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="mountainPrice" class="form-label">Harga (Rp)</label>
+              <input type="number" class="form-control" id="mountainPrice" required />
+            </div>
+          </div>
+
+           <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="mountainDuration" class="form-label">Durasi (e.g., 3 Hari 2 Malam)</label>
+              <input type="text" class="form-control" id="mountainDuration" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="mountainHeight" class="form-label">Ketinggian (mdpl)</label>
+              <input type="number" class="form-control" id="mountainHeight" />
+            </div>
+          </div>
+          
+          <div class="mb-3">
+              <label for="mountainGallery" class="form-label">Galeri (URL Gambar, pisahkan dengan koma)</label>
+              <textarea class="form-control" id="mountainGallery" rows="2" placeholder="https://url.com/gambar1.jpg, https://url.com/gambar2.jpg"></textarea>
+          </div>
+          
+          <div class="mb-3">
+              <label for="mountainReviews" class="form-label">Ulasan (Format: Nama;Rating;Teks Ulasan)</label>
+              <textarea class="form-control" id="mountainReviews" rows="4" placeholder="Ahmad;5;Sangat memuaskan!&#10;Sari;4;Pemandangan indah."></textarea>
+              <small class="text-muted">Setiap ulasan dipisahkan dengan baris baru.</small>
+          </div>
+
+          <div class="mb-3">
+            <label for="mountainImage" class="form-label">Gambar Utama</label>
+            <input type="file" class="form-control" id="mountainImage" accept="image/jpeg,image/png" />
+          </div>
+
+          <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script>
+  let mountains = JSON.parse(localStorage.getItem('mountains')) || [];
+
+  function saveToLocal() {
+    localStorage.setItem('mountains', JSON.stringify(mountains));
+  }
+
+  function toBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  }
+
+  function renderTable() {
+    const list = document.getElementById('mountainList');
+    list.innerHTML = '';
+    mountains.forEach((mountain, i) => {
+      const imageSrc = mountain.image || 'https://via.placeholder.com/100x100?text=No+Image';
+      list.innerHTML += `
+        <tr>
+          <td><small>${mountain.id}</small></td>
+          <td><img src="${imageSrc}" alt="${mountain.name}" class="mountain-image"></td>
+          <td>${mountain.name}</td>
+          <td>${mountain.location}</td>
+          <td>Rp ${mountain.price.toLocaleString('id-ID')}</td>
+          <td>
+            <button class="btn btn-sm btn-warning me-1" onclick="editMountain(${i})"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-sm btn-danger" onclick="deleteMountain(${i})"><i class="bi bi-trash"></i></button>
+          </td>
+        </tr>`;
+    });
+  }
+
+  document.getElementById('mountainForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const name = document.getElementById('mountainName').value.trim();
+    const description = document.getElementById('mountainDescription').value.trim();
+    const location = document.getElementById('mountainLocation').value.trim();
+    const difficulty = document.getElementById('mountainDifficulty').value;
+    const price = parseInt(document.getElementById('mountainPrice').value);
+    const duration = document.getElementById('mountainDuration').value.trim();
+    const height = parseInt(document.getElementById('mountainHeight').value);
+    const gallery = document.getElementById('mountainGallery').value.trim();
+    const reviewsRaw = document.getElementById('mountainReviews').value.trim();
+    
+    const index = document.getElementById('mountainIndex').value;
+    const imageInput = document.getElementById('mountainImage');
+    let image = (index !== '' && mountains[index]) ? mountains[index].image : '';
+
+    if (!name || !location || !price) {
+      Swal.fire({ icon: 'error', title: 'Error', text: 'Please fill in all required fields.' });
+      return;
+    }
+
+    if (imageInput.files && imageInput.files[0]) {
+      const file = imageInput.files[0];
+      if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+        Swal.fire({ icon: 'error', title: 'Error', text: 'Please upload a JPG or PNG image.' });
+        return;
+      }
+      image = await toBase64(file);
+    }
+    // Parse reviews: setiap baris = Nama;Rating;Komentar
+    let reviews = [];
+    if (reviewsRaw) {
+      reviews = reviewsRaw.split('\n').map(line => {
+        const [name, rating, comment] = line.split(';').map(s => s.trim());
+        return {
+          name: name || 'Anonim',
+          rating: parseInt(rating) || 5,
+          comment: comment || ''
+        };
+      });
+    }
+    
+    const isUpdating = index !== '';
+    let mountainData;
+    const baseData = { name, description, location, difficulty, price, image, duration, height, gallery, reviews };
+
+    if (isUpdating) {
+        mountainData = { ...mountains[index], ...baseData };
+        mountains[index] = mountainData;
+    } else {
+        const newIdNumber = mountains.length > 0 ? Math.max(...mountains.map(m => parseInt(m.id, 10))) + 1 : 1;
+        const newIdString = String(newIdNumber).padStart(2, '0');
+        mountainData = { id: newIdString, ...baseData };
+        mountains.push(mountainData);
+    }
+
+    saveToLocal();
+    renderTable();
+
+    document.getElementById('mountainForm').reset();
+    document.getElementById('mountainIndex').value = '';
+    const modal = bootstrap.Modal.getInstance(document.getElementById('addMountainModal'));
+    if(modal) modal.hide();
+
+    Swal.fire({ icon: 'success', title: 'Success', text: `Mountain ${isUpdating ? 'updated' : 'added'} successfully!` });
+  });
+
+  function editMountain(index) {
+    const mountain = mountains[index];
+    document.getElementById('mountainName').value = mountain.name;
+    document.getElementById('mountainDescription').value = mountain.description || '';
+    document.getElementById('mountainLocation').value = mountain.location;
+    document.getElementById('mountainDifficulty').value = mountain.difficulty;
+    document.getElementById('mountainPrice').value = mountain.price;
+    document.getElementById('mountainDuration').value = mountain.duration || '';
+    document.getElementById('mountainHeight').value = mountain.height || '';
+    document.getElementById('mountainGallery').value = mountain.gallery || '';
+    document.getElementById('mountainReviews').value = mountain.reviews || '';
+    document.getElementById('mountainIndex').value = index;
+    new bootstrap.Modal(document.getElementById('addMountainModal')).show();
+
+    let reviewsStr = '';
+    if (Array.isArray(mountain.reviews)) {
+      reviewsStr = mountain.reviews.map(r => `${r.name};${r.rating};${r.comment}`).join('\n');
+    } else if (typeof mountain.reviews === 'string') {
+      reviewsStr = mountain.reviews;
+    }
+    document.getElementById('mountainReviews').value = reviewsStr;
+  }
+
+
+  function deleteMountain(index) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won’t be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        mountains.splice(index, 1);
+        saveToLocal();
+        renderTable();
+        Swal.fire('Deleted!', 'Mountain deleted successfully!', 'success');
+      }
+    });
+  }
+
+  document.getElementById('sidebarToggle').addEventListener('click', function() {
+    document.querySelector('.sidebar').classList.toggle('active');
+    document.getElementById('sidebarOverlay').classList.toggle('active');
+  });
+
+  document.getElementById('sidebarOverlay').addEventListener('click', function() {
+     document.querySelector('.sidebar').classList.remove('active');
+     this.classList.remove('active');
+  });
+
+  renderTable();
+</script>
+</body>
+</html>

@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Keranjang Belanja - PorterIn</title>
+  <meta name="description" content="Keranjang belanja PorterIn - Periksa dan kelola pesanan pendakian gunung Anda">
+  <meta name="keywords" content="keranjang belanja, checkout, porter, pendakian gunung, porterin">
+
+  <!-- Favicons -->
+  <link href="assets/img/icon-lagi1.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <style>
+    /* Custom styles for cart page */
+    :root {
+      --accent-color: #009961;
+      --secondary-color: #4a7c59;
+      --tertiary-color: #ff6b35;
+    }
+
+    .page-title {
+      background: linear-gradient(rgba(0, 153, 97, 0.8), rgba(74, 124, 89, 0.8)), url('/placeholder.svg?height=400&width=1200&text=Keranjang+Belanja');
+      background-size: cover;
+      background-position: center;
+      padding: 120px 0 80px 0;
+      color: white;
+    }
+
+    .cart-container {
+      padding: 60px 0;
+      background-color: #f8f9fa;
+    }
+
+    .cart-item {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .cart-item:hover {
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .cart-item-image {
+      width: 100px;
+      height: 100px;
+      border-radius: 10px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quantity-btn {
+      width: 35px;
+      height: 35px;
+      border: 2px solid var(--accent-color);
+      background: white;
+      color: var(--accent-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: bold;
+    }
+
+    .quantity-btn:hover {
+      background: var(--accent-color);
+      color: white;
+    }
+
+    .quantity-display {
+      min-width: 40px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .remove-btn {
+      background: none;
+      border: none;
+      color: #dc3545;
+      font-size: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .remove-btn:hover {
+      color: #c82333;
+      transform: scale(1.2);
+    }
+
+    .order-summary {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 100px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .summary-row:last-child {
+      border-bottom: none;
+      font-weight: 600;
+      font-size: 18px;
+      color: var(--accent-color);
+    }
+
+    .btn-checkout {
+      background: var(--accent-color);
+      border: none;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 16px;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+
+    .btn-checkout:hover {
+      background: var(--secondary-color);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .btn-continue {
+      background: transparent;
+      border: 2px solid var(--accent-color);
+      color: var(--accent-color);
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-continue:hover {
+      background: var(--accent-color);
+      color: white;
+    }
+
+    .empty-cart {
+      text-align: center;
+      padding: 60px 20px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .empty-cart-icon {
+      font-size: 80px;
+      color: #ddd;
+      margin-bottom: 20px;
+    }
+
+    .promo-section {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .promo-input {
+      border: 2px solid #e9ecef;
+      border-radius: 10px;
+      padding: 12px 15px;
+      font-size: 14px;
+    }
+
+    .promo-input:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 0.2rem rgba(0, 153, 97, 0.25);
+    }
+
+    .btn-promo {
+      background: var(--accent-color);
+      border: none;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .payment-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .payment-method {
+      width: 60px;
+      height: 40px;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      transition: all 0.3s ease;
+    }
+
+    .payment-method:hover {
+      border-color: var(--accent-color);
+    }
+
+    .security-info {
+      background: #e8f5e8;
+      border: 1px solid #c3e6c3;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 20px;
+    }
+
+    .breadcrumbs {
+      margin-top: 20px;
+    }
+
+    .breadcrumbs ol {
+      display: flex;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .breadcrumbs ol li {
+      margin-right: 10px;
+    }
+
+    .breadcrumbs ol li:last-child:after {
+      content: "";
+    }
+
+    .breadcrumbs ol li a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+    }
+
+    .breadcrumbs ol li a:hover {
+      color: white;
+    }
+
+    .recommended-section {
+      background: white;
+      padding: 20px 0;
+      margin-bottom: 20px;
+    }
+
+    .recommended-item {
+      display: inline-block;
+      background: white;
+      border-radius: 10px;
+      padding: 10px;
+      border: 1px solid #e9ecef;
+      width: 200px;
+      margin-right: 15px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .recommended-item:hover {
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+
+    .recommended-image {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      background-size: cover;
+      background-position: center;
+      margin: 0 auto 10px;
+    }
+
+    .btn-add-recommended {
+      background: var(--accent-color);
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-size: 10px;
+      font-weight: 600;
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .cart-item {
+        padding: 15px;
+      }
+      
+      .cart-item-image {
+        width: 80px;
+        height: 80px;
+      }
+      
+      .order-summary {
+        position: static;
+        margin-top: 30px;
+      }
+      
+      .quantity-controls {
+        justify-content: center;
+        margin: 10px 0;
+      }
+
+      .recommended-item {
+        width: 150px;
+        margin-right: 10px;
+      }
+    }
+
+    .mountain-notification {
+      position: fixed;
+      top: -150px;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      transition: top 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      margin: 0 auto;
+      width: 90%;
+      max-width: 500px;
+      opacity: 0;
+    }
+
+    .mountain-notification.show {
+      top: 90px;
+      opacity: 1;
+    }
+
+    .mountain-notification .notification-content {
+      display: flex;
+      align-items: center;
+      padding: 20px 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .mountain-notification.success .notification-content {
+      background: linear-gradient(135deg, #2ecc71, #27ae60);
+      color: white;
+    }
+
+    .mountain-notification.error .notification-content {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      color: white;
+    }
+
+    .mountain-notification.warning .notification-content {
+      background: linear-gradient(135deg, #f39c12, #e67e22);
+      color: white;
+    }
+
+    .mountain-notification.info .notification-content {
+      background: linear-gradient(135deg, #3498db, #2980b9);
+      color: white;
+    }
+
+    .mountain-notification.promo .notification-content {
+      background: linear-gradient(135deg, #9b59b6, #8e44ad);
+      color: white;
+    }
+
+    .mountain-notification .notification-content::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='rgba(255,255,255,0.15)' d='M0,224L60,213.3C120,203,240,181,360,181.3C480,181,600,203,720,213.3C840,224,960,224,1080,208C1200,192,1320,160,1380,144L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+      background-size: cover;
+      opacity: 0.4;
+      z-index: 0;
+    }
+
+    .mountain-notification .notification-content::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='rgba(255,255,255,0.05)' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.1;
+      z-index: 0;
+    }
+
+    .mountain-notification .notification-icon {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      margin-right: 20px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .mountain-notification .notification-icon i {
+      font-size: 24px;
+      animation: iconPulse 2s infinite;
+    }
+
+    @keyframes iconPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .mountain-notification .notification-text {
+      flex: 1;
+      z-index: 1;
+      position: relative;
+    }
+
+    .mountain-notification .notification-text h5 {
+      margin: 0 0 8px;
+      font-weight: 700;
+      font-size: 18px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .mountain-notification .notification-text p {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.95;
+      line-height: 1.4;
+    }
+
+    .mountain-notification .notification-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 8px;
+      opacity: 0.8;
+      transition: all 0.3s ease;
+      z-index: 1;
+      position: relative;
+      border-radius: 50%;
+    }
+
+    .mountain-notification .notification-close:hover {
+      opacity: 1;
+      background: rgba(255,255,255,0.2);
+      transform: rotate(90deg);
+    }
+
+    @keyframes slideInBounce {
+      0% {
+        transform: translateY(-100px) scale(0.8);
+        opacity: 0;
+      }
+      60% {
+        transform: translateY(10px) scale(1.05);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideOutUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) scale(0.8);
+        opacity: 0;
+      }
+    }
+
+    .mountain-notification.show .notification-content {
+      animation: slideInBounce 0.6s ease-out;
+    }
+
+    .mountain-notification.hide .notification-content {
+      animation: slideOutUp 0.4s ease-in;
+    }
+
+    .quantity-btn.animate {
+      animation: quantityPulse 0.3s ease;
+    }
+
+    @keyframes quantityPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); background: var(--accent-color); color: white; }
+      100% { transform: scale(1); }
+    }
+
+    .promo-success {
+      animation: promoGlow 1s ease-out;
+    }
+
+    @keyframes promoGlow {
+      0% { box-shadow: 0 0 0 rgba(46, 204, 113, 0); }
+      50% { box-shadow: 0 0 20px rgba(46, 204, 113, 0.6); }
+      100% { box-shadow: 0 0 0 rgba(46, 204, 113, 0); }
+    }
+  </style>
+</head>
+
+<body class="cart-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+        <h1 class="sitename">PorterIn</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu order-3 order-xl-2">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li class="dropdown"><a href="#"><span>Produk</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="katalog-gunung.html">Katalog Gunung</a></li>
+              <li><a href="katalog-porter.html">Porter</a></li>
+              <li><a href="katalog-gear.html">Sewa Gear Pendakian</a></li>
+              <li><a href="#">Simulasi Pendakian</a></li>
+            </ul>
+          </li>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="index.html#history">History</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+    </div>
+  </header>
+
+  <div id="mountain-notification" class="mountain-notification">
+    <div class="notification-content">
+      <div class="notification-icon">
+        <i id="notification-icon" class="bi bi-check-circle-fill"></i>
+      </div>
+      <div class="notification-text">
+        <h5 id="notification-title">Berhasil!</h5>
+        <p id="notification-message">Aksi berhasil dilakukan!</p>
+      </div>
+      <button id="notification-close" class="notification-close">
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+  </div>
+
+  <main class="main">
+
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/img/gunung.jpg);">
+      <div class="container position-relative">
+        <h1>Keranjang Belanja</h1>
+        <p>Periksa kembali pesanan Anda sebelum melanjutkan ke pembayaran. Pastikan semua detail sudah sesuai dengan kebutuhan pendakian Anda.</p>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="katalog-gunung.html">Katalog Gunung</a></li>
+            <li class="current">Keranjang Belanja</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <section class="cart-container">
+      <div class="container">
+        <div class="row">
+          
+          <div class="col-lg-8" data-aos="fade-up" data-aos-delay="100">
+            
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h3>Item dalam Keranjang (0)</h3>
+              <a href="katalog-gunung.html" class="btn-continue">
+                <i class="bi bi-arrow-left"></i> Lanjut Belanja
+              </a>
+            </div>
+
+            <div class="empty-cart" data-aos="fade-up" data-aos-delay="200">
+              <div class="empty-cart-icon">
+                <i class="bi bi-bag-x"></i>
+              </div>
+              <h3>Keranjang Belanja Kosong</h3>
+              <p class="text-muted mb-4">Sepertinya Anda belum menambahkan item apapun ke keranjang belanja.</p>
+              <a href="katalog-gunung.html" class="btn-checkout">Mulai Belanja</a>
+            </div>
+
+            <div class="promo-section" data-aos="fade-up" data-aos-delay="500">
+              <h6 class="mb-3"><i class="bi bi-tag"></i> Kode Promo</h6>
+              <div class="row">
+                <div class="col-md-8">
+                  <input type="text" class="form-control promo-input" placeholder="Masukkan kode promo" id="promoCode">
+                </div>
+                <div class="col-md-4">
+                  <button class="btn btn-promo w-100" onclick="applyPromo()">Terapkan</button>
+                </div>
+              </div>
+              <small class="text-muted mt-2 d-block">Gunakan kode PENDAKI20 untuk diskon 20%</small>
+            </div>
+
+            <div class="recommended-section" data-aos="fade-up" data-aos-delay="600">
+              <h5 class="mb-3">Rekomendasi untuk Anda</h5>
+              <div class="recommended-items">
+                <div class="recommended-item">
+                  <div class="recommended-image" style="background-image: url('/placeholder.svg?height=60&width=60&text=Headlamp');"></div>
+                  <h6 class="mb-1">Headlamp LED Rechargeable</h6>
+                  <p class="text-muted mb-1">Rp 75.000 / 2 hari</p>
+                  <div class="text-warning mb-2">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star"></i>
+                    <small>(4.0)</small>
+                  </div>
+                  <button class="btn-add-recommended" onclick="addToCart('Headlamp LED Rechargeable', 75000, 'url(/placeholder.svg?height=100&width=100&text=Headlamp)')">+ Tambah ke Keranjang</button>
+                </div>
+                <div class="recommended-item">
+                  <div class="recommended-image" style="background-image: url('/placeholder.svg?height=60&width=60&text=Jaket');"></div>
+                  <h6 class="mb-1">Jaket Gunung Windproof</h6>
+                  <p class="text-muted mb-1">Rp 120.000 / 2 hari</p>
+                  <div class="text-warning mb-2">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-half"></i>
+                    <small>(4.5)</small>
+                  </div>
+                  <button class="btn-add-recommended" onclick="addToCart('Jaket Gunung Windproof', 120000, 'url(/placeholder.svg?height=100&width=100&text=Jaket)')">+ Tambah ke Keranjang</button>
+                </div>
+                <div class="recommended-item">
+                  <div class="recommended-image" style="background-image: url('/placeholder.svg?height=60&width=60&text=Sepatu');"></div>
+                  <h6 class="mb-1">Sepatu Hiking Waterproof</h6>
+                  <p class="text-muted mb-1">Rp 150.000 / 2 hari</p>
+                  <div class="text-warning mb-2">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <small>(5.0)</small>
+                  </div>
+                  <button class="btn-add-recommended" onclick="addToCart('Sepatu Hiking Waterproof', 150000, 'url(/placeholder.svg?height=100&width=100&text=Sepatu)')">+ Tambah ke Keranjang</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="700">
+            
+            <div class="order-summary">
+              <h4 class="mb-4"><i class="bi bi-receipt"></i> Ringkasan Pesanan</h4>
+              
+              <div class="summary-row">
+                <span>Subtotal</span>
+                <span id="subtotal-amount">Rp 0</span>
+              </div>
+              
+              <div class="summary-row">
+                <span>Biaya Admin</span>
+                <span>Rp 15.000</span>
+              </div>
+              
+              <div class="summary-row">
+                <span>Asuransi Perjalanan</span>
+                <span>Rp 25.000</span>
+              </div>
+              
+              <div class="summary-row" id="discount-row" style="display: none;">
+                <span class="text-success">Diskon (PENDAKI20)</span>
+                <span class="text-success" id="discount-amount">-Rp 0</span>
+              </div>
+              
+              <hr>
+              
+              <div class="summary-row">
+                <span><strong>Total Pembayaran</strong></span>
+                <span><strong id="total-amount">Rp 40.000</strong></span>
+              </div>
+              
+              <button class="btn-checkout mt-4" onclick="proceedToCheckout()">
+                <i class="bi bi-credit-card"></i> Lanjut ke Pembayaran
+              </button>
+              
+              <div class="mt-4">
+                <h6 class="mb-3">Metode Pembayaran</h6>
+                <div class="payment-methods">
+                  <div class="payment-method" title="BCA">
+                    <img src="/placeholder.svg?height=25&width=40&text=BCA" alt="BCA" style="max-width: 100%; max-height: 100%;">
+                  </div>
+                  <div class="payment-method" title="Mandiri">
+                    <img src="/placeholder.svg?height=25&width=40&text=MDR" alt="Mandiri" style="max-width: 100%; max-height: 100%;">
+                  </div>
+                  <div class="payment-method" title="BRI">
+                    <img src="/placeholder.svg?height=25&width=40&text=BRI" alt="BRI" style="max-width: 100%; max-height: 100%;">
+                  </div>
+                  <div class="payment-method" title="OVO">
+                    <img src="/placeholder.svg?height=25&width=40&text=OVO" alt="OVO" style="max-width: 100%; max-height: 100%;">
+                  </div>
+                  <div class="payment-method" title="GoPay">
+                    <img src="/placeholder.svg?height=25&width=40&text=GPY" alt="GoPay" style="max-width: 100%; max-height: 100%;">
+                  </div>
+                  <div class="payment-method" title="DANA">
+                    <img src="/placeholder.svg?height=25&width=40&text=DNA" alt="DANA" style="max-width: 100%; max-height: 100%;">
+                  </div>
+                </div>
+              </div>
+              
+              <div class="security-info">
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-shield-check text-success me-2 fs-5"></i>
+                  <div>
+                    <small class="fw-bold">Transaksi Aman</small>
+                    <br><small class="text-muted">Dilindungi enkripsi SSL 256-bit</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="footer" class="footer dark-background">
+    <div class="container">
+      <h3 class="sitename">PorterIn</h3>
+      <p>Platform terpercaya untuk petualangan pendakian gunung di Indonesia. Wujudkan impian mendaki Anda bersama kami.</p>
+      <div class="social-links d-flex justify-content-center">
+        <a href=""><i class="bi bi-twitter-x"></i></a>
+        <a href=""><i class="bi bi-facebook"></i></a>
+        <a href=""><i class="bi bi-instagram"></i></a>
+        <a href=""><i class="bi bi-youtube"></i></a>
+        <a href=""><i class="bi bi-linkedin"></i></a>
+      </div>
+      <div class="container">
+        <div class="copyright">
+          <span>Copyright</span> <strong class="px-1 sitename">PorterIn</strong> <span>All Rights Reserved</span>
+        </div>
+        <div class="credits">
+          Designed with <i class="bi bi-heart-fill text-danger"></i> for Mountain Lovers
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <div id="preloader"></div>
+
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <script src="assets/js/main.js"></script>
+
+  <script>
+    let cartItems = [];
+    let notificationTimeout;
+    let cartCount = 0;
+    let subtotal = 0;
+    let adminFee = 15000;
+    let insurance = 25000;
+    let discount = 0;
+    let isPromoApplied = false;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Load cart from localStorage and check URL parameters
+      loadCartFromLocalStorage();
+      checkURLParameters();
+      renderCartItems();
+      updateCartCount();
+      updateTotal();
+      document.getElementById('notification-close').addEventListener('click', hideNotification);
+    });
+
+    function loadCartFromLocalStorage() {
+      cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+      cartCount = parseInt(localStorage.getItem('cartCount') || '0');
+      subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      document.getElementById('subtotal-amount').textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+    }
+
+    function saveCartToLocalStorage() {
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      localStorage.setItem('cartCount', cartCount);
+    }
+
+    function checkURLParameters() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const itemName = urlParams.get('itemName');
+      const price = urlParams.get('price');
+      const image = urlParams.get('image');
+
+      if (itemName && price && image) {
+        addToCart(itemName, parseInt(price), image);
+        // Redirect to clean URL after adding
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    }
+
+    function renderCartItems() {
+      const cartContainer = document.querySelector('.col-lg-8');
+      const emptyCart = document.querySelector('.empty-cart');
+      const orderSummary = document.querySelector('.order-summary');
+      const subtotalRow = document.querySelector('.order-summary .summary-row:first-child');
+
+      if (cartItems.length === 0) {
+        if (!emptyCart) showEmptyCart();
+        return;
+      }
+
+      if (emptyCart) emptyCart.remove();
+
+      cartItems.forEach(item => {
+        const existingItem = document.querySelector(`.cart-item[data-item-id="${item.id}"]`);
+        if (!existingItem) {
+          const newCartItem = document.createElement('div');
+          newCartItem.className = 'cart-item';
+          newCartItem.setAttribute('data-item-id', item.id);
+          newCartItem.setAttribute('data-aos', 'fade-up');
+          newCartItem.setAttribute('data-aos-delay', '200');
+          newCartItem.innerHTML = `
+            <div class="row align-items-center">
+              <div class="col-md-2 col-4">
+                <div class="cart-item-image" style="background-image: ${item.image};"></div>
+              </div>
+              <div class="col-md-4 col-8">
+                <h5 class="mb-1">${item.name}</h5>
+                <p class="text-muted mb-1"><i class="bi bi-box2"></i> ${item.category || 'Sewa Peralatan'}</p>
+                <div class="mb-2">
+                  <span class="badge bg-success">Tersedia</span>
+                </div>
+                <small class="text-success"><i class="bi bi-check-circle"></i> Tersedia</small>
+              </div>
+              <div class="col-md-2 col-6">
+                <div class="quantity-controls">
+                  <button class="quantity-btn" onclick="decreaseQuantity(${item.id})">-</button>
+                  <span class="quantity-display" id="qty-${item.id}">${item.quantity}</span>
+                  <button class="quantity-btn" onclick="increaseQuantity(${item.id})">+</button>
+                </div>
+              </div>
+              <div class="col-md-2 col-4">
+                <div class="text-center">
+                  <strong class="text-success">Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</strong>
+                  <br><small class="text-muted">${item.duration || '2 hari'}</small>
+                </div>
+              </div>
+              <div class="col-md-2 col-2">
+                <button class="remove-btn" onclick="removeItem(${item.id})" title="Hapus item">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>
+          `;
+          cartContainer.insertBefore(newCartItem, document.querySelector('.promo-section'));
+
+          const newSummaryRow = document.createElement('div');
+          newSummaryRow.className = 'summary-row';
+          newSummaryRow.innerHTML = `
+            <span>${item.name} (${item.quantity}x)</span>
+            <span>Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</span>
+          `;
+          orderSummary.insertBefore(newSummaryRow, subtotalRow);
+        }
+      });
+    }
+
+    function showMountainNotification(type, title, message, duration = 4000) {
+      const notification = document.getElementById('mountain-notification');
+      const notificationTitle = document.getElementById('notification-title');
+      const notificationMessage = document.getElementById('notification-message');
+      const notificationIcon = document.getElementById('notification-icon');
+      
+      if (notificationTimeout) clearTimeout(notificationTimeout);
+      
+      notification.className = 'mountain-notification';
+      notificationTitle.textContent = title;
+      notificationMessage.textContent = message;
+      
+      switch(type) {
+        case 'success': notificationIcon.className = 'bi bi-check-circle-fill'; notification.classList.add('success'); break;
+        case 'error': notificationIcon.className = 'bi bi-x-circle'; notification.classList.add('error'); break;
+        case 'warning': notificationIcon.className = 'bi bi-exclamation-triangle-fill'; notification.classList.add('warning'); break;
+        case 'info': notificationIcon.className = 'bi bi-info-circle'; notification.classList.add('info'); break;
+        case 'promo': notificationIcon.className = 'bi bi-gift-fill'; notification.classList.add('promo'); break;
+      }
+      
+      notification.classList.add('show');
+      notificationTimeout = setTimeout(() => hideNotification(), duration);
+    }
+
+    function hideNotification() {
+      const notification = document.getElementById('mountain-notification');
+      notification.classList.remove('show');
+      notification.classList.add('hide');
+      setTimeout(() => notification.classList.remove('hide'), 400);
+    }
+
+    function increaseQuantity(itemId) {
+      const qtyElement = document.getElementById(`qty-${itemId}`);
+      const button = event.currentTarget;
+      const item = cartItems.find(item => item.id === itemId);
+      
+      if (item) {
+        item.quantity += 1;
+        qtyElement.textContent = item.quantity;
+        subtotal += item.price;
+        
+        const summaryRows = document.querySelectorAll('.order-summary .summary-row');
+        summaryRows.forEach(row => {
+          if (row.querySelector('span:first-child').textContent.includes(item.name)) {
+            row.querySelector('span:first-child').textContent = `${item.name} (${item.quantity}x)`;
+            row.querySelector('span:last-child').textContent = `Rp ${(item.price * item.quantity).toLocaleString('id-ID')}`;
+          }
+        });
+
+        const itemElement = document.querySelector(`.cart-item[data-item-id="${itemId}"]`);
+        itemElement.querySelector('.text-success').textContent = `Rp ${(item.price * item.quantity).toLocaleString('id-ID')}`;
+        
+        document.getElementById('subtotal-amount').textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+        saveCartToLocalStorage();
+        updateTotal();
+        button.classList.add('animate');
+        setTimeout(() => button.classList.remove('animate'), 300);
+        showMountainNotification('success', 'Quantity Updated!', `${item.name} quantity increased to ${item.quantity}`, 2000);
+      }
+    }
+
+    function decreaseQuantity(itemId) {
+      const qtyElement = document.getElementById(`qty-${itemId}`);
+      const button = event.currentTarget;
+      const item = cartItems.find(item => item.id === itemId);
+      
+      if (item && item.quantity > 1) {
+        item.quantity -= 1;
+        qtyElement.textContent = item.quantity;
+        subtotal -= item.price;
+        
+        const summaryRows = document.querySelectorAll('.order-summary .summary-row');
+        summaryRows.forEach(row => {
+          if (row.querySelector('span:first-child').textContent.includes(item.name)) {
+            row.querySelector('span:first-child').textContent = `${item.name} (${item.quantity}x)`;
+            row.querySelector('span:last-child').textContent = `Rp ${(item.price * item.quantity).toLocaleString('id-ID')}`;
+          }
+        });
+
+        const itemElement = document.querySelector(`.cart-item[data-item-id="${itemId}"]`);
+        itemElement.querySelector('.text-success').textContent = `Rp ${(item.price * item.quantity).toLocaleString('id-ID')}`;
+        
+        document.getElementById('subtotal-amount').textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+        saveCartToLocalStorage();
+        updateTotal();
+        button.classList.add('animate');
+        setTimeout(() => button.classList.remove('animate'), 300);
+        showMountainNotification('info', 'Quantity Updated!', `${item.name} quantity decreased to ${item.quantity}`, 2000);
+      } else {
+        showMountainNotification('warning', 'Minimum Quantity!', 'Quantity cannot be less than 1', 2000);
+      }
+    }
+
+    function removeItem(itemId) {
+      const itemElement = document.querySelector(`.cart-item[data-item-id="${itemId}"]`);
+      if (!itemElement) return;
+
+      const item = cartItems.find(item => item.id === itemId);
+      if (item) {
+        subtotal -= (item.price * item.quantity);
+        cartItems = cartItems.filter(i => i.id !== itemId);
+        cartCount--;
+        
+        const summaryRows = document.querySelectorAll('.order-summary .summary-row');
+        summaryRows.forEach(row => {
+          if (row.querySelector('span:first-child').textContent.includes(item.name)) {
+            row.remove();
+          }
+        });
+        
+        itemElement.style.transition = 'all 0.5s ease';
+        itemElement.style.transform = 'translateX(-100%)';
+        itemElement.style.opacity = '0';
+        
+        setTimeout(() => {
+          itemElement.remove();
+          document.getElementById('subtotal-amount').textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+          saveCartToLocalStorage();
+          updateCartCount();
+          updateTotal();
+          showMountainNotification('error', 'Item Dihapus!', `${item.name} telah dihapus dari keranjang Anda`, 3000);
+          if (cartCount === 0) showEmptyCart();
+        }, 500);
+      }
+    }
+
+    function addToCart(itemName, price, image, category = 'Sewa Peralatan', duration = '2 hari') {
+      const existingItem = cartItems.find(item => item.name === itemName);
+      if (existingItem) {
+        increaseQuantity(existingItem.id);
+        saveCartToLocalStorage();
+        return;
+      }
+
+      cartCount++;
+      subtotal += price;
+      const newItem = {
+        id: Date.now(),
+        name: itemName,
+        price: price,
+        quantity: 1,
+        image: image,
+        category: category,
+        duration: duration
+      };
+      cartItems.push(newItem);
+      
+      const emptyCart = document.querySelector('.empty-cart');
+      if (emptyCart) emptyCart.remove();
+      
+      const cartContainer = document.querySelector('.col-lg-8');
+      const newCartItem = document.createElement('div');
+      newCartItem.className = 'cart-item';
+      newCartItem.setAttribute('data-item-id', newItem.id);
+      newCartItem.setAttribute('data-aos', 'fade-up');
+      newCartItem.setAttribute('data-aos-delay', '200');
+      newCartItem.innerHTML = `
+        <div class="row align-items-center">
+          <div class="col-md-2 col-4">
+            <div class="cart-item-image" style="background-image: ${image};"></div>
+          </div>
+          <div class="col-md-4 col-8">
+            <h5 class="mb-1">${itemName}</h5>
+            <p class="text-muted mb-1"><i class="bi bi-box2"></i> ${category}</p>
+            <div class="mb-2">
+              <span class="badge bg-success">Tersedia</span>
+            </div>
+            <small class="text-success"><i class="bi bi-check-circle"></i> Tersedia</small>
+          </div>
+          <div class="col-md-2 col-6">
+            <div class="quantity-controls">
+              <button class="quantity-btn" onclick="decreaseQuantity(${newItem.id})">-</button>
+              <span class="quantity-display" id="qty-${newItem.id}">1</span>
+              <button class="quantity-btn" onclick="increaseQuantity(${newItem.id})">+</button>
+            </div>
+          </div>
+          <div class="col-md-2 col-4">
+            <div class="text-center">
+              <strong class="text-success">Rp ${price.toLocaleString('id-ID')}</strong>
+              <br><small class="text-muted">${duration}</small>
+            </div>
+          </div>
+          <div class="col-md-2 col-2">
+            <button class="remove-btn" onclick="removeItem(${newItem.id})" title="Hapus item">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+        </div>
+      `;
+      cartContainer.insertBefore(newCartItem, document.querySelector('.promo-section'));
+      
+      const orderSummary = document.querySelector('.order-summary');
+      const subtotalRow = document.querySelector('.order-summary .summary-row:first-child');
+      const newSummaryRow = document.createElement('div');
+      newSummaryRow.className = 'summary-row';
+      newSummaryRow.innerHTML = `
+        <span>${itemName} (1x)</span>
+        <span>Rp ${price.toLocaleString('id-ID')}</span>
+      `;
+      orderSummary.insertBefore(newSummaryRow, subtotalRow);
+      
+      document.getElementById('subtotal-amount').textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+      saveCartToLocalStorage();
+      updateTotal();
+      updateCartCount();
+      showMountainNotification('success', 'Item Ditambahkan!', `${itemName} telah ditambahkan ke keranjang Anda seharga Rp ${price.toLocaleString('id-ID')}`, 3000);
+    }
+
+    function applyPromo() {
+      const promoCode = document.getElementById('promoCode').value.toUpperCase();
+      const discountRow = document.getElementById('discount-row');
+      const discountAmount = document.getElementById('discount-amount');
+      const promoInput = document.getElementById('promoCode');
+      
+      if (promoCode === 'PENDAKI20' && !isPromoApplied) {
+        discount = Math.floor(subtotal * 0.2);
+        isPromoApplied = true;
+        discountRow.style.display = 'flex';
+        discountAmount.textContent = `-Rp ${discount.toLocaleString('id-ID')}`;
+        
+        promoInput.parentElement.parentElement.parentElement.classList.add('promo-success');
+        setTimeout(() => promoInput.parentElement.parentElement.parentElement.classList.remove('promo-success'), 1000);
+        
+        promoInput.disabled = true;
+        updateTotal();
+        showMountainNotification('promo', 'Promo Applied!', `Congratulations! You saved Rp ${discount.toLocaleString('id-ID')} with PENDAKI20`, 5000);
+      } else if (isPromoApplied) {
+        showMountainNotification('warning', 'Promo Already Applied!', 'You have already used this promo code', 3000);
+      } else {
+        showMountainNotification('error', 'Invalid Promo Code!', 'Please check your promo code and try again', 3000);
+      }
+    }
+
+    function updateTotal() {
+      const total = subtotal + adminFee + insurance - discount;
+      document.getElementById('total-amount').textContent = `Rp ${total.toLocaleString('id-ID')}`;
+    }
+
+    function updateCartCount() {
+      const cartHeader = document.querySelector('.col-lg-8 h3');
+      if (cartHeader) cartHeader.textContent = `Item dalam Keranjang (${cartCount})`;
+    }
+
+    function proceedToCheckout() {
+      if (cartCount === 0) {
+        showMountainNotification('warning', 'Empty Cart!', 'Please add items to your cart before proceeding to checkout', 3000);
+        return;
+      }
+      
+      showMountainNotification('info', 'Checkout', 'Redirecting to payment page...', 2000);
+      setTimeout(() => {
+        alert('Mengarahkan ke halaman pembayaran...\n\nTotal: ' + document.getElementById('total-amount').textContent);
+      }, 2000);
+    }
+
+    function showEmptyCart() {
+      const cartContainer = document.querySelector('.col-lg-8');
+      const existingEmptyCart = document.querySelector('.empty-cart');
+      if (!existingEmptyCart) {
+        const emptyCart = document.createElement('div');
+        emptyCart.className = 'empty-cart';
+        emptyCart.setAttribute('data-aos', 'fade-up');
+        emptyCart.setAttribute('data-aos-delay', '200');
+        emptyCart.innerHTML = `
+          <div class="empty-cart-icon">
+            <i class="bi bi-bag-x"></i>
+          </div>
+          <h3>Keranjang Belanja Kosong</h3>
+          <p class="text-muted mb-4">Sepertinya Anda belum menambahkan item apapun ke keranjang belanja.</p>
+          <a href="katalog-gunung.html" class="btn-checkout">Mulai Belanja</a>
+        `;
+        cartContainer.insertBefore(emptyCart, document.querySelector('.promo-section'));
+      }
+    }
+
+    function toggleWishlist(event) {
+      event.preventDefault();
+      showMountainNotification('info', 'Coming Soon!', 'Fitur wishlist akan segera hadir!', 3000);
+    }
+  </script>
+
+</body>
+
+</html>

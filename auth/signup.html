@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - PorterIn</title>
+  <!-- KnightOne Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Montserrat:300,400,700" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Boxicons -->
+  <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../css/signup.css">
+  <style>
+    body {
+      font-family: 'Montserrat', 'Open Sans', sans-serif;
+      background: linear-gradient(135deg, #4a7c59 0%, #47b2e4 100%);
+      min-height: 100vh;
+    }
+
+    .signup-section {
+      min-height: 100vh;
+    }
+
+    .knightone-card {
+      border-radius: 1rem;
+      background: #fff;
+      border: none;
+    }
+
+    .knightone-title {
+      color: #37517e;
+      font-weight: 700;
+    }
+
+    .knightone-btn {
+      background: #47b2e4;
+      border: none;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .knightone-btn:hover {
+      background: #37517e;
+      color: #fff;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      color: #37517e;
+    }
+
+    #signupMessage {
+      font-size: 1rem;
+    }
+
+    .signin-link {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .signin-link a {
+      color: #47b2e4;
+      text-decoration: none;
+    }
+
+    .signin-link a:hover {
+      text-decoration: underline;
+      color: #37517e;
+    }
+  </style>
+</head>
+<body>
+  <section class="signup-section d-flex align-items-center justify-content-center">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+          <div class="card shadow knightone-card">
+            <div class="card-body">
+              <h3 class="text-center knightone-title mb-4">Sign Up</h3>
+              <form id="signupForm">
+                <div class="form-group">
+                  <label for="username"><i class="bx bx-user"></i> Username</label>
+                  <input type="text" class="form-control" id="username" placeholder="Enter username" required>
+                </div>
+                <div class="form-group">
+                  <label for="email"><i class="bx bx-envelope"></i> Email</label>
+                  <input type="email" class="form-control" id="email" placeholder="Enter email" required>
+                </div>
+                <div class="form-group">
+                  <label for="password"><i class="bx bx-lock"></i> Password</label>
+                  <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+                </div>
+                <div class="form-group">
+                  <label for="confirmPassword"><i class="bx bx-lock"></i> Confirm Password</label>
+                  <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block knightone-btn">Sign Up</button>
+              </form>
+              <div id="signupMessage" class="mt-3 text-center"></div>
+              <div class="signin-link">
+                Already have an account? <a href="signin.html">Sign in</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom JS -->
+  <script src="../js/signup.js"></script>
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const messageDiv = document.getElementById('signupMessage');
+
+      if (password !== confirmPassword) {
+        messageDiv.textContent = "Passwords do not match!";
+        messageDiv.style.color = "red";
+        return;
+      }
+
+      // Load existing users from localStorage
+      let users = JSON.parse(localStorage.getItem('users')) || [];
+      // Check if username or email already exists
+      if (users.some(user => user.username === username || user.email === email)) {
+        messageDiv.textContent = "Username or email already exists!";
+        messageDiv.style.color = "red";
+        return;
+      }
+
+      // Add new user
+      const newUser = { username, email, password };
+      users.push(newUser);
+      localStorage.setItem('users', JSON.stringify(users));
+
+      // Trigger custom event for dashboard activity log
+      window.dispatchEvent(new CustomEvent('userCreated', { detail: { username } }));
+
+      // Success message and redirect to sign-in
+      messageDiv.textContent = "Sign up successful! Redirecting to sign in...";
+      messageDiv.style.color = "green";
+      setTimeout(() => {
+        window.location.href = 'signin.html';
+      }, 2000); // Redirect after 2 seconds
+    });
+  </script>
+</body>
+</html>

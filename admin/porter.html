@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Porters - PorterIn Admin</title>
+
+  <!-- Favicons -->
+  <link href="../assets/img/icon-lagi1.png" rel="icon">
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- SweetAlert2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+    }
+    .sidebar {
+      width: 240px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background-color: #212529;
+      padding-top: 60px;
+      transition: all 0.3s;
+      z-index: 1100;
+      overflow-x: hidden;
+    }
+    .sidebar a {
+      display: block;
+      padding: 12px 20px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+    .sidebar a.active, .sidebar a:hover {
+      background-color: #343a40;
+    }
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 240px;
+      right: 0;
+      height: 60px;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      border-bottom: 1px solid #dee2e6;
+      z-index: 1000;
+      transition: all 0.3s;
+    }
+    .main-content {
+      margin-left: 240px;
+      padding: 80px 20px 20px;
+      transition: all 0.3s;
+    }
+    .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+    .modal .form-control, .modal .form-select {
+      border-radius: 0.5rem;
+    }
+    .porter-image {
+      max-width: 50px;
+      max-height: 50px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1050;
+      transition: all 0.3s;
+    }
+    .overlay.active {
+      display: block;
+    }
+    @media (max-width: 768px) {
+        .sidebar {
+          width: 0;
+          left: 0;
+          overflow: hidden;
+          padding-top: 60px;
+          transition: width 0.3s;
+        }
+        .sidebar.active {
+          width: 200px;
+          overflow: visible;
+        }
+        .main-content {
+          margin-left: 0;
+        }
+        .topbar {
+          left: 0;
+        }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <a href="/admin/dashboard.html"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+  <a href="/admin/users.html"><i class="bi bi-people me-2"></i>Users</a>
+  <a href="#" data-bs-toggle="collapse" data-bs-target="#productsSubmenu"><i class="bi bi-box-seam me-2"></i>Products</a>
+  <div class="collapse ps-3 show" id="productsSubmenu">
+    <a href="mountains.html">Mountains</a>
+    <a href="/admin/porter.html" class="active">Porters</a>
+    <a href="gears.html">Gears</a>
+    <a href="simulations.html">Simulations</a>
+  </div>
+  <a href="/admin/articles.html"><i class="bi bi-newspaper me-2"></i>Articles</a>
+  <a href="orders.html"><i class="bi bi-cart3 me-2"></i>Orders</a>
+  <a href="/index.html"><i class="bi bi-box-arrow-left me-2"></i>Logout</a>
+</div>
+
+<!-- Overlay -->
+<div class="overlay" id="sidebarOverlay"></div>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="d-flex align-items-center">
+    <button class="btn btn-dark d-md-none" id="sidebarToggle">
+      <i class="bi bi-list"></i>
+    </button>
+    <div class="brand ms-2 fw-bold">PorterIn Admin</div>
+  </div>
+  <div class="d-flex align-items-center">
+    <img src="https://placehold.co/40x40/212529/FFFFFF?text=A" class="rounded-circle me-2" alt="Admin"/>
+    <span>Admin</span>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3>Manage Porters</h3>
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPorterModal"><i class="bi bi-plus-lg"></i> Add Porter</button>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover" id="porterTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Photo</th>
+                <th>Name</th>
+                <th>Specialty</th>
+                <th>Skills</th>
+                <th>Rating</th>
+                <th>Price/Day</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="porterList">
+              <!-- Porter rows will be added via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Add/Edit -->
+<div class="modal fade" id="addPorterModal" tabindex="-1" aria-labelledby="addPorterModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addPorterModalLabel">Add/Edit Porter</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="porterForm">
+          <input type="hidden" id="porterIndex" />
+          <div class="mb-3">
+            <label for="porterName" class="form-label">Name</label>
+            <input type="text" class="form-control" id="porterName" required />
+          </div>
+           <div class="mb-3">
+              <label for="porterDescription" class="form-label">Description</label>
+              <textarea class="form-control" id="porterDescription" rows="3" placeholder="Deskripsi singkat tentang porter..."></textarea>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="porterExperience" class="form-label">Experience (years)</label>
+              <input type="number" class="form-control" id="porterExperience" required />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="porterRating" class="form-label">Rating (1-5)</label>
+              <input type="number" class="form-control" id="porterRating" step="0.1" min="1" max="5" required />
+            </div>
+          </div>
+          <div class="row">
+              <div class="col-md-6 mb-3">
+                 <label for="porterPrice" class="form-label">Price/Day (Rp)</label>
+                 <input type="number" class="form-control" id="porterPrice" required />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="porterCondition" class="form-label">Physical Condition</label>
+                <select class="form-select" id="porterCondition" required>
+                  <option value="">Choose...</option>
+                  <option value="Fit">Fit</option>
+                  <option value="Cukup">Cukup</option>
+                  <option value="Kurang Fit">Kurang Fit</option>
+                </select>
+            </div>
+          </div>
+           <div class="row">
+              <div class="col-md-6 mb-3">
+                 <label for="porterTotalTrips" class="form-label">Total Trips</label>
+                 <input type="number" class="form-control" id="porterTotalTrips" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="porterSuccessRate" class="form-label">Success Rate (%)</label>
+                <input type="number" class="form-control" id="porterSuccessRate" max="100" />
+            </div>
+          </div>
+          <div class="mb-3">
+              <label for="porterSpecialty" class="form-label">Spesialisasi Utama</label>
+              <input type="text" class="form-control" id="porterSpecialty" placeholder="e.g., Gunung Semeru, Jalur Rinjani" required />
+          </div>
+          <div class="mb-3">
+              <label for="porterSkills" class="form-label">Keterampilan (Pisahkan dengan koma)</label>
+              <textarea class="form-control" id="porterSkills" rows="3" placeholder="e.g., Memasak, P3K, Fotografi"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="porterPhoto" class="form-label">Photo</label>
+            <input type="file" class="form-control" id="porterPhoto" accept="image/jpeg,image/png" />
+            <small class="text-muted">Hanya JPG dan PNG diperbolehkan.</small>
+          </div>
+          <div class="mb-3">
+            <label for="porterTestimonials" class="form-label">Testimoni (Satu per baris: Nama;Rating;Komentar)</label>
+            <textarea class="form-control" id="porterTestimonials" rows="3" placeholder="Contoh: Budi;5;Porter sangat membantu"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="porterBookedDates" class="form-label">Tanggal Booking (pisahkan dengan koma, format: YYYY-MM-DD)</label>
+            <input type="text" class="form-control" id="porterBookedDates" placeholder="Contoh: 2024-07-01,2024-07-02">
+            <small class="text-muted">Tanggal-tanggal ini akan dianggap sudah dibooking dan tidak tersedia.</small>
+          </div>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script>
+  let porters = JSON.parse(localStorage.getItem('porters')) || [
+    { id: 1672531200000, name: 'John Doe', experience: 5, specialty: 'High Altitude', photo: '', condition: 'Fit', description: 'Deskripsi untuk John Doe.', skills: 'P3K, Navigasi', totalTrips: 150, successRate: 98, rating: 4.8, price: 350000, location: 'Malang, Jawa Timur'},
+    { id: 1672531200001, name: 'Jane Smith', experience: 3, specialty: 'Trail Guide', photo: '', condition: 'Cukup', description: 'Deskripsi untuk Jane Smith.', skills: 'Memasak, Fotografi', totalTrips: 80, successRate: 99, rating: 4.5, price: 275000, location: 'Lombok, NTB'},
+    { id: 1672531200002, name: 'Ali Bin', experience: 7, specialty: 'Rescue', photo: '', condition: 'Fit', description: 'Deskripsi untuk Ali Bin.', skills: 'Rescue, P3K, Survival', totalTrips: 200, successRate: 100, rating: 5.0, price: 400000, location: 'Lumajang, Jawa Timur' }
+  ];
+
+  function saveToLocal() {
+    localStorage.setItem('porters', JSON.stringify(porters));
+  }
+
+  function toBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  }
+
+  function renderTable() {
+    const list = document.getElementById('porterList');
+    list.innerHTML = '';
+    porters.forEach((porter, i) => {
+      const photo = porter.photo || 'https://placehold.co/50x50/cccccc/ffffff?text=NP';
+      list.innerHTML += `
+        <tr>
+          <td><small>${porter.id}</small></td>
+          <td><img src="${photo}" alt="${porter.name}" class="porter-image" /></td>
+          <td>${porter.name}</td>
+          <td>${porter.specialty || 'N/A'}</td>
+          <td>${porter.skills || 'N/A'}</td>
+          <td><i class="bi bi-star-fill text-warning"></i> ${porter.rating || 'N/A'}</td>
+          <td>Rp ${(porter.price || 0).toLocaleString('id-ID')}</td>
+          <td>
+            <button class="btn btn-sm btn-warning me-1" onclick="editPorter(${i})"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-sm btn-danger" onclick="deletePorter(${i})"><i class="bi bi-trash"></i></button>
+          </td>
+        </tr>`;
+    });
+  }
+
+  document.getElementById('porterForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const name = document.getElementById('porterName').value.trim();
+    const description = document.getElementById('porterDescription').value.trim();
+    const experience = parseInt(document.getElementById('porterExperience').value);
+    const rating = parseFloat(document.getElementById('porterRating').value);
+    const price = parseInt(document.getElementById('porterPrice').value);
+    const condition = document.getElementById('porterCondition').value;
+    const specialty = document.getElementById('porterSpecialty').value.trim();
+    const skills = document.getElementById('porterSkills').value.trim();
+    const totalTrips = parseInt(document.getElementById('porterTotalTrips').value) || 0;
+    const successRate = parseInt(document.getElementById('porterSuccessRate').value) || 0;
+    const testimonialsRaw = document.getElementById('porterTestimonials').value.trim();
+    let testimonials = [];
+    if (testimonialsRaw) {
+      testimonials = testimonialsRaw.split('\n').map(line => {
+        const [name, rating, comment] = line.split(';').map(s => s.trim());
+        return {
+          name: name || 'Anonim',
+          rating: parseInt(rating) || 5,
+          comment: comment || ''
+        };
+      });
+    }
+    const bookedDatesRaw = document.getElementById('porterBookedDates').value.trim();
+    let bookedDates = [];
+    if (bookedDatesRaw) {
+      bookedDates = bookedDatesRaw.split(',').map(d => d.trim()).filter(d => d);
+    }
+    
+    const index = document.getElementById('porterIndex').value;
+    const photoInput = document.getElementById('porterPhoto');
+    let photo = (index !== '' && porters[index]) ? porters[index].photo : '';
+
+    if (!name || !experience || !rating || !price || !condition || !specialty) {
+      Swal.fire('Error', 'Mohon lengkapi semua kolom.', 'error');
+      return;
+    }
+
+    if (photoInput.files && photoInput.files[0]) {
+      const file = photoInput.files[0];
+      if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+        Swal.fire('Error', 'Hanya gambar JPG dan PNG yang diperbolehkan.', 'error');
+        return;
+      }
+      photo = await toBase64(file);
+    }
+
+    const isUpdating = index !== '';
+    let porterData;
+    
+    const baseData = { name, description, experience, rating, price, condition, specialty, skills, photo, totalTrips, successRate, testimonials, bookedDates };
+
+    if(isUpdating) {
+        porterData = { ...porters[index], ...baseData };
+        porters[index] = porterData;
+    } else {
+        porterData = { id: Date.now(), ...baseData };
+        porters.push(porterData);
+    }
+    
+    saveToLocal();
+    renderTable();
+    document.getElementById('porterForm').reset();
+    document.getElementById('porterIndex').value = '';
+    
+    const modalElement = document.getElementById('addPorterModal');
+    const modal = bootstrap.Modal.getInstance(modalElement);
+    if(modal) {
+        modal.hide();
+    }
+
+    modalElement.addEventListener('hidden.bs.modal', () => {
+      Swal.fire({
+          icon: 'success',
+          title: 'Sukses!',
+          text: `Porter berhasil ${isUpdating ? 'diperbarui' : 'ditambahkan'}!`,
+          timer: 1500,
+          showConfirmButton: false
+      });
+    }, { once: true });
+  });
+
+  function editPorter(index) {
+    const porter = porters[index];
+    document.getElementById('porterName').value = porter.name;
+    document.getElementById('porterDescription').value = porter.description || '';
+    document.getElementById('porterExperience').value = porter.experience;
+    document.getElementById('porterRating').value = porter.rating;
+    document.getElementById('porterPrice').value = porter.price;
+    document.getElementById('porterCondition').value = porter.condition;
+    document.getElementById('porterSpecialty').value = porter.specialty;
+    document.getElementById('porterSkills').value = porter.skills || '';
+    document.getElementById('porterTotalTrips').value = porter.totalTrips || 0;
+    document.getElementById('porterSuccessRate').value = porter.successRate || 0;
+    let testimonialsStr = '';
+    if (Array.isArray(porter.testimonials)) {
+      testimonialsStr = porter.testimonials.map(t => `${t.name};${t.rating};${t.comment}`).join('\n');
+    }
+    document.getElementById('porterTestimonials').value = testimonialsStr;
+    document.getElementById('porterBookedDates').value = (porter.bookedDates || []).join(',');
+    document.getElementById('porterIndex').value = index;
+    new bootstrap.Modal(document.getElementById('addPorterModal')).show();
+  }
+
+  function deletePorter(index) {
+    Swal.fire({
+      title: 'Anda yakin?',
+      text: "Data yang dihapus tidak dapat dikembalikan!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Ya, hapus!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        porters.splice(index, 1);
+        saveToLocal();
+        renderTable();
+        Swal.fire('Dihapus!', 'Data porter telah dihapus.', 'success');
+      }
+    });
+  }
+  
+  document.getElementById('sidebarToggle').addEventListener('click', function() {
+    document.querySelector('.sidebar').classList.toggle('active');
+    document.getElementById('sidebarOverlay').classList.toggle('active');
+  });
+
+  document.getElementById('sidebarOverlay').addEventListener('click', function() {
+     document.querySelector('.sidebar').classList.remove('active');
+     this.classList.remove('active');
+  });
+
+  renderTable();
+</script>
+</body>
+</html>

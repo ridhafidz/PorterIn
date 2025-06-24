@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Katalog Gunung - PorterIn</title>
+  <meta name="description" content="Katalog lengkap paket pendakian gunung dan wisata alam terbaik di Indonesia bersama PorterIn">
+  <meta name="keywords" content="katalog gunung, pendakian gunung, porter, bromo, ijen, rinjani, semeru, merapi, indonesia">
+
+  <!-- Favicons -->
+  <link href="assets/img/icon-lagi1.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <style>
+    /* Custom styles for katalog gunung */
+    :root {
+      --accent-color: #009961;
+      --secondary-color: #4a7c59;
+      --tertiary-color: #ff6b35;
+    }
+
+    /* CSS for Wishlist and Cart Icons */
+    .wishlist-icon, .cart-icon {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: all 0.3s ease-in-out;
+      background: transparent;
+    }
+
+    .wishlist-icon:hover, .cart-icon:hover {
+      color: #ffffff;
+      background: var(--accent-color);
+      box-shadow: 0 0 12px 3px rgba(0, 153, 97, 0.4);
+      transform: rotate(8deg) scale(1.2);
+    }
+
+    .wishlist-count, .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--tertiary-color);
+      color: #fff;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transition: all 0.3s ease;
+    }
+
+    .wishlist-icon:hover .wishlist-count,
+    .cart-icon:hover .cart-count {
+      transform: scale(1.3) rotate(10deg);
+      box-shadow: 0 2px 10px rgba(0, 153, 97, 0.6);
+    }
+
+    .page-title {
+      background: linear-gradient(rgba(0, 153, 97, 0.8), rgba(74, 124, 89, 0.8)), url('https://placehold.co/1200x400/2a2a2a/ffffff?text=Katalog+Gunung+Indonesia');
+      background-size: cover;
+      background-position: center;
+      padding: 120px 0 80px 0;
+      color: white;
+    }
+
+    .package-card {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      margin-bottom: 30px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .package-card .card-body {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    .package-card .card-body .d-flex.gap-2 {
+        margin-top: auto; /* Pushes buttons to the bottom */
+    }
+
+
+    .package-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    }
+
+    .package-image {
+      height: 250px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .package-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: var(--tertiary-color);
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .package-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-color);
+    }
+
+    .btn-book {
+      background: var(--accent-color);
+      border: none;
+      color: white;
+      padding: 10px 25px;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-decoration: none; /* Added for <a> tag */
+    }
+
+    .btn-book:hover {
+      background: var(--secondary-color);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .filter-btn {
+      background: white;
+      border: 2px solid var(--accent-color);
+      color: var(--accent-color);
+      padding: 8px 20px;
+      margin: 5px;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--accent-color);
+      color: white;
+    }
+    .difficulty-badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-size: 11px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .difficulty-Pemula { background: #28a745; }
+    .difficulty-Menengah { background: #ffc107; color: #212529;}
+    .difficulty-Ekstrem { background: #dc3545; }
+    
+    .isotope-container .col-12 { text-align: center; font-size: 1.2rem; color: #6c757d;}
+    
+    /* Custom Notification Styles */
+    .custom-notification {
+        position: fixed;
+        top: -150px; /* Start off-screen */
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 15px 25px;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        z-index: 10000;
+        transition: top 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.5s;
+        opacity: 0;
+        min-width: 350px;
+    }
+
+    .custom-notification.show {
+        top: 20px;
+        opacity: 1;
+    }
+
+    .custom-notification .icon {
+        font-size: 24px;
+        margin-right: 15px;
+    }
+    
+    .custom-notification.success {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .custom-notification.info {
+        background-color: #0dcaf0;
+        color: white;
+    }
+  </style>
+</head>
+
+<body class="portfolio-details-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+        <h1 class="sitename">PorterIn</h1>
+      </a>
+
+      <!-- Wishlist & Cart icons -->
+      <div class="d-flex align-items-center order-2 order-xl-3 me-2">
+        <a href="wishlist.html" class="me-2 position-relative wishlist-icon">
+          <i class="bi bi-heart-fill fs-5"></i>
+          <span class="wishlist-count" id="wishlist-count-header">0</span>
+        </a>
+        <a href="cart.html" class="me-2 position-relative cart-icon">
+          <i class="bi bi-bag-check-fill fs-5"></i>
+          <span class="cart-count" id="cart-count-header">0</span>
+        </a>
+      </div>
+
+      <nav id="navmenu" class="navmenu order-3 order-xl-2">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li class="dropdown"><a href="#" class="active"><span>Produk</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="katalog-gunung.html" class="active">Katalog Gunung</a></li>
+              <li><a href="katalog-porter.html">Porter</a></li>
+              <li><a href="katalog-gear.html">Sewa Gear Pendakian</a></li>
+              <li><a href="#">Simulasi Pendakian</a></li>
+            </ul>
+          </li>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="index.html#history">History</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- Notification Element -->
+  <div id="custom-notification" class="custom-notification">
+    <div id="notification-icon" class="icon"></div>
+    <div id="notification-message"></div>
+  </div>
+
+  <main class="main">
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/img/gunung.jpg);">
+      <div class="container position-relative">
+        <h1>Katalog Gunung Indonesia</h1>
+        <p>Temukan paket pendakian terbaik untuk petualangan tak terlupakan di puncak-puncak Indonesia</p>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">Produk</a></li>
+            <li class="current">Katalog Gunung</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    
+    <section class="search-filter-section" style="background: #f8f9fa; padding: 30px 0;">
+      <div class="container">
+        <div class="search-box" data-aos="fade-up" style="max-width: 500px; margin: 0 auto 30px;">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Cari gunung atau destinasi..." id="searchInput" style="border-radius: 25px 0 0 25px; padding: 12px 20px;">
+            <button class="btn btn-outline-secondary" type="button" id="searchBtn" style="border-radius: 0 25px 25px 0;">
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+        </div>
+        <div class="text-center" data-aos="fade-up" data-aos-delay="100">
+          <button class="filter-btn active" data-filter="*">Semua</button>
+          <button class="filter-btn" data-filter=".Pemula">Pemula</button>
+          <button class="filter-btn" data-filter=".Menengah">Menengah</button>
+          <button class="filter-btn" data-filter=".Ekstrem">Ekstrem</button>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section id="packages" class="section">
+      <div class="container">
+        <!-- wadah untuk menampung kartu-kartu yang dibuat secara dinamis -->
+        <div class="row isotope-container" data-aos="fade-up" data-aos-delay="200" id="mountain-package-list">
+          
+          <!-- KONTEN DINAMIS AKAN DIMASUKKAN DI SINI OLEH JAVASCRIPT -->
+
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <footer id="footer" class="footer dark-background">
+    <div class="container">
+      <h3 class="sitename">PorterIn</h3>
+      <p>Platform terpercaya untuk petualangan pendakian gunung di Indonesia. Wujudkan impian mendaki Anda bersama kami.</p>
+      <div class="social-links d-flex justify-content-center">
+        <a href=""><i class="bi bi-twitter-x"></i></a>
+        <a href=""><i class="bi bi-facebook"></i></a>
+        <a href=""><i class="bi bi-instagram"></i></a>
+        <a href=""><i class="bi bi-youtube"></i></a>
+        <a href=""><i class="bi bi-linkedin"></i></a>
+      </div>
+      <div class="container">
+        <div class="copyright">
+          <span>Copyright</span> <strong class="px-1 sitename">PorterIn</strong> <span>All Rights Reserved</span>
+        </div>
+        <div class="credits">
+          Designed with <i class="bi bi-heart-fill text-danger"></i> for Mountain Lovers
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <!-- <script src="assets/js/main.js"></script> -->
+
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- Global Wishlist Logic ---
+        let wishlistItems = JSON.parse(localStorage.getItem('wishlistMountains')) || [];
+
+        function updateWishlist() {
+            localStorage.setItem('wishlistMountains', JSON.stringify(wishlistItems));
+            const wishlistCountHeader = document.getElementById('wishlist-count-header');
+            if(wishlistCountHeader) {
+                wishlistCountHeader.textContent = wishlistItems.length;
+            }
+        }
+
+        window.addToWishlist = function(buttonElement, mountainData) {
+            const icon = buttonElement.querySelector('i');
+            const itemIndex = wishlistItems.findIndex(item => item.id === mountainData.id);
+
+            if (itemIndex === -1) {
+                wishlistItems.push(mountainData);
+                icon.classList.remove('bi-heart');
+                icon.classList.add('bi-heart-fill', 'text-danger');
+                showNotification('success', mountainData.name);
+            } else {
+                wishlistItems.splice(itemIndex, 1);
+                icon.classList.remove('bi-heart-fill', 'text-danger');
+                icon.classList.add('bi-heart');
+                showNotification('info', mountainData.name);
+            }
+            updateWishlist();
+        }
+
+        // --- Main Page Logic ---
+        let iso;
+
+        function renderMountainPackages() {
+            const packageListContainer = document.getElementById('mountain-package-list');
+            const mountains = JSON.parse(localStorage.getItem('mountains')) || [];
+
+            if (mountains.length === 0) {
+                packageListContainer.innerHTML = '<div class="col-12 text-center"><p>Belum ada paket pendakian yang tersedia. Silakan tambahkan melalui halaman admin.</p></div>';
+                return;
+            }
+            
+            packageListContainer.innerHTML = '';
+
+            mountains.forEach(mountain => {
+                if (!mountain.id) {
+                    console.warn("Skipping mountain without ID:", mountain);
+                    return; 
+                }
+
+                const difficultyClass = mountain.difficulty.replace(/\s+/g, '');
+                const imageSrc = mountain.image || `https://placehold.co/600x400/009961/FFFFFF?text=${encodeURIComponent(mountain.name)}`;
+                
+                const formattedPrice = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                }).format(mountain.price);
+                
+                const isInWishlist = wishlistItems.some(item => item.id === mountain.id);
+                const heartIconClass = isInWishlist ? 'bi-heart-fill text-danger' : 'bi-heart';
+                
+                const card = document.createElement('div');
+                card.className = `col-lg-4 col-md-6 isotope-item ${difficultyClass}`;
+                card.setAttribute('data-name', `${mountain.name.toLowerCase()} ${mountain.location.toLowerCase()}`);
+
+                card.innerHTML = `
+                    <div class="package-card">
+                      <div class="package-image" style="background-image: url('${imageSrc}');">
+                        <div class="difficulty-badge difficulty-${difficultyClass}">${mountain.difficulty}</div>
+                        <div class="package-badge">Terbaru</div>
+                      </div>
+                      <div class="card-body p-4">
+                        <h5 class="card-title">${mountain.name}</h5>
+                        <p class="text-muted mb-2"><i class="bi bi-geo-alt"></i> ${mountain.location}</p>
+                        <ul class="list-unstyled mb-3">
+                          <li><i class="bi bi-check-circle text-success"></i> Guide berpengalaman</li>
+                          <li><i class="bi bi-check-circle text-success"></i> Termasuk tiket masuk</li>
+                          <li><i class="bi bi-check-circle text-success"></i> Transportasi lokal</li>
+                        </ul>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                          <div class="package-price">${formattedPrice}</div>
+                          <small class="text-muted">per orang</small>
+                        </div>
+                        <div class="d-flex gap-2">
+                          <a href="detail-gunung.html?id=${mountain.id}" class="btn btn-book flex-grow-1">Lihat Detail</a>
+                          <button class="btn btn-outline-secondary" onclick='window.addToWishlist(this, ${JSON.stringify(mountain).replace(/"/g, "&quot;")})'>
+                            <i class="bi ${heartIconClass}"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                `;
+                packageListContainer.appendChild(card);
+            });
+        }
+
+        function initializePage() {
+            // Inisialisasi AOS
+            if (typeof AOS !== 'undefined') {
+                AOS.init({
+                    duration: 600,
+                    easing: 'ease-in-out',
+                    once: true,
+                    mirror: false
+                });
+            }
+
+            // Hapus Preloader
+            const preloader = document.querySelector('#preloader');
+            if(preloader) {
+                window.addEventListener('load', () => {
+                    preloader.remove();
+                });
+            }
+
+            const grid = document.querySelector('.isotope-container');
+            if (!grid) return;
+            imagesLoaded(grid, function () {
+                iso = new Isotope(grid, {
+                    itemSelector: '.isotope-item',
+                    layoutMode: 'fitRows'
+                });
+
+                const filterButtons = document.querySelectorAll('.filter-btn');
+                filterButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        filterButtons.forEach(btn => btn.classList.remove('active'));
+                        this.classList.add('active');
+                        const filterValue = this.getAttribute('data-filter');
+                        if (iso) iso.arrange({ filter: filterValue });
+                    });
+                });
+                
+                const searchInput = document.getElementById('searchInput');
+                const searchBtn = document.getElementById('searchBtn');
+
+                function performSearch() {
+                    if (!iso) return;
+                    const searchTerm = searchInput.value.toLowerCase().trim();
+                    const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+                    iso.arrange({
+                        filter: function(item) {
+                            const nameMatch = searchTerm ? item.getAttribute('data-name').includes(searchTerm) : true;
+                            const filterMatch = activeFilter === '*' || item.matches(activeFilter);
+                            return nameMatch && filterMatch;
+                        }
+                    });
+                }
+
+                if(searchBtn && searchInput) {
+                    searchBtn.addEventListener('click', performSearch);
+                    searchInput.addEventListener('keyup', performSearch);
+                }
+            });
+        }
+        
+        // Initial Page Load
+        updateWishlist();
+        renderMountainPackages();
+        initializePage();
+    });
+    
+    // --- Global Notification and Helper Functions ---
+    let notificationTimeout;
+    
+    function showNotification(type, message) {
+        const notification = document.getElementById('custom-notification');
+        const iconElement = document.getElementById('notification-icon');
+        const messageElement = document.getElementById('notification-message');
+
+        if (notificationTimeout) {
+            clearTimeout(notificationTimeout);
+        }
+
+        if (type === 'success') {
+            notification.className = 'custom-notification success show';
+            iconElement.innerHTML = '<i class="bi bi-heart-fill"></i>';
+            messageElement.textContent = `${message} ditambahkan ke wishlist!`;
+        } else {
+            notification.className = 'custom-notification info show';
+            iconElement.innerHTML = '<i class="bi bi-trash-fill"></i>';
+            messageElement.textContent = `${message} dihapus dari wishlist.`;
+        }
+        
+        notification.classList.add('show');
+
+        notificationTimeout = setTimeout(() => {
+            notification.classList.remove('show');
+        }, 3000);
+    }
+    
+    function toggleCart(event) { event.preventDefault(); alert('Tampilkan keranjang.'); }
+    function toggleWishlist(event) { event.preventDefault(); alert('Tampilkan wishlist.'); }
+
+   </script>
+
+</body>
+
+</html>

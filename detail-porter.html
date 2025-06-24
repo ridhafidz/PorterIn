@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Detail Porter - PorterIn</title>
+  <meta name="description" content="Detail informasi porter profesional untuk pendakian gunung di Indonesia">
+  <meta name="keywords" content="porter, pendakian gunung, pemandu gunung, jasa porter, gunung indonesia">
+
+  <!-- Favicons -->
+  <link href="assets/img/icon-lagi1.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --accent-color: #009961;
+      --secondary-color: #4a7c59;
+      --tertiary-color: #ff6b35;
+    }
+
+    .wishlist-icon, .cart-icon {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: all 0.3s ease-in-out;
+      background: transparent;
+    }
+
+    .wishlist-icon:hover, .cart-icon:hover {
+      color: #ffffff;
+      background: var(--accent-color);
+      box-shadow: 0 0 12px 3px rgba(0, 153, 97, 0.4);
+      transform: rotate(8deg) scale(1.2);
+    }
+
+    .wishlist-count, .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--tertiary-color);
+      color: #fff;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transition: all 0.3s ease;
+    }
+
+    .wishlist-icon:hover .wishlist-count,
+    .cart-icon:hover .cart-count {
+      transform: scale(1.3) rotate(10deg);
+      box-shadow: 0 2px 10px rgba(0, 153, 97, 0.6);
+    }
+    
+    .page-title {
+      background-size: cover;
+      background-position: center;
+      padding: 120px 0 80px 0;
+      color: white;
+    }
+
+    .porter-detail-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    .porter-image-main {
+      height: 400px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .porter-specialty-badge {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background-color: var(--accent-color);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .porter-status {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 8px 20px;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .status-available {
+      background-color: #d1e7dd;
+      color: #0f5132;
+    }
+
+    .status-busy {
+      background-color: #f8d7da;
+      color: #842029;
+    }
+
+    .porter-rating {
+      color: #ffc107;
+    }
+
+    .porter-rating .bi-star-fill,
+    .porter-rating .bi-star-half,
+    .porter-rating .bi-star {
+      font-size: 16px;
+    }
+
+    .porter-price {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent-color);
+    }
+
+    .porter-condition {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .condition-fit {
+      background-color: #d1e7dd;
+      color: #0f5132;
+    }
+
+    .condition-cukup {
+      background-color: #fff3cd;
+      color: #664d03;
+    }
+
+    .condition-kurang-fit {
+      background-color: #f8d7da;
+      color: #842029;
+    }
+
+    .info-card {
+      background: #f8f9fa;
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 20px;
+      border-left: 5px solid var(--accent-color);
+    }
+
+    .skill-badge {
+      background: var(--accent-color);
+      color: white;
+      padding: 6px 15px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      margin: 5px;
+      display: inline-block;
+    }
+
+    .btn-book-main {
+      background: var(--accent-color);
+      border: none;
+      color: white;
+      padding: 15px 40px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-book-main:hover {
+      background: var(--secondary-color);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .btn-wishlist {
+      background: white;
+      border: 2px solid var(--accent-color);
+      color: var(--accent-color);
+      padding: 15px 30px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-wishlist:hover {
+      background: var(--accent-color);
+      color: white;
+    }
+
+    .btn-wishlist.active {
+      background: var(--tertiary-color);
+      border-color: var(--tertiary-color);
+      color: white;
+    }
+
+    .calendar-container {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .calendar-day {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 2px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .calendar-day.available {
+      background: #d1e7dd;
+      color: #0f5132;
+    }
+
+    .calendar-day.available:hover {
+      background: var(--accent-color);
+      color: white;
+    }
+
+    .calendar-day.busy {
+      background: #f8d7da;
+      color: #842029;
+      cursor: not-allowed;
+    }
+
+    .calendar-day.selected {
+      background: var(--accent-color);
+      color: white;
+    }
+
+    .testimonial-card {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .custom-notification {
+      position: fixed;
+      top: -150px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 15px 25px;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      z-index: 10000;
+      transition: top 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.5s;
+      opacity: 0;
+      min-width: 350px;
+    }
+
+    .custom-notification.show {
+      top: 20px;
+      opacity: 1;
+    }
+
+    .custom-notification .icon {
+      font-size: 24px;
+      margin-right: 15px;
+    }
+    
+    .custom-notification.success {
+      background-color: #28a745;
+      color: white;
+    }
+    
+     .custom-notification.info {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .custom-notification.error {
+      background-color: #ffc107;
+      color: #333;
+    }
+
+    .breadcrumbs {
+      margin-top: 20px;
+    }
+
+    .breadcrumbs ol {
+      display: flex;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .breadcrumbs ol li {
+      margin-right: 10px;
+    }
+
+    .breadcrumbs ol li:last-child:after {
+      content: "";
+    }
+
+    .breadcrumbs ol li a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+    }
+
+    .breadcrumbs ol li a:hover {
+      color: white;
+    }
+
+    .breadcrumbs ol li.current {
+      color: white;
+    }
+  </style>
+</head>
+
+<body class="porter-detail-page">
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+        <h1 class="sitename">PorterIn</h1>
+      </a>
+      <div class="d-flex align-items-center order-2 order-xl-3 me-2">
+        <a href="wishlist.html" class="me-2 position-relative wishlist-icon">
+          <i class="bi bi-heart-fill fs-5"></i>
+          <span class="wishlist-count" id="wishlist-count-header">0</span>
+        </a>
+        <a href="cart.html" class="me-2 position-relative cart-icon">
+          <i class="bi bi-bag-check-fill fs-5"></i>
+          <span class="cart-count" id="cart-count-header">0</span>
+        </a>
+      </div>
+      <nav id="navmenu" class="navmenu order-3 order-xl-2">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li class="dropdown"><a href="#" class="active"><span>Produk</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="katalog-gunung.html">Katalog Gunung</a></li>
+              <li><a href="porter-booking.html" class="active">Porter</a></li>
+              <li><a href="katalog-gear.html">Sewa Gear Pendakian</a></li>
+              <li><a href="#">Simulasi Pendakian</a></li>
+            </ul>
+          </li>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="index.html#history">History</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Notification Element -->
+  <div id="custom-notification" class="custom-notification">
+    <div id="notification-icon" class="icon"></div>
+    <div id="notification-message"></div>
+  </div>
+
+  <main class="main">
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url('/assets/img/seru.jpg');">
+      <div class="container position-relative">
+        <nav class="breadcrumbs">
+          <h1 id="porter-name-title">Detail Porter</h1>
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="katalog-porter.html">Porter</a></li>
+            <li class="current" id="porter-breadcrumb-name">Detail Porter</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container" id="porter-details-container">
+         <div class="row justify-content-center text-center">
+             <div class="col-lg-8">
+                <p>Memuat detail porter...</p>
+             </div>
+         </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer" class="footer dark-background">
+     <div class="container">
+      <h3 class="sitename">PorterIn</h3>
+      <p>Platform terpercaya untuk petualangan pendakian gunung di Indonesia. Wujudkan impian mendaki Anda bersama kami.</p>
+      <div class="social-links d-flex justify-content-center">
+        <a href=""><i class="bi bi-twitter-x"></i></a>
+        <a href=""><i class="bi bi-facebook"></i></a>
+        <a href=""><i class="bi bi-instagram"></i></a>
+        <a href=""><i class="bi bi-youtube"></i></a>
+        <a href=""><i class="bi bi-linkedin"></i></a>
+      </div>
+      <div class="container">
+        <div class="copyright">
+          <span>Copyright</span> <strong class="px-1 sitename">PorterIn</strong> <span>All Rights Reserved</span>
+        </div>
+        <div class="credits">
+          Designed with <i class="bi bi-heart-fill text-danger"></i> for Mountain Lovers
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/js/main.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        const getQueryParam = (param) => new URLSearchParams(window.location.search).get(param);
+        const porterId = parseInt(getQueryParam('id'));
+
+        if (isNaN(porterId)) {
+            renderNotFound(document.getElementById('porter-details-container'), "ID Porter tidak valid di URL.");
+            return;
+        }
+
+        const porters = JSON.parse(localStorage.getItem('porters')) || [];
+        const porter = porters.find(p => p.id === porterId); 
+        
+        const container = document.getElementById('porter-details-container');
+        if (!container) return;
+
+        if (porter) {
+          renderPorterDetails(porter, container);
+          initializeCalendar(porter.price, porter); // tambahkan porter sebagai argumen kedua
+          initializeEventListeners(porter);
+        } else {
+          renderNotFound(container);
+        }
+      } catch (error) {
+        console.error("Gagal memuat detail porter:", error);
+        const container = document.getElementById('porter-details-container');
+        if(container) renderNotFound(container, "Terjadi kesalahan saat memuat data.");
+      }
+    });
+
+    function renderPorterDetails(porter, container) {
+      document.title = `Detail Porter: ${porter.name} - PorterIn`;
+      const pageTitle = document.querySelector('.page-title');
+      if (pageTitle) { // Check if element exists before modifying
+        pageTitle.style.backgroundImage = `url('${porter.photo || 'assets/img/seru.jpg'}')`;
+      }
+      
+      document.getElementById('porter-breadcrumb-name').textContent = porter.name;
+      document.getElementById('porter-name-title').textContent = porter.name;
+
+      const imageSrc = porter.photo || `https://placehold.co/1200x800/cccccc/ffffff?text=${encodeURIComponent(porter.name)}`;
+      const formattedPrice = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(porter.price || 0);
+      const ratingStars = getRatingStars(porter.rating || 0);
+      const conditionClass = getConditionClass(porter.condition);
+      
+      let skillsHTML = '';
+      if (porter.skills && typeof porter.skills === 'string' && porter.skills.trim() !== '') {
+          const skillsArray = porter.skills.split(',').map(s => s.trim()).filter(s => s);
+          skillsHTML = '<div class="info-card" data-aos="fade-up" data-aos-delay="200"><h4><i class="bi bi-gear-wide-connected me-2"></i>Keterampilan</h4>';
+          skillsArray.forEach(skill => {
+              skillsHTML += `<span class="skill-badge">${skill}</span>`;
+          });
+          skillsHTML += '</div>';
+      }
+      
+      let testimonialsHTML = `
+        <div class="info-card" data-aos="fade-up" data-aos-delay="300">
+          <h4><i class="bi bi-chat-quote me-2"></i>Testimoni</h4>
+          <form id="testimonial-form" class="mb-3">
+            <div class="row g-2">
+              <div class="col-md-4">
+                <input type="text" id="testimonial-name" class="form-control" placeholder="Nama Anda" required>
+              </div>
+              <div class="col-md-4">
+                <select id="testimonial-rating" class="form-control" required>
+                  <option value="">Rating</option>
+                  <option value="5">5 - Sangat Baik</option>
+                  <option value="4">4 - Baik</option>
+                  <option value="3">3 - Cukup</option>
+                  <option value="2">2 - Kurang</option>
+                  <option value="1">1 - Buruk</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <input type="file" id="testimonial-avatar" accept="image/*" class="form-control">
+              </div>
+            </div>
+            <textarea id="testimonial-comment" class="form-control mt-2" placeholder="Tulis testimoni Anda..." required></textarea>
+            <button type="submit" class="btn btn-success btn-sm mt-2">
+              <i class="bi bi-send-fill me-1"></i> Kirim Testimoni
+            </button>
+          </form>
+          <div id="testimonials-container">
+              ${
+                Array.isArray(porter.testimonials) && porter.testimonials.length > 0
+                ? porter.testimonials.map(t => `
+                  <div class="testimonial-card d-flex mb-3 align-items-start">
+                    <img src="${t.avatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(t.name || 'User')}" class="review-avatar me-3" alt="${t.name || 'User'}" style="width:48px;height:48px;border-radius:50%;">
+                    <div>
+                      <strong>${t.name || 'Anonim'}</strong>
+                      <div class="porter-rating mb-1">
+                        ${getRatingStars(t.rating || 5)}
+                      </div>
+                      <div class="review-body">
+                        <p class="mb-0">${t.comment || ''}</p>
+                      </div>
+                    </div>
+                  </div>
+                `).join('')
+                : `<p class="text-muted">Belum ada testimoni untuk porter ini.</p>`
+              }
+            </div>
+        </div>
+      `;
+
+      container.innerHTML = `
+      <div class="row">
+          <div class="col-lg-8">
+              <div class="porter-detail-card" data-aos="fade-up">
+                  <div class="porter-image-main" style="background-image: url('${imageSrc}')">
+                      <div class="porter-specialty-badge">${porter.specialty || 'Spesialis'}</div>
+                  </div>
+                  <div class="p-4">
+                      <div class="d-flex justify-content-between align-items-start">
+                          <div>
+                              <h2 class="mb-1">${porter.name}</h2>
+                              <p class="text-muted"><i class="bi bi-geo-alt"></i> ${porter.location || 'N/A'}</p>
+                          </div>
+                           <div class="text-end">
+                              <div class="porter-price">${formattedPrice}</div>
+                              <small class="text-muted">/ hari</small>
+                          </div>
+                      </div>
+                       <div class="porter-rating mb-3">
+                          ${ratingStars}
+                          <span class="ms-2 text-muted" style="font-size: 1rem;">(${porter.rating || 'N/A'})</span>
+                      </div>
+                       <div class="porter-condition ${conditionClass}">
+                          <i class="bi bi-heart-pulse-fill me-1"></i>Kondisi: ${porter.condition || 'N/A'}
+                        </div>
+                        <hr>
+                      <p>${porter.description || 'Tidak ada deskripsi untuk porter ini.'}</p>
+                  </div>
+              </div>
+              ${skillsHTML}
+              ${testimonialsHTML}
+          </div>
+          <div class="col-lg-4">
+            <div class="info-card" data-aos="fade-up" data-aos-delay="100">
+                 <h5><i class="bi bi-graph-up me-2"></i>Statistik Porter</h6>
+                 <ul class="list-unstyled">
+                    <li class="d-flex justify-content-between py-2 border-bottom"><strong>Pengalaman</strong> <span>${porter.experience || 0} tahun</span></li>
+                    <li class="d-flex justify-content-between py-2 border-bottom"><strong>Total Perjalanan</strong> <span>${porter.totalTrips || 'N/A'}</span></li>
+                    <li class="d-flex justify-content-between py-2"><strong>Tingkat Sukses</strong> <span>${porter.successRate || 'N/A'}%</span></li>
+                 </ul>
+            </div>
+              <div class="calendar-container" data-aos="fade-up" data-aos-delay="200">
+                <h5 class="mb-4"><i class="bi bi-calendar-check me-2"></i>Pilih Tanggal</h5>
+                <div class="mb-4">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <button class="btn btn-sm btn-outline-secondary" id="prev-month"><i class="bi bi-chevron-left"></i></button>
+                    <h6 class="mb-0" id="current-month"></h6>
+                    <button class="btn btn-sm btn-outline-secondary" id="next-month"><i class="bi bi-chevron-right"></i></button>
+                  </div>
+                  <div class="row text-center mb-2">
+                    <div class="col"><small class="text-muted">Min</small></div>
+                    <div class="col"><small class="text-muted">Sen</small></div>
+                    <div class="col"><small class="text-muted">Sel</small></div>
+                    <div class="col"><small class="text-muted">Rab</small></div>
+                    <div class="col"><small class="text-muted">Kam</small></div>
+                    <div class="col"><small class="text-muted">Jum</small></div>
+                    <div class="col"><small class="text-muted">Sab</small></div>
+                  </div>
+                  <div id="calendar-grid" class="d-flex flex-wrap"></div>
+                </div>
+                <div class="mb-4" id="selected-date-info" style="display: none;">
+                  <div class="alert alert-success"><i class="bi bi-check-circle me-2"></i><strong>Tanggal dipilih:</strong> <span id="selected-date"></span></div>
+                </div>
+                <div class="mb-4">
+                  <label class="form-label">Durasi Pendakian</label>
+                  <select class="form-select" id="duration-select">
+                    <option value="1">1 Hari</option>
+                    <option value="2">2 Hari</option>
+                    <option value="3">3 Hari</option>
+                  </select>
+                </div>
+                <div class="mb-4">
+                  <div class="d-flex justify-content-between"><span>Harga per hari:</span> <span id="price-per-day"></span></div>
+                  <div class="d-flex justify-content-between"><span>Durasi:</span> <span id="duration-display">1 hari</span></div>
+                  <hr>
+                  <div class="d-flex justify-content-between"><strong>Total:</strong> <strong id="total-price"></strong></div>
+                </div>
+                <div class="d-grid gap-2">
+                  <button class="btn-book-main w-100" id="book-porter-btn"><i class="bi bi-calendar-plus me-2"></i>Pesan Porter</button>
+                  <button class="btn-wishlist w-100" id="wishlist-btn"><i class="bi bi-heart me-2"></i>Tambah ke Wishlist</button>
+                </div>
+              </div>
+          </div>
+      </div>
+      `;
+    }
+
+    function renderNotFound(container, message = "Maaf, kami tidak dapat menemukan detail untuk porter yang Anda cari.") {
+      container.innerHTML = `
+        <div class="row justify-content-center text-center">
+           <div class="col-lg-8">
+              <h3>Porter Tidak Ditemukan</h3>
+              <p>${message} Silakan kembali ke halaman katalog.</p>
+              <a href="katalog-porter.html" class="btn-book-main">Kembali ke Katalog</a>
+           </div>
+       </div>`;
+    }
+    
+    function getRatingStars(rating) {
+        let starsHTML = '';
+        const fullStars = Math.floor(rating);
+        const halfStar = rating % 1 !== 0;
+        const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+        for(let i = 0; i < fullStars; i++) { starsHTML += '<i class="bi bi-star-fill"></i>'; }
+        if(halfStar) { starsHTML += '<i class="bi bi-star-half"></i>'; }
+        for(let i = 0; i < emptyStars; i++) { starsHTML += '<i class="bi bi-star"></i>'; }
+        return starsHTML;
+    }
+
+    function getConditionClass(condition) {
+        if (!condition) return 'condition-cukup';
+        return `condition-${condition.toLowerCase().replace(/\s+/g, '-')}`;
+    }
+
+    function initializeCalendar(pricePerDay, porter) {
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth();
+        let currentYear = currentDate.getFullYear();
+        const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+
+        // Ambil tanggal booking dari porter
+        const bookedDates = Array.isArray(porter.bookedDates) ? porter.bookedDates : [];
+
+        function generateCalendar(month, year) {
+            const grid = document.getElementById('calendar-grid');
+            const monthLabel = document.getElementById('current-month');
+            if(!grid || !monthLabel) return;
+
+            grid.innerHTML = '';
+            monthLabel.textContent = `${monthNames[month]} ${year}`;
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const today = new Date();
+            today.setHours(0,0,0,0);
+
+            for (let i = 0; i < firstDay; i++) {
+                grid.innerHTML += '<div class="calendar-day"></div>';
+            }
+
+            for (let date = 1; date <= daysInMonth; date++) {
+                const cellDate = new Date(year, month, date);
+                cellDate.setHours(0,0,0,0);
+                const dateStr = cellDate.toISOString().split('T')[0];
+                const isPast = cellDate < today;
+                const isBooked = bookedDates.includes(dateStr);
+                let dayClass = '';
+                let clickable = '';
+
+                if (isPast) {
+                    dayClass = 'busy';
+                } else if (isBooked) {
+                    dayClass = 'busy';
+                } else {
+                    dayClass = 'available';
+                    clickable = `onclick="window.selectDate(${date}, ${month}, ${year})"`;
+                }
+
+                grid.innerHTML += `<div class="calendar-day ${dayClass}" data-date="${dateStr}" ${clickable}>${date}</div>`;
+            }
+        }
+
+        document.getElementById('prev-month').addEventListener('click', () => {
+            currentMonth--;
+            if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+            generateCalendar(currentMonth, currentYear);
+        });
+
+        document.getElementById('next-month').addEventListener('click', () => {
+            currentMonth++;
+            if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+            generateCalendar(currentMonth, currentYear);
+        });
+        
+        generateCalendar(currentMonth, currentYear);
+        updatePrice(pricePerDay);
+    }
+    
+    function updatePrice(pricePerDay) {
+      const durationSelect = document.getElementById('duration-select');
+      if (!durationSelect) return;
+      const duration = parseInt(durationSelect.value);
+      const totalPrice = (pricePerDay || 0) * duration;
+      document.getElementById('price-per-day').textContent = `Rp ${(pricePerDay || 0).toLocaleString('id-ID')}`;
+      document.getElementById('duration-display').textContent = `${duration} hari`;
+      document.getElementById('total-price').textContent = `Rp ${totalPrice.toLocaleString('id-ID')}`;
+    }
+    
+    function initializeEventListeners(porter) {
+        document.getElementById('duration-select').addEventListener('change', () => updatePrice(porter.price));
+
+        document.getElementById('book-porter-btn').addEventListener('click', () => {
+            const selectedDateEl = document.querySelector('.calendar-day.selected');
+            if (!selectedDateEl) {
+                showNotification('error', 'Silakan pilih tanggal terlebih dahulu');
+                return;
+            }
+            const selectedDate = selectedDateEl.getAttribute('data-date');
+            // Simpan ke bookedDates
+            const porters = JSON.parse(localStorage.getItem('porters')) || [];
+            const idx = porters.findIndex(p => p.id === porter.id);
+            if (idx !== -1) {
+                if (!Array.isArray(porters[idx].bookedDates)) porters[idx].bookedDates = [];
+                if (!porters[idx].bookedDates.includes(selectedDate)) {
+                    porters[idx].bookedDates.push(selectedDate);
+                    localStorage.setItem('porters', JSON.stringify(porters));
+                }
+            }
+            showNotification('success', `Booking untuk ${porter.name} berhasil!`);
+
+            // Tambahkan ke keranjang
+            let cart = JSON.parse(localStorage.getItem('cartPorters')) || [];
+            // Cek apakah sudah ada di cart dengan tanggal yang sama
+            const alreadyInCart = cart.some(item => item.id === porter.id && item.date === selectedDate);
+            if (!alreadyInCart) {
+                cart.push({
+                    id: porter.id,
+                    name: porter.name,
+                    photo: porter.photo,
+                    price: porter.price,
+                    date: selectedDate,
+                    duration: parseInt(document.getElementById('duration-select').value) || 1
+                });
+                localStorage.setItem('cartPorters', JSON.stringify(cart));
+                updateCartCount();
+                showNotification('success', `${porter.name} ditambahkan ke keranjang!`);
+            } else {
+                showNotification('info', `${porter.name} sudah ada di keranjang untuk tanggal tersebut.`);
+            }
+
+            // Refresh kalender
+            renderPorterDetails(porters[idx], document.getElementById('porter-details-container'));
+        });
+
+        const wishlistBtn = document.getElementById('wishlist-btn');
+        if (wishlistBtn) {
+            wishlistBtn.onclick = () => toggleWishlist(porter);
+        }
+        
+        updateWishlistStatus(porter);
+      setTimeout(() => {
+        const testimonialForm = document.getElementById('testimonial-form');
+        if (testimonialForm) {
+          testimonialForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const name = document.getElementById('testimonial-name').value.trim() || 'Anonim';
+            const rating = parseInt(document.getElementById('testimonial-rating').value) || 5;
+            const comment = document.getElementById('testimonial-comment').value.trim();
+            const avatarInput = document.getElementById('testimonial-avatar');
+            let avatar = '';
+            if (avatarInput && avatarInput.files && avatarInput.files[0]) {
+              avatar = await toBase64(avatarInput.files[0]);
+            }
+            const newTesti = { name, rating, comment, avatar };
+            // Simpan ke localStorage
+            const porters = JSON.parse(localStorage.getItem('porters')) || [];
+            const idx = porters.findIndex(p => p.id === porter.id);
+            if (idx !== -1) {
+              if (!Array.isArray(porters[idx].testimonials)) porters[idx].testimonials = [];
+              porters[idx].testimonials.push(newTesti);
+              localStorage.setItem('porters', JSON.stringify(porters));
+              showNotification('success', 'Testimoni berhasil ditambahkan!');
+              renderPorterDetails(porters[idx], document.getElementById('porter-details-container'));
+              // Re-initialize form event
+              setTimeout(() => { initializeTestimonialForm(porters[idx]); }, 100);
+            }
+          });
+        }
+      }, 100);
+    }
+    
+    window.selectDate = (day, month, year) => {
+        document.querySelectorAll('.calendar-day.selected').forEach(el => el.classList.remove('selected'));
+        event.target.classList.add('selected');
+        const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+        document.getElementById('selected-date').textContent = `${day} ${monthNames[month]} ${year}`;
+        document.getElementById('selected-date-info').style.display = 'block';
+    };
+
+    function toggleWishlist(porter) {
+        let wishlist = JSON.parse(localStorage.getItem('wishlistPorters')) || [];
+        const itemIndex = wishlist.findIndex(item => item.id === porter.id);
+
+        if (itemIndex === -1) {
+            wishlist.push({
+                id: porter.id,
+                name: porter.name,
+                photo: porter.photo,
+                price: porter.price,
+                rating: porter.rating,
+                // tambahkan properti lain jika perlu
+            });
+            showNotification('success', `${porter.name} ditambahkan ke wishlist!`);
+        } else {
+            wishlist.splice(itemIndex, 1);
+            showNotification('info', `${porter.name} dihapus dari wishlist.`);
+        }
+
+        localStorage.setItem('wishlistPorters', JSON.stringify(wishlist));
+        updateWishlistStatus(porter);
+        updateWishlistCount();
+    }
+    
+    function updateWishlistStatus(porter) {
+        const wishlist = JSON.parse(localStorage.getItem('wishlistPorters')) || [];
+        const isInWishlist = wishlist.some(item => item.id === porter.id);
+        const wishlistBtn = document.getElementById('wishlist-btn');
+        if(!wishlistBtn) return;
+        const icon = wishlistBtn.querySelector('i');
+
+        if(isInWishlist) {
+            wishlistBtn.classList.add('active');
+            icon.classList.remove('bi-heart');
+            icon.classList.add('bi-heart-fill');
+            wishlistBtn.childNodes[1].nodeValue = " Hapus dari Wishlist";
+        } else {
+            wishlistBtn.classList.remove('active');
+            icon.classList.remove('bi-heart-fill');
+            icon.classList.add('bi-heart');
+            wishlistBtn.childNodes[1].nodeValue = " Tambah ke Wishlist";
+        }
+    }
+
+    function updateWishlistCount() {
+        const wishlist = JSON.parse(localStorage.getItem('wishlistPorters')) || [];
+        document.getElementById('wishlist-count-header').textContent = wishlist.length;
+    }
+
+    function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem('cartPorters')) || [];
+        document.getElementById('cart-count-header').textContent = cart.length;
+    }
+
+    let notificationTimeout;
+    function showNotification(type, message) {
+        const notification = document.getElementById('custom-notification');
+        const iconElement = document.getElementById('notification-icon');
+        const messageElement = document.getElementById('notification-message');
+        if(!notification || !iconElement || !messageElement) return;
+
+        if (notificationTimeout) clearTimeout(notificationTimeout);
+
+        notification.className = `custom-notification ${type} show`;
+        if (type === 'success') iconElement.innerHTML = '<i class="bi bi-check-circle-fill"></i>';
+        else if (type === 'error') iconElement.innerHTML = '<i class="bi bi-exclamation-triangle-fill"></i>';
+        else iconElement.innerHTML = '<i class="bi bi-info-circle-fill"></i>';
+        
+        messageElement.textContent = message;
+        
+        notificationTimeout = setTimeout(() => {
+            notification.classList.remove('show');
+        }, 4000);
+    }
+
+    function toBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Initial load
+    updateWishlistCount();
+    updateCartCount();
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Wishlist - PorterIn</title>
+  <meta name="description" content="Wishlist PorterIn - Simpan dan kelola produk favorit pendakian gunung Anda">
+  <meta name="keywords" content="wishlist, favorit, porter, pendakian gunung, porterin">
+
+  <!-- Favicons -->
+  <link href="assets/img/icon-lagi1.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <style>
+    /* Custom styles for wishlist page */
+    :root {
+      --accent-color: #009961;
+      --secondary-color: #4a7c59;
+      --tertiary-color: #ff6b35;
+      --wishlist-color: #e91e63;
+    }
+
+    .page-title {
+      background: linear-gradient(rgba(233, 30, 99, 0.8), rgba(0, 153, 97, 0.8)), url('/placeholder.svg?height=400&width=1200&text=Wishlist');
+      background-size: cover;
+      background-position: center;
+      padding: 120px 0 80px 0;
+      color: white;
+    }
+
+    .wishlist-container {
+      padding: 60px 0;
+      background-color: #f8f9fa;
+    }
+
+    .wishlist-item {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wishlist-item:hover {
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      transform: translateY(-2px);
+    }
+
+    .wishlist-item::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(135deg, var(--wishlist-color), var(--accent-color));
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .wishlist-item:hover::before {
+      opacity: 1;
+    }
+
+    .wishlist-item-image {
+      width: 100px;
+      height: 100px;
+      border-radius: 10px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wishlist-item-image::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+    }
+
+    .wishlist-item:hover .wishlist-item-image::after {
+      transform: translateX(100%);
+    }
+
+    .wishlist-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: var(--wishlist-color);
+      color: white;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      animation: heartBeat 2s infinite;
+    }
+
+    @keyframes heartBeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .btn-add-to-cart {
+      background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-add-to-cart::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .btn-add-to-cart:hover::before {
+      left: 100%;
+    }
+
+    .btn-add-to-cart:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 153, 97, 0.3);
+      color: white;
+    }
+
+    .btn-add-to-cart:disabled {
+      background: #6c757d;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .remove-btn {
+      background: none;
+      border: none;
+      color: var(--wishlist-color);
+      font-size: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 8px;
+      border-radius: 50%;
+    }
+
+    .remove-btn:hover {
+      color: #c2185b;
+      background: rgba(233, 30, 99, 0.1);
+      transform: scale(1.2);
+    }
+
+    .wishlist-summary {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 100px;
+    }
+
+    .summary-card {
+      background: linear-gradient(135deg, var(--wishlist-color), #c2185b);
+      color: white;
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .summary-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='rgba(255,255,255,0.1)' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.3;
+    }
+
+    .summary-card h3 {
+      margin: 0 0 10px;
+      font-size: 2.5rem;
+      font-weight: 700;
+      position: relative;
+      z-index: 1;
+    }
+
+    .summary-card p {
+      margin: 0;
+      opacity: 0.9;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-continue {
+      background: transparent;
+      border: 2px solid var(--accent-color);
+      color: var(--accent-color);
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-continue:hover {
+      background: var(--accent-color);
+      color: white;
+    }
+
+    .btn-clear-wishlist {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      border: none;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-weight: 600;
+      width: 100%;
+      transition: all 0.3s ease;
+      margin-top: 15px;
+    }
+
+    .btn-clear-wishlist:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+      color: white;
+    }
+
+    .empty-wishlist {
+      text-align: center;
+      padding: 80px 20px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .empty-wishlist-icon {
+      font-size: 100px;
+      color: var(--wishlist-color);
+      margin-bottom: 30px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .availability-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    .availability-badge.available {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .availability-badge.limited {
+      background: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeaa7;
+    }
+
+    .availability-badge.unavailable {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .price-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .current-price {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent-color);
+      margin-bottom: 5px;
+    }
+
+    .original-price {
+      font-size: 14px;
+      color: #6c757d;
+      text-decoration: line-through;
+      margin-bottom: 5px;
+    }
+
+    .discount-badge {
+      background: var(--tertiary-color);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .breadcrumbs {
+      margin-top: 20px;
+    }
+
+    .breadcrumbs ol {
+      display: flex;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .breadcrumbs ol li {
+      margin-right: 10px;
+    }
+
+    .breadcrumbs ol li:last-child:after {
+      content: "";
+    }
+
+    .breadcrumbs ol li a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+    }
+
+    .breadcrumbs ol li a:hover {
+      color: white;
+    }
+
+    .filter-section {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .filter-btn {
+      background: #f8f9fa;
+      border: 2px solid #e9ecef;
+      color: #6c757d;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      margin: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn.active {
+      background: var(--accent-color);
+      border-color: var(--accent-color);
+      color: white;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
+
+    .filter-btn.active:hover {
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .wishlist-item {
+        padding: 15px;
+      }
+      
+      .wishlist-item-image {
+        width: 80px;
+        height: 80px;
+      }
+      
+      .wishlist-summary {
+        position: static;
+        margin-top: 30px;
+      }
+      
+      .btn-add-to-cart {
+        width: 100%;
+        margin-top: 10px;
+      }
+    }
+
+    /* Styling untuk notifikasi mountain */
+    .mountain-notification {
+      position: fixed;
+      top: -150px;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      transition: top 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      margin: 0 auto;
+      width: 90%;
+      max-width: 500px;
+      opacity: 0;
+    }
+
+    .mountain-notification.show {
+      top: 90px;
+      opacity: 1;
+    }
+
+    .mountain-notification .notification-content {
+      display: flex;
+      align-items: center;
+      padding: 20px 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .mountain-notification.success .notification-content {
+      background: linear-gradient(135deg, #2ecc71, #27ae60);
+      color: white;
+    }
+
+    .mountain-notification.error .notification-content {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      color: white;
+    }
+
+    .mountain-notification.warning .notification-content {
+      background: linear-gradient(135deg, #f39c12, #e67e22);
+      color: white;
+    }
+
+    .mountain-notification.info .notification-content {
+      background: linear-gradient(135deg, #3498db, #2980b9);
+      color: white;
+    }
+
+    .mountain-notification.wishlist .notification-content {
+      background: linear-gradient(135deg, #e91e63, #c2185b);
+      color: white;
+    }
+
+    .mountain-notification .notification-content::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='rgba(255,255,255,0.15)' d='M0,224L60,213.3C120,203,240,181,360,181.3C480,181,600,203,720,213.3C840,224,960,224,1080,208C1200,192,1320,160,1380,144L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+      background-size: cover;
+      opacity: 0.4;
+      z-index: 0;
+    }
+
+    .mountain-notification .notification-content::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='rgba(255,255,255,0.05)' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.1;
+      z-index: 0;
+    }
+
+    .mountain-notification .notification-icon {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      margin-right: 20px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .mountain-notification .notification-icon i {
+      font-size: 24px;
+      animation: iconPulse 2s infinite;
+    }
+
+    @keyframes iconPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .mountain-notification .notification-text {
+      flex: 1;
+      z-index: 1;
+      position: relative;
+    }
+
+    .mountain-notification .notification-text h5 {
+      margin: 0 0 8px;
+      font-weight: 700;
+      font-size: 18px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .mountain-notification .notification-text p {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.95;
+      line-height: 1.4;
+    }
+
+    .mountain-notification .notification-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 8px;
+      opacity: 0.8;
+      transition: all 0.3s ease;
+      z-index: 1;
+      position: relative;
+      border-radius: 50%;
+    }
+
+    .mountain-notification .notification-close:hover {
+      opacity: 1;
+      background: rgba(255,255,255,0.2);
+      transform: rotate(90deg);
+    }
+
+    /* Animasi untuk berbagai aksi */
+    @keyframes slideInBounce {
+      0% {
+        transform: translateY(-100px) scale(0.8);
+        opacity: 0;
+      }
+      60% {
+        transform: translateY(10px) scale(1.05);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideOutUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) scale(0.8);
+        opacity: 0;
+      }
+    }
+
+    .mountain-notification.show .notification-content {
+      animation: slideInBounce 0.6s ease-out;
+    }
+
+    .mountain-notification.hide .notification-content {
+      animation: slideOutUp 0.4s ease-in;
+    }
+
+    /* Custom Confirmation Modal */
+    .confirmation-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 99999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: all 0.3s ease;
+      padding: 20px;
+    }
+
+    .confirmation-modal.show {
+      display: flex !important;
+      opacity: 1;
+    }
+
+    .modal-backdrop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      z-index: 1;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 20px;
+      padding: 0;
+      max-width: 450px;
+      width: 100%;
+      max-height: 90vh;
+      position: relative;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+      transform: scale(0.7) translateY(-50px);
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      z-index: 2;
+    }
+
+    .confirmation-modal.show .modal-content {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-header {
+      background: linear-gradient(135deg, var(--wishlist-color), #c2185b);
+      color: white;
+      padding: 35px 25px 25px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .modal-header::before {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 30px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='white' d='M0,224L60,213.3C120,203,240,181,360,181.3C480,181,600,203,720,213.3C840,224,960,224,1080,208C1200,192,1320,160,1380,144L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+      background-size: cover;
+      z-index: 1;
+    }
+
+    .modal-icon {
+      width: 80px;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      animation: modalIconPulse 2s infinite;
+      z-index: 2;
+      position: relative;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .modal-icon i {
+      font-size: 40px;
+      z-index: 3;
+    }
+
+    @keyframes modalIconPulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+      }
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 15px rgba(255, 255, 255, 0);
+      }
+    }
+
+    .modal-header h4 {
+      margin: 0;
+      font-weight: 700;
+      font-size: 24px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      z-index: 2;
+      position: relative;
+    }
+
+    .modal-body {
+      padding: 35px 25px 25px;
+      text-align: center;
+      background: white;
+    }
+
+    .modal-body p {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 25px;
+      line-height: 1.6;
+      font-weight: 500;
+    }
+
+    .modal-item-preview {
+      display: flex;
+      align-items: center;
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 25px;
+      border: 2px solid #e9ecef;
+      transition: all 0.3s ease;
+    }
+
+    .modal-item-preview .item-image {
+      width: 70px;
+      height: 70px;
+      border-radius: 12px;
+      background-size: cover;
+      background-position: center;
+      margin-right: 20px;
+      border: 2px solid white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-item-preview .item-details {
+      text-align: left;
+      flex: 1;
+    }
+
+    .modal-item-preview .item-details h6 {
+      margin: 0 0 8px;
+      font-weight: 700;
+      color: #333;
+      font-size: 16px;
+    }
+
+    .modal-item-preview .item-details p {
+      margin: 0;
+      font-weight: 700;
+      color: var(--accent-color);
+      font-size: 18px;
+    }
+
+    .modal-actions {
+      padding: 0 25px 35px;
+      display: flex;
+      gap: 15px;
+      background: white;
+    }
+
+    .btn-cancel,
+    .btn-confirm {
+      flex: 1;
+      padding: 15px 25px;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-cancel {
+      background: #f8f9fa;
+      color: #666;
+      border: 2px solid #e9ecef;
+    }
+
+    .btn-cancel:hover {
+      background: #e9ecef;
+      color: #333;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-confirm {
+      background: linear-gradient(135deg, var(--wishlist-color), #c2185b);
+      color: white;
+      box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+    }
+
+    .btn-confirm:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
+    }
+
+    .btn-confirm.success {
+      background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+      box-shadow: 0 4px 15px rgba(0, 153, 97, 0.3);
+    }
+
+    .btn-confirm.success:hover {
+      box-shadow: 0 6px 20px rgba(0, 153, 97, 0.4);
+    }
+  </style>
+</head>
+
+<body class="wishlist-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+        <h1 class="sitename">PorterIn</h1>
+      </a>
+      
+      <div class="d-flex align-items-center order-2 order-xl-3 me-2">
+      </div>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li class="dropdown"><a href="#"><span>Produk</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="katalog-gunung.html">Katalog Gunung</a></li>
+              <li><a href="katalog-porter.html">Porter</a></li>
+              <li><a href="#">Sewa Gear Pendakian</a></li>
+              <li><a href="#">Simulasi Pendakian</a></li>
+            </ul>
+          </li>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="index.html#history">History</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- Mountain Notification -->
+  <div id="mountain-notification" class="mountain-notification">
+    <div class="notification-content">
+      <div class="notification-icon">
+        <i id="notification-icon" class="bi bi-heart-fill"></i>
+      </div>
+      <div class="notification-text">
+        <h5 id="notification-title">Wishlist Updated!</h5>
+        <p id="notification-message">Item berhasil dikelola!</p>
+      </div>
+      <button id="notification-close" class="notification-close">
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Custom Confirmation Modal -->
+  <div id="confirmation-modal" class="confirmation-modal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-icon">
+          <i id="modal-icon" class="bi bi-heart-fill"></i>
+        </div>
+        <h4 id="modal-title">Konfirmasi</h4>
+      </div>
+      <div class="modal-body">
+        <p id="modal-message">Apakah Anda yakin?</p>
+        <div class="modal-item-preview" id="modal-item-preview" style="display: none;">
+          <div class="item-image" id="modal-item-image"></div>
+          <div class="item-details">
+            <h6 id="modal-item-name">Item Name</h6>
+            <p id="modal-item-price">Rp 0</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="hideConfirmationModal()">Batal</button>
+        <button class="btn-confirm" id="confirm-action">Konfirmasi</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/img/gunung.jpg);">
+      <div class="container position-relative">
+        <h1>Wishlist Saya</h1>
+        <p>Kumpulan produk favorit untuk petualangan pendakian gunung Anda. Simpan dan kelola item yang ingin Anda beli nanti.</p>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="katalog-gunung.html">Katalog Gunung</a></li>
+            <li class="current">Wishlist</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- Wishlist Section -->
+    <section class="wishlist-container">
+      <div class="container">
+        <div class="row">
+          
+          <!-- Wishlist Items Column -->
+          <div class="col-lg-8" data-aos="fade-up" data-aos-delay="100">
+            
+            <!-- Wishlist Items Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h3><i class="bi bi-heart-fill text-danger me-2"></i>Item Favorit (5)</h3>
+              <a href="katalog-gunung.html" class="btn-continue">
+                <i class="bi bi-arrow-left"></i> Lanjut Belanja
+              </a>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section" data-aos="fade-up" data-aos-delay="150">
+              <h6 class="mb-3"><i class="bi bi-funnel"></i> Filter Wishlist</h6>
+              <div class="d-flex flex-wrap">
+                <button class="filter-btn active" onclick="filterWishlist('all')">Semua</button>
+                <button class="filter-btn" onclick="filterWishlist('tour')">Tour</button>
+                <button class="filter-btn" onclick="filterWishlist('porter')">Porter</button>
+                <button class="filter-btn" onclick="filterWishlist('gear')">Gear</button>
+                <button class="filter-btn" onclick="filterWishlist('available')">Tersedia</button>
+              </div>
+            </div>
+
+            <!-- Wishlist Item 1 -->
+            <div class="wishlist-item" data-category="tour" data-aos="fade-up" data-aos-delay="200">
+              <div class="row align-items-center">
+                <div class="col-md-2 col-4">
+                  <div class="wishlist-item-image" style="background-image: url('/placeholder.svg?height=100&width=100&text=Bromo+Tour');">
+                    <div class="wishlist-badge">
+                      <i class="bi bi-heart-fill"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-8">
+                  <h5 class="mb-1">Bromo Sunrise Tour</h5>
+                  <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i> Taman Nasional Bromo Tengger Semeru</p>
+                  <div class="mb-2">
+                    <span class="badge bg-success me-1">2D1N</span>
+                    <span class="badge bg-info">Populer</span>
+                  </div>
+                  <div class="availability-badge available">
+                    <i class="bi bi-check-circle me-1"></i>Tersedia
+                  </div>
+                </div>
+                <div class="col-md-3 col-6">
+                  <div class="price-info">
+                    <div class="current-price">Rp 450.000</div>
+                    <div class="original-price">Rp 500.000</div>
+                    <div class="discount-badge">10% OFF</div>
+                  </div>
+                </div>
+                <div class="col-md-2 col-4">
+                  <button class="btn-add-to-cart w-100 mb-2" onclick="addToCart(1)">
+                    <i class="bi bi-cart-plus me-1"></i>Tambah
+                  </button>
+                </div>
+                <div class="col-md-1 col-2">
+                  <button class="remove-btn" onclick="removeFromWishlist(1)" title="Hapus dari wishlist">
+                    <i class="bi bi-heart-fill"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Wishlist Item 2 -->
+            <div class="wishlist-item" data-category="porter" data-aos="fade-up" data-aos-delay="300">
+              <div class="row align-items-center">
+                <div class="col-md-2 col-4">
+                  <div class="wishlist-item-image" style="background-image: url('/placeholder.svg?height=100&width=100&text=Porter+Service');">
+                    <div class="wishlist-badge">
+                      <i class="bi bi-heart-fill"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-8">
+                  <h5 class="mb-1">Porter: Agus Setiawan</h5>
+                  <p class="text-muted mb-1"><i class="bi bi-person"></i> Spesialis Gunung Semeru</p>
+                  <div class="mb-2">
+                    <span class="badge bg-warning me-1">Top Rated</span>
+                    <span class="badge bg-primary">5+ Tahun</span>
+                  </div>
+                  <div class="availability-badge available">
+                    <i class="bi bi-check-circle me-1"></i>Tersedia
+                  </div>
+                </div>
+                <div class="col-md-3 col-6">
+                  <div class="price-info">
+                    <div class="current-price">Rp 500.000</div>
+                    <small class="text-muted">2 hari</small>
+                  </div>
+                </div>
+                <div class="col-md-2 col-4">
+                  <button class="btn-add-to-cart w-100 mb-2" onclick="addToCart(2)">
+                    <i class="bi bi-cart-plus me-1"></i>Tambah
+                  </button>
+                </div>
+                <div class="col-md-1 col-2">
+                  <button class="remove-btn" onclick="removeFromWishlist(2)" title="Hapus dari wishlist">
+                    <i class="bi bi-heart-fill"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Wishlist Item 3 -->
+            <div class="wishlist-item" data-category="gear" data-aos="fade-up" data-aos-delay="400">
+              <div class="row align-items-center">
+                <div class="col-md-2 col-4">
+                  <div class="wishlist-item-image" style="background-image: url('/placeholder.svg?height=100&width=100&text=Gear+Package');">
+                    <div class="wishlist-badge">
+                      <i class="bi bi-heart-fill"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-8">
+                  <h5 class="mb-1">Paket Lengkap Pendakian</h5>
+                  <p class="text-muted mb-1"><i class="bi bi-box2"></i> Carrier + Tenda + Sleeping Bag</p>
+                  <div class="mb-2">
+                    <span class="badge bg-danger me-1">Hemat 20%</span>
+                    <span class="badge bg-success">Lengkap</span>
+                  </div>
+                  <div class="availability-badge limited">
+                    <i class="bi bi-exclamation-triangle me-1"></i>Stok Terbatas
+                  </div>
+                </div>
+                <div class="col-md-3 col-6">
+                  <div class="price-info">
+                    <div class="current-price">Rp 240.000</div>
+                    <div class="original-price">Rp 300.000</div>
+                    <div class="discount-badge">20% OFF</div>
+                  </div>
+                </div>
+                <div class="col-md-2 col-4">
+                  <button class="btn-add-to-cart w-100 mb-2" onclick="addToCart(3)">
+                    <i class="bi bi-cart-plus me-1"></i>Tambah
+                  </button>
+                </div>
+                <div class="col-md-1 col-2">
+                  <button class="remove-btn" onclick="removeFromWishlist(3)" title="Hapus dari wishlist">
+                    <i class="bi bi-heart-fill"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Wishlist Item 4 -->
+            <div class="wishlist-item" data-category="gear" data-aos="fade-up" data-aos-delay="500">
+              <div class="row align-items-center">
+                <div class="col-md-2 col-4">
+                  <div class="wishlist-item-image" style="background-image: url('/placeholder.svg?height=100&width=100&text=Headlamp');">
+                    <div class="wishlist-badge">
+                      <i class="bi bi-heart-fill"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-8">
+                  <h5 class="mb-1">Headlamp LED Rechargeable</h5>
+                  <p class="text-muted mb-1"><i class="bi bi-lightbulb"></i> Tahan Air + USB Charging</p>
+                  <div class="mb-2">
+                    <span class="badge bg-info me-1">Waterproof</span>
+                    <span class="badge bg-success">Eco-Friendly</span>
+                  </div>
+                  <div class="availability-badge available">
+                    <i class="bi bi-check-circle me-1"></i>Tersedia
+                  </div>
+                </div>
+                <div class="col-md-3 col-6">
+                  <div class="price-info">
+                    <div class="current-price">Rp 75.000</div>
+                    <small class="text-muted">2 hari</small>
+                  </div>
+                </div>
+                <div class="col-md-2 col-4">
+                  <button class="btn-add-to-cart w-100 mb-2" onclick="addToCart(4)">
+                    <i class="bi bi-cart-plus me-1"></i>Tambah
+                  </button>
+                </div>
+                <div class="col-md-1 col-2">
+                  <button class="remove-btn" onclick="removeFromWishlist(4)" title="Hapus dari wishlist">
+                    <i class="bi bi-heart-fill"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Wishlist Item 5 -->
+            <div class="wishlist-item" data-category="tour" data-aos="fade-up" data-aos-delay="600">
+              <div class="row align-items-center">
+                <div class="col-md-2 col-4">
+                  <div class="wishlist-item-image" style="background-image: url('/placeholder.svg?height=100&width=100&text=Rinjani+Tour');">
+                    <div class="wishlist-badge">
+                      <i class="bi bi-heart-fill"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-8">
+                  <h5 class="mb-1">Rinjani Summit Trek</h5>
+                  <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i> Gunung Rinjani, Lombok</p>
+                  <div class="mb-2">
+                    <span class="badge bg-warning me-1">3D2N</span>
+                    <span class="badge bg-danger">Challenging</span>
+                  </div>
+                  <div class="availability-badge unavailable">
+                    <i class="bi bi-x-circle me-1"></i>Tidak Tersedia
+                  </div>
+                </div>
+                <div class="col-md-3 col-6">
+                  <div class="price-info">
+                    <div class="current-price">Rp 1.200.000</div>
+                    <small class="text-muted">per orang</small>
+                  </div>
+                </div>
+                <div class="col-md-2 col-4">
+                  <button class="btn-add-to-cart w-100 mb-2" disabled>
+                    <i class="bi bi-clock me-1"></i>Tunggu
+                  </button>
+                </div>
+                <div class="col-md-1 col-2">
+                  <button class="remove-btn" onclick="removeFromWishlist(5)" title="Hapus dari wishlist">
+                    <i class="bi bi-heart-fill"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Wishlist Summary Column -->
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="700">
+            
+            <!-- Wishlist Summary -->
+            <div class="wishlist-summary">
+              <div class="summary-card">
+                <h3 id="wishlist-count">5</h3>
+                <p>Item di Wishlist</p>
+              </div>
+              
+              <h5 class="mb-3"><i class="bi bi-heart-fill text-danger me-2"></i>Ringkasan Wishlist</h5>
+              
+              <div class="mb-3">
+                <div class="d-flex justify-content-between mb-2">
+                  <span>Item Tersedia</span>
+                  <span class="text-success fw-bold" id="available-count">4</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                  <span>Item Tidak Tersedia</span>
+                  <span class="text-danger fw-bold" id="unavailable-count">1</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                  <span>Total Estimasi</span>
+                  <span class="text-primary fw-bold" id="total-estimate">Rp 2.265.000</span>
+                </div>
+              </div>
+              
+              <hr>
+              
+              <button class="btn-add-to-cart w-100 mb-3" onclick="addAllToCart()">
+                <i class="bi bi-cart-plus me-2"></i>Tambah Semua ke Keranjang
+              </button>
+              
+              <a href="cart.html" class="btn btn-outline-success w-100 mb-3">
+                <i class="bi bi-bag-check me-2"></i>Lihat Keranjang
+              </a>
+              
+              <button class="btn-clear-wishlist" onclick="clearWishlist()">
+                <i class="bi bi-trash me-2"></i>Kosongkan Wishlist
+              </button>
+              
+              <!-- Quick Actions -->
+              <div class="mt-4">
+                <h6 class="mb-3">Aksi Cepat</h6>
+                <div class="d-grid gap-2">
+                  <button class="btn btn-outline-primary btn-sm" onclick="shareWishlist()">
+                    <i class="bi bi-share me-1"></i>Bagikan Wishlist
+                  </button>
+                  <button class="btn btn-outline-info btn-sm" onclick="saveWishlist()">
+                    <i class="bi bi-download me-1"></i>Simpan sebagai PDF
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recommendations -->
+            <div class="mt-4" data-aos="fade-up" data-aos-delay="800">
+              <h5 class="mb-3">Mungkin Anda Suka</h5>
+              
+              <div class="wishlist-item mb-3">
+                <div class="row align-items-center">
+                  <div class="col-4">
+                    <div class="wishlist-item-image" style="background-image: url('/placeholder.svg?height=80&width=80&text=Jaket'); width: 80px; height: 80px;"></div>
+                  </div>
+                  <div class="col-8">
+                    <h6 class="mb-1">Jaket Gunung Windproof</h6>
+                    <p class="text-muted mb-1">Rp 120.000 <small>/2 hari</small></p>
+                    <div class="text-warning mb-2">
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-half"></i>
+                      <small>(4.5)</small>
+                    </div>
+                    <div class="d-flex gap-1">
+                      <button class="btn btn-sm btn-outline-danger" onclick="addToWishlist('Jaket Gunung', 120000)">
+                        <i class="bi bi-heart"></i>
+                      </button>
+                      <button class="btn btn-sm btn-success flex-fill" onclick="addToCart('new', 'Jaket Gunung', 120000)">
+                        <i class="bi bi-cart-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wishlist-item">
+                <div class="row align-items-center">
+                  <div class="col-4">
+                    <div class="wishlist-item-image" style="background-image: url('/placeholder.svg?height=80&width=80&text=Sepatu'); width: 80px; height: 80px;"></div>
+                  </div>
+                  <div class="col-8">
+                    <h6 class="mb-1">Sepatu Hiking Waterproof</h6>
+                    <p class="text-muted mb-1">Rp 150.000 <small>/2 hari</small></p>
+                    <div class="text-warning mb-2">
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <small>(5.0)</small>
+                    </div>
+                    <div class="d-flex gap-1">
+                      <button class="btn btn-sm btn-outline-danger" onclick="addToWishlist('Sepatu Hiking', 150000)">
+                        <i class="bi bi-heart"></i>
+                      </button>
+                      <button class="btn btn-sm btn-success flex-fill" onclick="addToCart('new', 'Sepatu Hiking', 150000)">
+                        <i class="bi bi-cart-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="footer" class="footer dark-background">
+    <div class="container">
+      <h3 class="sitename">PorterIn</h3>
+      <p>Platform terpercaya untuk petualangan pendakian gunung di Indonesia. Wujudkan impian mendaki Anda bersama kami.</p>
+      <div class="social-links d-flex justify-content-center">
+        <a href=""><i class="bi bi-twitter-x"></i></a>
+        <a href=""><i class="bi bi-facebook"></i></a>
+        <a href=""><i class="bi bi-instagram"></i></a>
+        <a href=""><i class="bi bi-youtube"></i></a>
+        <a href=""><i class="bi bi-linkedin"></i></a>
+      </div>
+      <div class="container">
+        <div class="copyright">
+          <span>Copyright</span> <strong class="px-1 sitename">PorterIn</strong> <span>All Rights Reserved</span>
+        </div>
+        <div class="credits">
+          Designed with <i class="bi bi-heart-fill text-danger"></i> for Mountain Lovers
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <script>
+    // Wishlist functionality
+    let notificationTimeout;
+    let wishlistCount = 5;
+    let cartCount = 0;
+
+    document.addEventListener('DOMContentLoaded', function() {
+      updateWishlistCount();
+
+      // Setup notification close button
+      document.getElementById('notification-close').addEventListener('click', function() {
+        hideNotification();
+      });
+
+      // Setup modal backdrop click
+      const modal = document.getElementById('confirmation-modal');
+      const backdrop = modal.querySelector('.modal-backdrop');
+      
+      backdrop.addEventListener('click', function() {
+        hideConfirmationModal();
+      });
+      
+      modal.querySelector('.modal-content').addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
+    });
+
+    // Show mountain notification function
+    function showMountainNotification(type, title, message, duration = 4000) {
+      const notification = document.getElementById('mountain-notification');
+      const notificationTitle = document.getElementById('notification-title');
+      const notificationMessage = document.getElementById('notification-message');
+      const notificationIcon = document.getElementById('notification-icon');
+      
+      if (notificationTimeout) {
+        clearTimeout(notificationTimeout);
+      }
+      
+      notification.className = 'mountain-notification';
+      
+      notificationTitle.textContent = title;
+      notificationMessage.textContent = message;
+      
+      switch(type) {
+        case 'success':
+          notificationIcon.className = 'bi bi-check-circle-fill';
+          notification.classList.add('success');
+          break;
+        case 'error':
+          notificationIcon.className = 'bi bi-x-circle-fill';
+          notification.classList.add('error');
+          break;
+        case 'warning':
+          notificationIcon.className = 'bi bi-exclamation-triangle-fill';
+          notification.classList.add('warning');
+          break;
+        case 'info':
+          notificationIcon.className = 'bi bi-info-circle-fill';
+          notification.classList.add('info');
+          break;
+        case 'wishlist':
+          notificationIcon.className = 'bi bi-heart-fill';
+          notification.classList.add('wishlist');
+          break;
+      }
+      
+      notification.classList.add('show');
+      
+      notificationTimeout = setTimeout(() => {
+        hideNotification();
+      }, duration);
+    }
+
+    function hideNotification() {
+      const notification = document.getElementById('mountain-notification');
+      notification.classList.remove('show');
+      notification.classList.add('hide');
+      
+      setTimeout(() => {
+        notification.classList.remove('hide');
+      }, 400);
+    }
+
+    // Custom modal functions
+    function showConfirmationModal(type, title, message, itemData = null, onConfirm = null) {
+      const modal = document.getElementById('confirmation-modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalMessage = document.getElementById('modal-message');
+      const modalIcon = document.getElementById('modal-icon');
+      const confirmBtn = document.getElementById('confirm-action');
+      const itemPreview = document.getElementById('modal-item-preview');
+      
+      modalTitle.textContent = title;
+      modalMessage.textContent = message;
+      
+      switch(type) {
+        case 'remove':
+          modalIcon.className = 'bi bi-heart-slash-fill';
+          confirmBtn.className = 'btn-confirm';
+          confirmBtn.textContent = 'Hapus';
+          break;
+        case 'add':
+          modalIcon.className = 'bi bi-cart-plus-fill';
+          confirmBtn.className = 'btn-confirm success';
+          confirmBtn.textContent = 'Tambah';
+          break;
+        case 'clear':
+          modalIcon.className = 'bi bi-trash-fill';
+          confirmBtn.className = 'btn-confirm';
+          confirmBtn.textContent = 'Kosongkan';
+          break;
+        default:
+          modalIcon.className = 'bi bi-heart-fill';
+          confirmBtn.className = 'btn-confirm';
+          confirmBtn.textContent = 'Konfirmasi';
+      }
+      
+      if (itemData) {
+        document.getElementById('modal-item-name').textContent = itemData.name;
+        document.getElementById('modal-item-price').textContent = itemData.price;
+        document.getElementById('modal-item-image').style.backgroundImage = itemData.image;
+        itemPreview.style.display = 'flex';
+      } else {
+        itemPreview.style.display = 'none';
+      }
+      
+      confirmBtn.onclick = () => {
+        hideConfirmationModal();
+        if (onConfirm) onConfirm();
+      };
+      
+      modal.classList.add('show');
+    }
+
+    function hideConfirmationModal() {
+      const modal = document.getElementById('confirmation-modal');
+      modal.classList.remove('show');
+    }
+
+    // Wishlist functions
+    function removeFromWishlist(itemId) {
+      const wishlistItems = document.querySelectorAll('.wishlist-item');
+      const itemElement = wishlistItems[itemId - 1];
+      const itemName = itemElement.querySelector('h5').textContent;
+      const itemPrice = itemElement.querySelector('.current-price').textContent;
+      const itemImage = itemElement.querySelector('.wishlist-item-image').style.backgroundImage;
+      
+      const itemData = {
+        name: itemName,
+        price: itemPrice,
+        image: itemImage
+      };
+      
+      showConfirmationModal(
+        'remove',
+        'Hapus dari Wishlist',
+        'Apakah Anda yakin ingin menghapus item ini dari wishlist?',
+        itemData,
+        () => {
+          itemElement.style.transition = 'all 0.5s ease';
+          itemElement.style.transform = 'translateX(-100%)';
+          itemElement.style.opacity = '0';
+          
+          setTimeout(() => {
+            itemElement.remove();
+            wishlistCount--;
+            updateWishlistCount();
+            
+            showMountainNotification('wishlist', 'Item Dihapus!', `${itemName} telah dihapus dari wishlist Anda`, 3000);
+            
+            // Check if wishlist is empty
+            if (wishlistCount === 0) {
+              setTimeout(() => {
+                showEmptyWishlist();
+              }, 1000);
+            }
+          }, 500);
+        }
+      );
+    }
+
+    function addToCart(itemId, itemName = null, price = null) {
+      let name, itemPrice, image;
+      
+      if (itemId === 'new') {
+        name = itemName;
+        itemPrice = `Rp ${price.toLocaleString('id-ID')}`;
+        image = `url('/placeholder.svg?height=60&width=60&text=${itemName.replace(' ', '+')}')`; 
+      } else {
+        const wishlistItems = document.querySelectorAll('.wishlist-item');
+        const itemElement = wishlistItems[itemId - 1];
+        name = itemElement.querySelector('h5').textContent;
+        itemPrice = itemElement.querySelector('.current-price').textContent;
+        image = itemElement.querySelector('.wishlist-item-image').style.backgroundImage;
+      }
+      
+      const itemData = {
+        name: name,
+        price: itemPrice,
+        image: image
+      };
+      
+      showConfirmationModal(
+        'add',
+        'Tambah ke Keranjang',
+        'Apakah Anda ingin menambahkan item ini ke keranjang belanja?',
+        itemData,
+        () => {
+          cartCount++;
+          
+          showMountainNotification('success', 'Ditambah ke Keranjang!', `${name} telah ditambahkan ke keranjang Anda`, 3000);
+        }
+      );
+    }
+
+    function addToWishlist(itemName, price) {
+      const itemData = {
+        name: itemName,
+        price: `Rp ${price.toLocaleString('id-ID')}`,
+        image: `url('/placeholder.svg?height=60&width=60&text=${itemName.replace(' ', '+')}')`
+      };
+      
+      showConfirmationModal(
+        'add',
+        'Tambah ke Wishlist',
+        'Apakah Anda ingin menambahkan item ini ke wishlist?',
+        itemData,
+        () => {
+          wishlistCount++;
+          updateWishlistCount();
+          
+          showMountainNotification('wishlist', 'Ditambah ke Wishlist!', `${itemName} telah ditambahkan ke wishlist Anda`, 3000);
+        }
+      );
+    }
+
+    function addAllToCart() {
+      const availableItems = document.querySelectorAll('.wishlist-item .btn-add-to-cart:not(:disabled)').length;
+      
+      if (availableItems === 0) {
+        showMountainNotification('warning', 'Tidak Ada Item!', 'Tidak ada item yang tersedia untuk ditambahkan ke keranjang', 3000);
+        return;
+      }
+      
+      showConfirmationModal(
+        'add',
+        'Tambah Semua ke Keranjang',
+        `Apakah Anda ingin menambahkan ${availableItems} item yang tersedia ke keranjang?`,
+        null,
+        () => {
+          cartCount += availableItems;
+          
+          showMountainNotification('success', 'Semua Item Ditambahkan!', `${availableItems} item telah ditambahkan ke keranjang Anda`, 4000);
+        }
+      );
+    }
+
+    function clearWishlist() {
+      if (wishlistCount === 0) {
+        showMountainNotification('info', 'Wishlist Kosong!', 'Wishlist Anda sudah kosong', 2000);
+        return;
+      }
+      
+      showConfirmationModal(
+        'clear',
+        'Kosongkan Wishlist',
+        'Apakah Anda yakin ingin menghapus semua item dari wishlist? Tindakan ini tidak dapat dibatalkan.',
+        null,
+        () => {
+          const wishlistItems = document.querySelectorAll('.wishlist-item[data-category]');
+          
+          wishlistItems.forEach((item, index) => {
+            setTimeout(() => {
+              item.style.transition = 'all 0.5s ease';
+              item.style.transform = 'translateX(-100%)';
+              item.style.opacity = '0';
+              
+              setTimeout(() => {
+                item.remove();
+              }, 500);
+            }, index * 100);
+          });
+          
+          setTimeout(() => {
+            wishlistCount = 0;
+            updateWishlistCount();
+            showEmptyWishlist();
+            showMountainNotification('info', 'Wishlist Dikosongkan!', 'Semua item telah dihapus dari wishlist Anda', 3000);
+          }, wishlistItems.length * 100 + 500);
+        }
+      );
+    }
+
+    function filterWishlist(category) {
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const wishlistItems = document.querySelectorAll('.wishlist-item[data-category]');
+      
+      // Update active filter button
+      filterBtns.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      // Filter items
+      wishlistItems.forEach(item => {
+        if (category === 'all') {
+          item.style.display = 'block';
+        } else if (category === 'available') {
+          const isAvailable = item.querySelector('.availability-badge.available');
+          item.style.display = isAvailable ? 'block' : 'none';
+        } else {
+          const itemCategory = item.getAttribute('data-category');
+          item.style.display = itemCategory === category ? 'block' : 'none';
+        }
+      });
+      
+      showMountainNotification('info', 'Filter Diterapkan!', `Menampilkan item kategori: ${category === 'all' ? 'Semua' : category}`, 2000);
+    }
+
+    function shareWishlist() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'Wishlist PorterIn Saya',
+          text: 'Lihat wishlist pendakian gunung saya di PorterIn!',
+          url: window.location.href
+        });
+      } else {
+        // Fallback for browsers that don't support Web Share API
+        navigator.clipboard.writeText(window.location.href);
+        showMountainNotification('success', 'Link Disalin!', 'Link wishlist telah disalin ke clipboard', 3000);
+      }
+    }
+
+    function saveWishlist() {
+      showMountainNotification('info', 'Menyimpan PDF...', 'Fitur simpan PDF sedang dalam pengembangan', 3000);
+    }
+
+    function updateWishlistCount() {
+      document.getElementById('wishlist-count').textContent = wishlistCount;
+      
+      // Update header if exists
+      const headerCount = document.querySelector('.wishlist-count');
+      if (headerCount) {
+        headerCount.textContent = wishlistCount;
+      }
+      
+      // Update available/unavailable counts
+      const availableItems = document.querySelectorAll('.availability-badge.available').length;
+      const unavailableItems = document.querySelectorAll('.availability-badge.unavailable').length;
+      
+      document.getElementById('available-count').textContent = availableItems;
+      document.getElementById('unavailable-count').textContent = unavailableItems;
+    }
+
+    function showEmptyWishlist() {
+      const wishlistContainer = document.querySelector('.wishlist-container .container .row');
+      wishlistContainer.innerHTML = `
+        <div class="col-12">
+          <div class="empty-wishlist">
+            <div class="empty-wishlist-icon">
+              <i class="bi bi-heart"></i>
+            </div>
+            <h3>Wishlist Kosong</h3>
+            <p class="text-muted mb-4">Belum ada item favorit yang disimpan. Mulai jelajahi produk kami dan tambahkan ke wishlist!</p>
+            <a href="katalog-gunung.html" class="btn-add-to-cart">
+              <i class="bi bi-search me-2"></i>Jelajahi Produk
+            </a>
+          </div>
+        </div>
+      `;
+    }
+  </script>
+
+</body>
+
+</html>

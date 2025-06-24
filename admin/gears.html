@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Gears - PorterIn Admin</title>
+
+  <!-- Favicons -->
+  <link href="../assets/img/icon-lagi1.png" rel="icon">
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- SweetAlert2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    .sidebar {
+      width: 240px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background-color: #212529;
+      padding-top: 60px;
+      transition: all 0.3s;
+      z-index: 1100;
+    }
+    .sidebar a {
+      display: block;
+      padding: 12px 20px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+    .sidebar a.active, .sidebar a:hover {
+      background-color: #343a40;
+    }
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 240px;
+      right: 0;
+      height: 60px;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      border-bottom: 1px solid #dee2e6;
+      z-index: 1000;
+      transition: all 0.3s;
+    }
+    .main-content {
+      margin-left: 240px;
+      padding: 80px 20px 20px;
+      transition: all 0.3s;
+    }
+    .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+    .modal .form-control, .modal .form-select {
+      border-radius: 0.5rem;
+    }
+    .gear-image {
+      max-width: 100px;
+      max-height: 100px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    .spec-list {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 0;
+    }
+    .spec-list li {
+      color: #28a745;
+      font-size: 0.9rem;
+    }
+    .spec-list li:before {
+      content: "✔ ";
+      color: #28a745;
+    }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1050;
+      transition: all 0.3s;
+    }
+    .overlay.active {
+      display: block;
+    }
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 0;
+        left: 0;
+        overflow: hidden;
+        padding-top: 60px;
+        transition: width 0.3s;
+      }
+      .sidebar.active {
+        width: 200px;
+        overflow: visible;
+      }
+      .main-content {
+        margin-left: 0;
+      }
+      .topbar {
+        left: 0;
+      }
+    }
+    /* Pastikan sidebar child tidak wrap keluar */
+    .sidebar {
+      overflow-x: hidden;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <a href="/admin/dashboard.html"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+  <a href="/admin/users.html"><i class="bi bi-people me-2"></i>Users</a>
+  <a href="#" data-bs-toggle="collapse" data-bs-target="#productsSubmenu"><i class="bi bi-box-seam me-2"></i>Products</a>
+  <div class="collapse ps-3 show" id="productsSubmenu">
+    <a href="/admin/mountains.html">Mountains</a>
+    <a href="/admin/porter.html">Porters</a>
+    <a href="/admin/gears.html" class="active">Gears</a>
+    <a href="/admin/simulations.html">Simulations</a>
+  </div>
+  <a href="/admin/articles.html"><i class="bi bi-newspaper me-2"></i>Articles</a>
+  <a href="/admin/orders.html"><i class="bi bi-cart3 me-2"></i>Orders</a>
+  <a href="/index.html"><i class="bi bi-box-arrow-left me-2"></i>Logout</a>
+</div>
+
+<!-- Overlay -->
+<div class="overlay" id="sidebarOverlay"></div>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="d-flex align-items-center">
+    <button class="btn btn-dark d-md-none" id="sidebarToggle"><i class="bi bi-list"></i></button>
+    <div class="brand ms-2 fw-bold">PorterIn Admin</div>
+  </div>
+  <div class="d-flex align-items-center">
+    <img src="https://placehold.co/40x40/212529/FFFFFF?text=A" class="rounded-circle me-2" />
+    <span>Admin</span>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3>Manage Gears</h3>
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addGearModal"><i class="bi bi-plus-lg"></i> Add Gear</button>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover" id="gearTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Gambar</th>
+                <th>Nama Produk</th>
+                <th>Brand & Tipe</th>
+                <th>Spesifikasi</th>
+                <th>Harga</th>
+                <th>Rating</th>
+                <th>Tanggal Sewa</th>
+                <th>Tanggal Pengambilan</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="gearList">
+              <!-- Gear rows will be added via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Add/Edit -->
+<div class="modal fade" id="addGearModal" tabindex="-1" aria-labelledby="addGearModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addGearModalLabel">Add/Edit Gear</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="gearForm">
+          <input type="hidden" id="gearIndex" />
+          <div class="mb-3">
+            <label for="gearImage" class="form-label">Gambar</label>
+            <input type="file" class="form-control" id="gearImage" accept="image/jpeg,image/png" />
+            <small class="text-muted">Hanya JPG dan PNG diperbolehkan.</small>
+          </div>
+          <div class="mb-3">
+            <label for="gearName" class="form-label">Nama Produk</label>
+            <input type="text" class="form-control" id="gearName" required />
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="gearBrand" class="form-label">Brand</label>
+              <select class="form-select" id="gearBrand" required>
+                <option value="">Pilih Brand</option>
+                <option value="Eiger">Eiger</option>
+                <option value="Rei">Rei</option>
+                <option value="Consina">Consina</option>
+                <option value="Osprey">Osprey</option>
+                <option value="The North Face">The North Face</option>
+                <option value="Outdoor Pro">Outdoor Pro</option>
+                <option value="Fjallraven">Fjällräven</option>
+                <option value="Lainnya">Lainnya</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="gearType" class="form-label">Tipe Produk</label>
+              <select class="form-select" id="gearType" required>
+                <option value="">Pilih Tipe</option>
+                <option value="Individu">Individu</option>
+                <option value="Paket Pemula">Paket Pemula</option>
+                <option value="Paket Pro">Paket Pro</option>
+              </select>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="gearSpecs" class="form-label">Spesifikasi</label>
+            <textarea class="form-control" id="gearSpecs" rows="4" placeholder="Masukkan spesifikasi (satu per baris, contoh: Kapasitas 55 liter)"></textarea>
+          </div>
+           <div class="mb-3">
+            <label for="gearCategory" class="form-label">Kategori</label>
+            <input type="text" class="form-control" id="gearCategory" placeholder="Contoh: Carrier, Tenda, Jaket" required />
+          </div>
+          <div class="mb-3">
+            <label for="gearPrice" class="form-label">Harga (Rp)</label>
+            <input type="number" class="form-control" id="gearPrice" required />
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="gearBookedDates" class="form-label">Tanggal Sewa (pisahkan dengan koma, format: YYYY-MM-DD)</label>
+              <input type="text" class="form-control" id="gearBookedDates" placeholder="Contoh: 2024-07-01,2024-07-02" />
+              <small class="text-muted">Tanggal-tanggal ini akan dianggap sudah disewa dan tidak tersedia.</small>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script>
+  let gears = JSON.parse(localStorage.getItem('gears')) || [];
+
+  if (!Array.isArray(gears)) {
+    gears = [];
+    saveToLocal();
+  }
+
+  function saveToLocal() {
+    localStorage.setItem('gears', JSON.stringify(gears));
+  }
+
+  function toBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  }
+
+  function renderTable() {
+  const list = document.getElementById('gearList');
+  list.innerHTML = '';
+  gears.forEach((gear, i) => {
+    const imageSrc = gear.image || 'https://placehold.co/100x100/CCCCCC/FFFFFF?text=No+Img';
+    const specs = gear.specs.split('\n').map(spec => `<li>${spec}</li>`).join('');
+    // Ambil rating dari review user
+    let rating = '-';
+    try {
+      const reviewKey = `gearReviews_${String(gear.id)}`;
+      const reviews = JSON.parse(localStorage.getItem(reviewKey)) || [];
+      if (reviews.length) {
+        const avg = reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / reviews.length;
+        rating = avg.toFixed(1);
+      }
+    } catch {}
+    const bookedDates = Array.isArray(gear.bookedDates) ? gear.bookedDates.join(', ') : '';
+    const pickupDates = Array.isArray(gear.pickupDates) ? gear.pickupDates.join(', ') : '';
+    list.innerHTML += `
+      <tr>
+        <td><span class="badge bg-secondary">${gear.id || String(i+1).padStart(3, '0')}</span></td>
+        <td><img src="${imageSrc}" alt="${gear.name}" class="gear-image"></td>
+        <td>${gear.name}</td>
+        <td>
+          <strong>${gear.brand || 'N/A'}</strong><br>
+          <span class="badge bg-info">${gear.type || 'N/A'}</span>
+        </td>
+        <td><ul class="spec-list">${specs}</ul></td>
+        <td>Rp ${gear.price.toLocaleString('id-ID')} / hari</td>
+        <td>${rating}</td>
+        <td style="font-size:0.9em">${bookedDates}</td>
+        <td style="font-size:0.9em">${pickupDates}</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-1" onclick="editGear(${i})"><i class="bi bi-pencil"></i></button>
+          <button class="btn btn-sm btn-danger" onclick="deleteGear(${i})"><i class="bi bi-trash"></i></button>
+        </td>
+      </tr>`;
+  });
+}
+
+  function getNextGearId() {
+  // Cari id terbesar, lalu +1, format 3 digit
+  if (!gears.length) return '001';
+  const maxId = Math.max(...gears.map(g => parseInt(g.id || '0')));
+  return String(maxId + 1).padStart(3, '0');
+}
+
+  document.getElementById('gearForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const name = document.getElementById('gearName').value.trim();
+    const brand = document.getElementById('gearBrand').value;
+    const type = document.getElementById('gearType').value;
+    const specs = document.getElementById('gearSpecs').value.trim();
+    const category = document.getElementById('gearCategory').value.trim();
+    const price = parseInt(document.getElementById('gearPrice').value);
+    const index = document.getElementById('gearIndex').value;
+    const imageInput = document.getElementById('gearImage');
+    let image = (index !== '' && gears[index]) ? gears[index].image : '';
+
+    if (!name || !brand || !type || !price || !category) {
+      Swal.fire('Error', 'Mohon lengkapi semua field yang wajib diisi.', 'error');
+      return;
+    }
+
+    if (imageInput.files && imageInput.files[0]) {
+      const file = imageInput.files[0];
+      if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+        Swal.fire('Error', 'Hanya file JPG dan PNG yang diperbolehkan.', 'error');
+        return;
+      }
+      image = await toBase64(file);
+    }
+
+    let id = '';
+    if (index === '') {
+      id = getNextGearId();
+    } else {
+      id = gears[index].id || getNextGearId();
+    }
+
+const bookedDatesRaw = document.getElementById('gearBookedDates').value.trim();
+let bookedDates = [];
+if (bookedDatesRaw) {
+  bookedDates = bookedDatesRaw.split(',').map(d => d.trim()).filter(d => d);
+}
+
+    const gearData = { id, name, brand, type, specs, category, price, image, bookedDates, };
+
+    if (index === '') {
+      gears.push(gearData);
+      Swal.fire('Sukses', 'Produk berhasil ditambahkan!', 'success');
+    } else {
+      gears[index] = gearData;
+      Swal.fire('Sukses', 'Produk berhasil diperbarui!', 'success');
+    }
+
+    saveToLocal();
+    renderTable();
+
+    document.getElementById('gearForm').reset();
+    document.getElementById('gearIndex').value = '';
+    const modal = bootstrap.Modal.getInstance(document.getElementById('addGearModal'));
+    modal.hide();
+  });
+
+  function editGear(index) {
+    const gear = gears[index];
+    document.getElementById('gearName').value = gear.name;
+    document.getElementById('gearBrand').value = gear.brand;
+    document.getElementById('gearType').value = gear.type;
+    document.getElementById('gearSpecs').value = gear.specs;
+    document.getElementById('gearCategory').value = gear.category;
+    document.getElementById('gearPrice').value = gear.price;
+    document.getElementById('gearIndex').value = index;
+    document.getElementById('gearBookedDates').value = (gear.bookedDates || []).join(',');
+    // Tidak perlu set id di form, id tetap di data
+    new bootstrap.Modal(document.getElementById('addGearModal')).show();
+  }
+
+  function deleteGear(index) {
+    Swal.fire({
+      title: 'Anda yakin?',
+      text: "Data yang dihapus tidak dapat dikembalikan!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Ya, hapus!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        gears.splice(index, 1);
+        saveToLocal();
+        renderTable();
+        Swal.fire('Dihapus!', 'Produk telah dihapus.', 'success');
+      }
+    });
+  }
+  
+  // Responsive sidebar logic
+  document.addEventListener('DOMContentLoaded', function() {
+    renderTable();
+
+    const sidebarToggleBtn = document.getElementById('sidebarToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const mainContent = document.querySelector('.main-content');
+    const topbar = document.querySelector('.topbar');
+
+    // Pastikan elemen ada sebelum menambah event listener
+    if (sidebarToggleBtn && sidebar && overlay) {
+      sidebarToggleBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+        if (mainContent) mainContent.classList.toggle('sidebar-active');
+        if (topbar) topbar.classList.toggle('sidebar-active');
+      });
+
+      overlay.addEventListener('click', function() {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+        if (mainContent) mainContent.classList.remove('sidebar-active');
+        if (topbar) topbar.classList.remove('sidebar-active');
+      });
+
+      // Tutup sidebar jika resize ke desktop
+      window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+          sidebar.classList.remove('active');
+          overlay.classList.remove('active');
+          if (mainContent) mainContent.classList.remove('sidebar-active');
+          if (topbar) topbar.classList.remove('sidebar-active');
+        }
+      });
+    }
+  });
+</script>
+</body>
+</html>

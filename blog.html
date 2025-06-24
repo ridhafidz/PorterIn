@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Blog - PorterIn</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/icon-lagi1.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <style>
+    /* Batasi tinggi gambar artikel di blog agar tidak terlalu besar */
+    .card-img-top {
+      max-height: 220px;
+      object-fit: cover;
+      width: 100%;
+    }
+
+    /* Navbar menu di tengah halaman (desktop), logo tetap di kiri */
+    @media (min-width: 992px) {
+      #header .container {
+        justify-content: flex-start !important;
+      }
+
+      .logo {
+        margin-right: 2.5rem;
+      }
+
+      #navmenu {
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+      }
+
+      #navmenu ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    /* Navbar tetap rata kanan di mobile */
+    @media (max-width: 991.98px) {
+      #header .container {
+        justify-content: space-between !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="blog-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container position-relative d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.png" alt=""> -->
+        <h1 class="sitename">PorterIn</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu order-3 order-xl-2">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="blog.html" class="active">Blog</a></li>
+          <li class="dropdown"><a href="#"><span>Produk</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="katalog-gunung.html">Katalog Gunung</a></li>
+              <li><a href="katalog-porter.html">Porter</a></li>
+              <li><a href="rental-gear.html">Sewa Gear Pendakian</a></li>
+              <li><a href="#">Simulasi Pendakian</a></li>
+            </ul>
+          </li>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="index.html#history">History</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/img/blog/Gunung\ Sindoro.jpeg);">
+      <div class="container position-relative">
+        <h1>Artikel</h1>
+        <p>Kumpulan artikel terbaru dari PorterIn</p>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li class="current">Blog</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- Blog Posts Section -->
+    <section id="blog-posts" class="blog-posts section">
+      <div class="container">
+        <!-- Filter Controls -->
+        <div class="row mb-4">
+          <div class="col-md-6 mb-2">
+            <select class="form-select" id="categoryFilter">
+              <option value="">Semua Kategori</option>
+              <option value="Gunung">Gunung</option>
+              <option value="Peralatan">Peralatan</option>
+              <option value="Pendakian">Pendakian</option>
+              <option value="Tips and Tricks">Tips and Tricks</option>
+              <option value="Seputar Porter">Seputar Porter</option>
+              <option value="PorterIn">PorterIn</option>
+            </select>
+          </div>
+          <div class="col-md-6 mb-2">
+            <input type="date" class="form-control" id="dateFilter" placeholder="Filter tanggal publikasi">
+          </div>
+        </div>
+        <!-- Artikel Blog -->
+        <div class="row gy-4" id="blogList"></div>
+      </div>
+    </section><!-- /Blog Posts Section -->
+
+    <!-- Blog Pagination Section -->
+    <section id="blog-pagination" class="blog-pagination section">
+      <div class="container">
+        <div class="d-flex justify-content-center">
+          <ul>
+            <li><a href="#"><i class="bi bi-chevron-left"></i></a></li>
+            <li><a href="#" class="active">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#"><i class="bi bi-chevron-right"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </section><!-- /Blog Pagination Section -->
+
+    <script>
+      // Ambil dan render artikel
+      function renderBlogArticles() {
+        const articles = JSON.parse(localStorage.getItem('articles')) || [];
+        const blogList = document.getElementById('blogList');
+        const category = document.getElementById('categoryFilter').value;
+        const date = document.getElementById('dateFilter').value;
+        let filtered = articles.filter(a => a.status === 'dipublikasi');
+        if (category) filtered = filtered.filter(a => a.category === category);
+        if (date) filtered = filtered.filter(a => a.date === date);
+
+        blogList.innerHTML = '';
+        if (filtered.length === 0) {
+          blogList.innerHTML = '<div class="col-12 text-center text-muted">Belum ada artikel.</div>';
+          return;
+        }
+        filtered.forEach(article => {
+          blogList.innerHTML += `
+            <div class="col-md-6 col-lg-4 mb-4">
+              <div class="card h-100 blog-article-card" data-article-id="${article.id}" style="cursor:pointer">
+                ${article.image ? `<img src="${article.image}" class="card-img-top" alt="${article.title}">` : ''}
+                <div class="card-body">
+                  <h5 class="card-title">${article.title}</h5>
+                  <div class="mb-2">
+                    <span class="badge bg-info">${article.category}</span>
+                    <small class="text-muted">${article.date}${article.author ? ' &middot; ' + article.author : ''}</small>
+                  </div>
+                  <p class="card-text">${article.snippet}</p>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+
+        // Tambahkan event listener ke setiap card artikel
+        document.querySelectorAll('.blog-article-card').forEach(card => {
+          card.addEventListener('click', function() {
+            const articleId = this.getAttribute('data-article-id');
+            window.location.href = `blog-details.html?id=${encodeURIComponent(articleId)}`;
+          });
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        renderBlogArticles();
+        document.getElementById('categoryFilter').addEventListener('change', renderBlogArticles);
+        document.getElementById('dateFilter').addEventListener('change', renderBlogArticles);
+      });
+    </script>
+
+  </main>
+
+  <footer id="footer" class="footer dark-background">
+    <div class="container">
+      <h3 class="sitename">PorterIn</h3>
+      <p>Platform terpercaya untuk petualangan pendakian gunung di Indonesia. Wujudkan impian mendaki Anda bersama kami.</p>
+      <div class="social-links d-flex justify-content-center">
+         <a href=""><i class="bi bi-twitter-x"></i></a>
+         <a href=""><i class="bi bi-facebook"></i></a>
+         <a href=""><i class="bi bi-instagram"></i></a>
+         <a href=""><i class="bi bi-youtube"></i></a>
+         <a href=""><i class="bi bi-linkedin"></i></a>
+      </div>
+      <div class="container">
+        <div class="copyright">
+          <span>Copyright</span> <strong class="px-1 sitename">PorterIn</strong> <span>All Rights Reserved</span>
+        </div>
+        <div class="credits">
+          Designed with <i class="bi bi-heart-fill text-danger"></i> for Mountain Lovers
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
