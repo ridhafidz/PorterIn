@@ -370,6 +370,57 @@
   <script src="assets/js/main.js"></script>
 
   <script>
+    // Dummy porter hanya akan muncul jika localStorage 'porters' kosong atau array kosong
+(function injectDummyPortersIfNeeded() {
+    let porters = [];
+    try {
+        porters = JSON.parse(localStorage.getItem('porters')) || [];
+    } catch (e) {
+        porters = [];
+    }
+    if (!Array.isArray(porters) || porters.length === 0) {
+        const dummyPorters = [
+            {
+                id: 'prt001',
+                name: 'John Doe',
+                photo: 'https://randomuser.me/api/portraits/men/32.jpg',
+                price: 350000,
+                rating: 4.8,
+                experience: 5,
+                specialty: 'Gunung Ekstrem',
+                skills: 'Navigasi, Survival, Rescue',
+                condition: 'Fit',
+                duration: 1
+            },
+            {
+                id: 'prt002',
+                name: 'Budi Santoso',
+                photo: 'https://randomuser.me/api/portraits/men/45.jpg',
+                price: 300000,
+                rating: 4.5,
+                experience: 3,
+                specialty: 'Gunung Pemula',
+                skills: 'Motivator, Fotografi',
+                condition: 'Fit',
+                duration: 1
+            },
+            {
+                id: 'prt003',
+                name: 'Siti Aminah',
+                photo: 'https://randomuser.me/api/portraits/women/65.jpg',
+                price: 400000,
+                rating: 4.9,
+                experience: 7,
+                specialty: 'Gunung Wanita',
+                skills: 'Medis, Logistik, Memasak',
+                condition: 'Fit',
+                duration: 1
+            }
+        ];
+        localStorage.setItem('porters', JSON.stringify(dummyPorters));
+    }
+})();
+
     // --- Global Wishlist Logic ---
     let wishlistItems = JSON.parse(localStorage.getItem('wishlistPorters')) || [];
 
@@ -531,10 +582,10 @@
                 if (filterContainer) {
                     filterContainer.addEventListener('click', function(e) {
                         if (e.target.classList.contains('filter-btn')) {
-                            filterContainer.querySelector('.active').classList.remove('active');
-                            e.target.classList.add('active');
-                            currentFilter = e.target.getAttribute('data-filter');
-                            applyFilters();
+                          filterContainer.querySelector('.active').classList.remove('active');
+                          e.target.classList.add('active');
+                          currentFilter = e.target.getAttribute('data-filter');
+                          applyFilters();
                         }
                     });
                 }
@@ -548,6 +599,7 @@
         
         // Initial setup on page load
         updateWishlistCount();
+        updateCartCount();
         renderPorters();
         initializeIsotopeAndFilters();
     });
@@ -583,6 +635,16 @@
 
     function toggleCart(event) { event.preventDefault(); alert('Tampilkan keranjang.'); }
     function toggleWishlist(event) { event.preventDefault(); alert('Tampilkan wishlist.'); }
+
+    function updateCartCount() {
+        const cartGunung = JSON.parse(localStorage.getItem('cartItems')) || [];
+        const cartPorter = JSON.parse(localStorage.getItem('cartPorters')) || [];
+        const total = cartGunung.length + cartPorter.length;
+        const cartCountHeader = document.getElementById('cart-count-header');
+        if (cartCountHeader) {
+            cartCountHeader.textContent = total;
+        }
+    }
   </script>
 
 </body>

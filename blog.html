@@ -54,12 +54,6 @@
         display: flex;
         justify-content: center;
       }
-
-      #navmenu ul {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
     }
 
     /* Navbar tetap rata kanan di mobile */
@@ -67,7 +61,7 @@
       #header .container {
         justify-content: space-between !important;
       }
-    }
+    } */
   </style>
 </head>
 
@@ -82,7 +76,7 @@
         <h1 class="sitename">PorterIn</h1>
       </a>
 
-      <nav id="navmenu" class="navmenu order-3 order-xl-2">
+      <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="index.html#about">About</a></li>
@@ -161,6 +155,54 @@
     </section><!-- /Blog Pagination Section -->
 
     <script>
+      // Inject dummy articles only if localStorage 'articles' is empty or not an array
+      (function injectDummyArticlesIfNeeded() {
+        let articles = [];
+        try {
+          articles = JSON.parse(localStorage.getItem('articles')) || [];
+        } catch (e) {
+          articles = [];
+        }
+        if (!Array.isArray(articles) || articles.length === 0) {
+          const dummyArticles = [
+            {
+              id: 'art001',
+              title: 'Tips Mendaki Gunung untuk Pemula',
+              category: 'Tips and Tricks',
+              date: '2025-06-01',
+              author: 'Admin PorterIn',
+              image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
+              snippet: 'Simak tips-tips penting agar pendakian pertamamu aman dan menyenangkan!',
+              content: 'Pendakian gunung adalah pengalaman luar biasa, namun perlu persiapan matang. Berikut beberapa tips untuk pemula: ...',
+              status: 'dipublikasi'
+            },
+            {
+              id: 'art002',
+              title: 'Review Peralatan Wajib Pendakian',
+              category: 'Peralatan',
+              date: '2025-06-10',
+              author: 'Tim PorterIn',
+              image: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80',
+              snippet: 'Peralatan apa saja yang wajib dibawa saat mendaki? Simak ulasan lengkapnya di sini.',
+              content: 'Berikut adalah daftar peralatan wajib untuk mendaki gunung di Indonesia: ...',
+              status: 'dipublikasi'
+            },
+            {
+              id: 'art003',
+              title: 'Cerita Seru Bersama Porter Lokal',
+              category: 'Seputar Porter',
+              date: '2025-06-15',
+              author: 'Guest Writer',
+              image: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=600&q=80',
+              snippet: 'Pengalaman tak terlupakan bersama porter profesional di jalur pendakian.',
+              content: 'Porter lokal memiliki peran penting dalam kesuksesan pendakian. Berikut kisah inspiratif mereka: ...',
+              status: 'dipublikasi'
+            }
+          ];
+          localStorage.setItem('articles', JSON.stringify(dummyArticles));
+        }
+      })();
+
       // Ambil dan render artikel
       function renderBlogArticles() {
         const articles = JSON.parse(localStorage.getItem('articles')) || [];

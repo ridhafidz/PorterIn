@@ -482,7 +482,7 @@
           <li class="dropdown"><a href="#" class="active"><span>Produk</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="katalog-gunung.html" class="active">Katalog Gunung</a></li>
-              <li><a href="porter-booking.html">Porter</a></li>
+              <li><a href="katalog-porter.html">Porter</a></li>
               <li><a href="katalog-gear.html">Sewa Gear Pendakian</a></li>
               <li><a href="#">Simulasi Pendakian</a></li>
             </ul>
@@ -933,6 +933,57 @@
         }
       });
     }
+
+    // --- Pesan Sekarang (Add to Cart) ---
+    const bookBtn = document.getElementById('book-package-btn');
+    if (bookBtn) {
+      bookBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        // Ambil data booking
+        const participantsInput = document.getElementById('participants-count');
+        const dateInput = document.getElementById('departure-date');
+        const participants = parseInt(participantsInput?.value) || 4;
+        const date = dateInput?.value || '';
+
+        // Siapkan data produk untuk cart, tambahkan uniqueKey agar setiap klik dianggap produk baru
+        const cartItem = {
+          id: mountain.id,
+          name: mountain.name,
+          image: mountain.image || '',
+          price: mountain.price || 0,
+          quantity: participants,
+          date: date,
+          category: 'Paket Pendakian',
+          duration: mountain.duration || "3 Hari 2 Malam",
+          uniqueKey: Date.now() + Math.random().toString(36).substr(2, 9) // unique per klik
+        };
+
+        // Ambil cart dari localStorage
+        let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+        // Selalu push produk baru (tidak pernah merge)
+        cart.push(cartItem);
+        localStorage.setItem('cartItems', JSON.stringify(cart));
+
+        showNotification('success', `${mountain.name} berhasil ditambahkan ke keranjang!`);
+        updateCartCount();
+      });
+    }
+
+    // Ganti fungsi updateCartCount agar count = jumlah total produk di semua cart (gunung, porter, gear)
+    function updateCartCount() {
+      const cartGunung = JSON.parse(localStorage.getItem('cartItems')) || [];
+      const cartPorter = JSON.parse(localStorage.getItem('cartPorters')) || [];
+      const cartGear = JSON.parse(localStorage.getItem('cartGears')) || [];
+      const total = cartGunung.length + cartPorter.length + cartGear.length;
+      const cartCountHeader = document.getElementById('cart-count-header');
+      if (cartCountHeader) {
+        cartCountHeader.textContent = total;
+      }
+    }
+
+    // Panggil updateCartCount() saat halaman dimuat agar count tetap ada saat refresh
+    updateCartCount();
 }
     
     // Wishlist Logic

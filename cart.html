@@ -727,40 +727,6 @@
               <button class="btn-checkout mt-4" onclick="proceedToCheckout()">
                 <i class="bi bi-credit-card"></i> Lanjut ke Pembayaran
               </button>
-              
-              <div class="mt-4">
-                <h6 class="mb-3">Metode Pembayaran</h6>
-                <div class="payment-methods">
-                  <div class="payment-method" title="BCA">
-                    <img src="/placeholder.svg?height=25&width=40&text=BCA" alt="BCA" style="max-width: 100%; max-height: 100%;">
-                  </div>
-                  <div class="payment-method" title="Mandiri">
-                    <img src="/placeholder.svg?height=25&width=40&text=MDR" alt="Mandiri" style="max-width: 100%; max-height: 100%;">
-                  </div>
-                  <div class="payment-method" title="BRI">
-                    <img src="/placeholder.svg?height=25&width=40&text=BRI" alt="BRI" style="max-width: 100%; max-height: 100%;">
-                  </div>
-                  <div class="payment-method" title="OVO">
-                    <img src="/placeholder.svg?height=25&width=40&text=OVO" alt="OVO" style="max-width: 100%; max-height: 100%;">
-                  </div>
-                  <div class="payment-method" title="GoPay">
-                    <img src="/placeholder.svg?height=25&width=40&text=GPY" alt="GoPay" style="max-width: 100%; max-height: 100%;">
-                  </div>
-                  <div class="payment-method" title="DANA">
-                    <img src="/placeholder.svg?height=25&width=40&text=DNA" alt="DANA" style="max-width: 100%; max-height: 100%;">
-                  </div>
-                </div>
-              </div>
-              
-              <div class="security-info">
-                <div class="d-flex align-items-center">
-                  <i class="bi bi-shield-check text-success me-2 fs-5"></i>
-                  <div>
-                    <small class="fw-bold">Transaksi Aman</small>
-                    <br><small class="text-muted">Dilindungi enkripsi SSL 256-bit</small>
-                  </div>
-                </div>
-              </div>
             </div>
 
           </div>
@@ -809,6 +775,9 @@
 
   <script>
     let cartItems = [];
+    let cartPorters = [];
+    let cartGears = [];
+
     let notificationTimeout;
     let cartCount = 0;
     let subtotal = 0;
@@ -829,8 +798,10 @@
 
     function loadCartFromLocalStorage() {
       cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
-      cartCount = parseInt(localStorage.getItem('cartCount') || '0');
-      subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      cartPorters = JSON.parse(localStorage.getItem('cartPorters') || '[]');
+      cartGears = JSON.parse(localStorage.getItem('cartGears') || '[]');
+      cartCount = cartItems.length + cartPorters.length + cartGears.length;
+      subtotal = [...cartItems, ...cartPorters, ...cartGears].reduce((sum, item) => sum + (item.price * item.quantity), 0);
       document.getElementById('subtotal-amount').textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
     }
 
@@ -855,67 +826,58 @@
     function renderCartItems() {
       const cartContainer = document.querySelector('.col-lg-8');
       const emptyCart = document.querySelector('.empty-cart');
-      const orderSummary = document.querySelector('.order-summary');
-      const subtotalRow = document.querySelector('.order-summary .summary-row:first-child');
+      const promoSection = document.querySelector('.promo-section');
+      // Hapus semua item cart yang sudah ada
+      document.querySelectorAll('.cart-item').forEach(e => e.remove());
 
-      if (cartItems.length === 0) {
+      const allItems = [...cartItems, ...cartPorters, ...cartGears];
+
+      if (!allItems || allItems.length === 0) {
         if (!emptyCart) showEmptyCart();
         return;
       }
-
       if (emptyCart) emptyCart.remove();
 
-      cartItems.forEach(item => {
-        const existingItem = document.querySelector(`.cart-item[data-item-id="${item.id}"]`);
-        if (!existingItem) {
-          const newCartItem = document.createElement('div');
-          newCartItem.className = 'cart-item';
-          newCartItem.setAttribute('data-item-id', item.id);
-          newCartItem.setAttribute('data-aos', 'fade-up');
-          newCartItem.setAttribute('data-aos-delay', '200');
-          newCartItem.innerHTML = `
-            <div class="row align-items-center">
-              <div class="col-md-2 col-4">
-                <div class="cart-item-image" style="background-image: ${item.image};"></div>
+      allItems.forEach(item => {
+        const newCartItem = document.createElement('div');
+        newCartItem.className = 'cart-item';
+        newCartItem.setAttribute('data-item-id', item.id);
+        newCartItem.setAttribute('data-aos', 'fade-up');
+        newCartItem.setAttribute('data-aos-delay', '200');
+        newCartItem.innerHTML = `
+          <div class="row align-items-center">
+            <div class="col-md-2 col-4">
+              <div class="cart-item-image" style="background-image: ${item.image};"></div>
+            </div>
+            <div class="col-md-4 col-8">
+              <h5 class="mb-1">${item.name}</h5>
+              <p class="text-muted mb-1"><i class="bi bi-box2"></i> ${item.category || 'Sewa Peralatan'}</p>
+              <div class="mb-2">
+                <span class="badge bg-success">Tersedia</span>
               </div>
-              <div class="col-md-4 col-8">
-                <h5 class="mb-1">${item.name}</h5>
-                <p class="text-muted mb-1"><i class="bi bi-box2"></i> ${item.category || 'Sewa Peralatan'}</p>
-                <div class="mb-2">
-                  <span class="badge bg-success">Tersedia</span>
-                </div>
-                <small class="text-success"><i class="bi bi-check-circle"></i> Tersedia</small>
-              </div>
-              <div class="col-md-2 col-6">
-                <div class="quantity-controls">
-                  <button class="quantity-btn" onclick="decreaseQuantity(${item.id})">-</button>
-                  <span class="quantity-display" id="qty-${item.id}">${item.quantity}</span>
-                  <button class="quantity-btn" onclick="increaseQuantity(${item.id})">+</button>
-                </div>
-              </div>
-              <div class="col-md-2 col-4">
-                <div class="text-center">
-                  <strong class="text-success">Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</strong>
-                  <br><small class="text-muted">${item.duration || '2 hari'}</small>
-                </div>
-              </div>
-              <div class="col-md-2 col-2">
-                <button class="remove-btn" onclick="removeItem(${item.id})" title="Hapus item">
-                  <i class="bi bi-trash"></i>
-                </button>
+              <small class="text-success"><i class="bi bi-check-circle"></i> Tersedia</small>
+            </div>
+            <div class="col-md-2 col-6">
+              <div class="quantity-controls">
+                <button class="quantity-btn" onclick="decreaseQuantity('${item.id}')">-</button>
+                <span class="quantity-display" id="qty-${item.id}">${item.quantity}</span>
+                <button class="quantity-btn" onclick="increaseQuantity('${item.id}')">+</button>
               </div>
             </div>
-          `;
-          cartContainer.insertBefore(newCartItem, document.querySelector('.promo-section'));
-
-          const newSummaryRow = document.createElement('div');
-          newSummaryRow.className = 'summary-row';
-          newSummaryRow.innerHTML = `
-            <span>${item.name} (${item.quantity}x)</span>
-            <span>Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</span>
-          `;
-          orderSummary.insertBefore(newSummaryRow, subtotalRow);
-        }
+            <div class="col-md-2 col-4">
+              <div class="text-center">
+                <strong class="text-success">Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</strong>
+                <br><small class="text-muted">${item.duration || '2 hari'}</small>
+              </div>
+            </div>
+            <div class="col-md-2 col-2">
+              <button class="remove-btn" onclick="removeItem(${item.id})" title="Hapus item">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </div>
+        `;
+        cartContainer.insertBefore(newCartItem, promoSection);
       });
     }
 
@@ -950,65 +912,60 @@
       setTimeout(() => notification.classList.remove('hide'), 400);
     }
 
-    function increaseQuantity(itemId) {
-      const qtyElement = document.getElementById(`qty-${itemId}`);
-      const button = event.currentTarget;
-      const item = cartItems.find(item => item.id === itemId);
-      
-      if (item) {
-        item.quantity += 1;
-        qtyElement.textContent = item.quantity;
-        subtotal += item.price;
-        
-        const summaryRows = document.querySelectorAll('.order-summary .summary-row');
-        summaryRows.forEach(row => {
-          if (row.querySelector('span:first-child').textContent.includes(item.name)) {
-            row.querySelector('span:first-child').textContent = `${item.name} (${item.quantity}x)`;
-            row.querySelector('span:last-child').textContent = `Rp ${(item.price * item.quantity).toLocaleString('id-ID')}`;
+    function increaseQuantity(id) {
+      let updated = false;
+      let itemName = '';
+      ['cartItems', 'cartPorters', 'cartGears'].forEach(key => {
+        let arr = JSON.parse(localStorage.getItem(key)) || [];
+        arr.forEach(item => {
+          if (item.id == id) {
+            item.quantity = (item.quantity || 1) + 1;
+            itemName = item.name;
+            updated = true;
           }
         });
-
-        const itemElement = document.querySelector(`.cart-item[data-item-id="${itemId}"]`);
-        itemElement.querySelector('.text-success').textContent = `Rp ${(item.price * item.quantity).toLocaleString('id-ID')}`;
-        
-        document.getElementById('subtotal-amount').textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
-        saveCartToLocalStorage();
-        updateTotal();
-        button.classList.add('animate');
-        setTimeout(() => button.classList.remove('animate'), 300);
-        showMountainNotification('success', 'Quantity Updated!', `${item.name} quantity increased to ${item.quantity}`, 2000);
+        localStorage.setItem(key, JSON.stringify(arr));
+      });
+      if (updated) {
+        loadCartFromLocalStorage();
+        renderCartItems();
+        updateCartCount();
+        showMountainNotification('success', 'Quantity Ditambah', `Jumlah ${itemName} berhasil ditambah`, 2000);
       }
     }
 
-    function decreaseQuantity(itemId) {
-      const qtyElement = document.getElementById(`qty-${itemId}`);
-      const button = event.currentTarget;
-      const item = cartItems.find(item => item.id === itemId);
-      
-      if (item && item.quantity > 1) {
-        item.quantity -= 1;
-        qtyElement.textContent = item.quantity;
-        subtotal -= item.price;
-        
-        const summaryRows = document.querySelectorAll('.order-summary .summary-row');
-        summaryRows.forEach(row => {
-          if (row.querySelector('span:first-child').textContent.includes(item.name)) {
-            row.querySelector('span:first-child').textContent = `${item.name} (${item.quantity}x)`;
-            row.querySelector('span:last-child').textContent = `Rp ${(item.price * item.quantity).toLocaleString('id-ID')}`;
+    function decreaseQuantity(id) {
+      let updated = false;
+      let warning = false;
+      let itemName = '';
+      let minQty = 1;
+      ['cartItems', 'cartPorters', 'cartGears'].forEach(key => {
+        let arr = JSON.parse(localStorage.getItem(key)) || [];
+        arr.forEach(item => {
+          if (item.id == id) {
+            itemName = item.name;
+            // Atur minimal quantity khusus, contoh: Gunung Semeru min 4
+            if (item.name && item.name.toLowerCase().includes('semeru')) {
+              minQty = 4;
+            }
+            if ((item.quantity || 1) > minQty) {
+              item.quantity = (item.quantity || 1) - 1;
+              updated = true;
+            } else {
+              warning = true;
+            }
           }
         });
-
-        const itemElement = document.querySelector(`.cart-item[data-item-id="${itemId}"]`);
-        itemElement.querySelector('.text-success').textContent = `Rp ${(item.price * item.quantity).toLocaleString('id-ID')}`;
-        
-        document.getElementById('subtotal-amount').textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
-        saveCartToLocalStorage();
-        updateTotal();
-        button.classList.add('animate');
-        setTimeout(() => button.classList.remove('animate'), 300);
-        showMountainNotification('info', 'Quantity Updated!', `${item.name} quantity decreased to ${item.quantity}`, 2000);
-      } else {
-        showMountainNotification('warning', 'Minimum Quantity!', 'Quantity cannot be less than 1', 2000);
+        localStorage.setItem(key, JSON.stringify(arr));
+      });
+      if (updated) {
+        loadCartFromLocalStorage();
+        renderCartItems();
+        updateCartCount();
+        showMountainNotification('success', 'Quantity Dikurangi', `Jumlah ${itemName} berhasil dikurangi`, 2000);
+      }
+      if (warning) {
+        showMountainNotification('warning', 'Minimal Peserta', `Jumlah minimal untuk paket ini adalah ${minQty}`, 2500);
       }
     }
 
@@ -1090,9 +1047,9 @@
           </div>
           <div class="col-md-2 col-6">
             <div class="quantity-controls">
-              <button class="quantity-btn" onclick="decreaseQuantity(${newItem.id})">-</button>
+              <button class="quantity-btn" onclick="decreaseQuantity('${newItem.id}')">-</button>
               <span class="quantity-display" id="qty-${newItem.id}">1</span>
-              <button class="quantity-btn" onclick="increaseQuantity(${newItem.id})">+</button>
+              <button class="quantity-btn" onclick="increaseQuantity('${newItem.id}')">+</button>
             </div>
           </div>
           <div class="col-md-2 col-4">
@@ -1159,7 +1116,8 @@
 
     function updateCartCount() {
       const cartHeader = document.querySelector('.col-lg-8 h3');
-      if (cartHeader) cartHeader.textContent = `Item dalam Keranjang (${cartCount})`;
+      const totalCount = cartItems.length + cartPorters.length + cartGears.length;
+      if (cartHeader) cartHeader.textContent = `Item dalam Keranjang (${totalCount})`;
     }
 
     function proceedToCheckout() {
@@ -1167,11 +1125,10 @@
         showMountainNotification('warning', 'Empty Cart!', 'Please add items to your cart before proceeding to checkout', 3000);
         return;
       }
-      
-      showMountainNotification('info', 'Checkout', 'Redirecting to payment page...', 2000);
+      showMountainNotification('info', 'Checkout', 'Redirecting to payment page...', 1200);
       setTimeout(() => {
-        alert('Mengarahkan ke halaman pembayaran...\n\nTotal: ' + document.getElementById('total-amount').textContent);
-      }, 2000);
+        window.location.href = 'payment.html';
+      }, 1200);
     }
 
     function showEmptyCart() {

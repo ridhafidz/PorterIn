@@ -8,16 +8,13 @@
   <meta name="description" content="Katalog lengkap paket pendakian gunung dan wisata alam terbaik di Indonesia bersama PorterIn">
   <meta name="keywords" content="katalog gunung, pendakian gunung, porter, bromo, ijen, rinjani, semeru, merapi, indonesia">
 
-  <!-- Favicons -->
   <link href="assets/img/icon-lagi1.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
@@ -26,7 +23,6 @@
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-  <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
   <style>
@@ -230,6 +226,33 @@
         background-color: #0dcaf0;
         color: white;
     }
+    
+    @media (max-width: 991.98px) {
+      #header .container {
+        justify-content: space-between !important;
+      }
+    }
+
+    /* =================================================================== */
+    /* == CSS PERBAIKAN UNTUK MOBILE DROPDOWN (TAMBAHAN) == */
+    /* =================================================================== */
+    .mobile-nav-active .navmenu .dropdown ul {
+      display: none; /* Sembunyikan secara default */
+      position: static; /* Hapus posisi absolut di mobile */
+      margin: 10px 20px;
+      padding: 10px 0;
+      border: 1px solid #eef0ef;
+      box-shadow: none;
+      background: #fff;
+    }
+
+    .mobile-nav-active .navmenu .dropdown.active > ul {
+      display: block; /* Tampilkan jika parent <li> memiliki kelas .active */
+    }
+    /* =================================================================== */
+    /* == AKHIR DARI CSS PERBAIKAN == */
+    /* =================================================================== */
+
   </style>
 </head>
 
@@ -242,7 +265,6 @@
         <h1 class="sitename">PorterIn</h1>
       </a>
 
-      <!-- Wishlist & Cart icons -->
       <div class="d-flex align-items-center order-2 order-xl-3 me-2">
         <a href="wishlist.html" class="me-2 position-relative wishlist-icon">
           <i class="bi bi-heart-fill fs-5"></i>
@@ -259,9 +281,9 @@
           <li><a href="index.html">Home</a></li>
           <li><a href="index.html#about">About</a></li>
           <li><a href="blog.html">Blog</a></li>
-          <li class="dropdown"><a href="#" class="active"><span>Produk</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+        <li class="dropdown"><a href="#" class="active"><span>Produk</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a href="katalog-gunung.html" class="active">Katalog Gunung</a></li>
+              <li><a href="katalog-gunung.html">Katalog Gunung</a></li>
               <li><a href="katalog-porter.html">Porter</a></li>
               <li><a href="katalog-gear.html">Sewa Gear Pendakian</a></li>
               <li><a href="#">Simulasi Pendakian</a></li>
@@ -276,7 +298,6 @@
     </div>
   </header>
 
-  <!-- Notification Element -->
   <div id="custom-notification" class="custom-notification">
     <div id="notification-icon" class="icon"></div>
     <div id="notification-message"></div>
@@ -317,15 +338,11 @@
       </div>
     </section>
 
-    <!-- Packages Section -->
     <section id="packages" class="section">
       <div class="container">
-        <!-- wadah untuk menampung kartu-kartu yang dibuat secara dinamis -->
         <div class="row isotope-container" data-aos="fade-up" data-aos-delay="200" id="mountain-package-list">
           
-          <!-- KONTEN DINAMIS AKAN DIMASUKKAN DI SINI OLEH JAVASCRIPT -->
-
-        </div>
+          </div>
       </div>
     </section>
   </main>
@@ -352,21 +369,83 @@
     </div>
   </footer>
 
-  <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Preloader -->
   <div id="preloader"></div>
 
-  <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <!-- <script src="assets/js/main.js"></script> -->
+  <script>
+    // Tambahkan di awal <script> sebelum kode utama, agar dummy hanya dibuat jika belum ada data
 
-   <script>
+const dummyMountains = [
+    {
+      id: 'mnt001',
+      name: 'Gunung Semeru',
+      image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
+      price: 2500000,
+      difficulty: 'Ekstrem',
+      location: 'Jawa Timur',
+      duration: '4 Hari 3 Malam',
+      description: 'Pendakian ke puncak tertinggi di Pulau Jawa dengan pemandangan luar biasa.',
+      gallery: [
+        'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80'
+      ],
+      reviews: [
+        { name: 'Andi', rating: 5, comment: 'Pengalaman luar biasa!' }
+      ]
+    },
+    {
+      id: 'mnt002',
+      name: 'Gunung Rinjani',
+      image: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80',
+      price: 2200000,
+      difficulty: 'Menengah',
+      location: 'Nusa Tenggara Barat',
+      duration: '3 Hari 2 Malam',
+      description: 'Nikmati keindahan Danau Segara Anak dan puncak Rinjani.',
+      gallery: [
+        'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80'
+      ],
+      reviews: [
+        { name: 'Budi', rating: 4, comment: 'Pemandangan sangat indah.' }
+      ]
+    },
+    {
+      id: 'mnt003',
+      name: 'Gunung Prau',
+      image: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80',
+      price: 900000,
+      difficulty: 'Pemula',
+      location: 'Dieng, Jawa Tengah',
+      duration: '2 Hari 1 Malam',
+      description: 'Gunung favorit pendaki pemula dengan sunrise terbaik di Jawa Tengah.',
+      gallery: [
+        'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80'
+      ],
+      reviews: [
+        { name: 'Citra', rating: 5, comment: 'Cocok untuk pemula, sunrise keren!' }
+      ]
+    }
+  ];
+
+let mountains = [];
+try {
+  mountains = JSON.parse(localStorage.getItem('mountains')) || [];
+} catch (e) {
+  mountains = [];
+}
+
+// Jika mountains kosong (belum ada data dinamis), isi dengan dummy
+if (!Array.isArray(mountains) || mountains.length === 0) {
+  localStorage.setItem('mountains', JSON.stringify(dummyMountains));
+}
+
     document.addEventListener('DOMContentLoaded', function() {
         // --- Global Wishlist Logic ---
         let wishlistItems = JSON.parse(localStorage.getItem('wishlistMountains')) || [];
@@ -378,6 +457,17 @@
                 wishlistCountHeader.textContent = wishlistItems.length;
             }
         }
+
+        function updateCartCount() {
+  const cartGunung = JSON.parse(localStorage.getItem('cartItems')) || [];
+  const cartPorter = JSON.parse(localStorage.getItem('cartPorters')) || [];
+  const cartGear = JSON.parse(localStorage.getItem('cartGears')) || [];
+  const total = cartGunung.length + cartPorter.length + cartGear.length;
+  const cartCountHeader = document.getElementById('cart-count-header');
+  if (cartCountHeader) {
+    cartCountHeader.textContent = total;
+  }
+}
 
         window.addToWishlist = function(buttonElement, mountainData) {
             const icon = buttonElement.querySelector('i');
@@ -524,8 +614,44 @@
             });
         }
         
+        // --- KODE LENGKAP UNTUK NAVIGASI MOBILE (TERMASUK DROPDOWN) ---
+        const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+        if (mobileNavToggle) {
+            mobileNavToggle.addEventListener('click', function(event) {
+                event.preventDefault();
+                document.body.classList.toggle('mobile-nav-active');
+                mobileNavToggle.classList.toggle('bi-list');
+                mobileNavToggle.classList.toggle('bi-x');
+            });
+        }
+
+        // Logika untuk Dropdown di dalam Navigasi Mobile
+        const navDropdowns = document.querySelectorAll('.navmenu .dropdown > a');
+
+        navDropdowns.forEach(el => {
+            el.addEventListener('click', function(event) {
+                // Cek apakah kita sedang dalam mode navigasi mobile
+                if (document.body.classList.contains('mobile-nav-active')) {
+                    event.preventDefault(); // Hentikan link agar tidak pindah halaman
+                    
+                    // Toggle kelas 'active' pada parent <li>
+                    this.parentElement.classList.toggle('active');
+                    
+                    // Ambil ikon panah di dalamnya
+                    const toggleIcon = this.querySelector('.toggle-dropdown');
+                    if (toggleIcon) {
+                        // Ganti ikon panah ke atas/bawah
+                        toggleIcon.classList.toggle('bi-chevron-down');
+                        toggleIcon.classList.toggle('bi-chevron-up');
+                    }
+                }
+            });
+        });
+        // --- AKHIR DARI KODE NAVIGASI MOBILE ---
+
         // Initial Page Load
         updateWishlist();
+        updateCartCount(); // <-- Tambahkan baris ini
         renderMountainPackages();
         initializePage();
     });
@@ -561,7 +687,6 @@
     
     function toggleCart(event) { event.preventDefault(); alert('Tampilkan keranjang.'); }
     function toggleWishlist(event) { event.preventDefault(); alert('Tampilkan wishlist.'); }
-
    </script>
 
 </body>

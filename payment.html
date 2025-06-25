@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Pembayaran - PorterIn</title>
+  <meta name="description" content="Pembayaran PorterIn - Selesaikan transaksi pendakian Anda dengan aman dan mudah">
+  <meta name="keywords" content="pembayaran, payment, porter, pendakian gunung, porterin">
+
+  <!-- Favicons -->
+  <link href="assets/img/icon-lagi1.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <style>
+    .page-title {
+      background: linear-gradient(rgba(0, 153, 97, 0.8), rgba(233, 30, 99, 0.8)), url('assets/img/gunung.jpg');
+      background-size: cover;
+      background-position: center;
+      padding: 100px 0 60px 0;
+      color: white;
+    }
+
+    .payment-container {
+      padding: 60px 0;
+      background-color: #f8f9fa;
+    }
+
+    .payment-summary {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+
+    .payment-summary h4 {
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .payment-item {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+      padding: 15px 0;
+    }
+
+    .payment-item:last-child {
+      border-bottom: none;
+    }
+
+    .payment-item-image {
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+      background-size: cover;
+      background-position: center;
+      margin-right: 20px;
+      background-color: #e9ecef;
+    }
+
+    .payment-item-details {
+      flex: 1;
+    }
+
+    .payment-item-details h6 {
+      margin: 0 0 5px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .payment-item-details small {
+      color: #888;
+    }
+
+    .payment-item-price {
+      font-weight: 700;
+      color: #009961;
+      font-size: 16px;
+      min-width: 100px;
+      text-align: right;
+    }
+
+    .payment-total {
+      font-size: 20px;
+      font-weight: 700;
+      color: #009961;
+      margin-top: 20px;
+      text-align: right;
+    }
+
+    .payment-form {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .payment-form h5 {
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .payment-methods label {
+      margin-right: 20px;
+      font-weight: 500;
+    }
+
+    .btn-pay {
+      background: linear-gradient(135deg, #009961, #4a7c59);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 18px;
+      margin-top: 20px;
+      transition: all 0.3s;
+    }
+
+    .btn-pay:hover {
+      background: linear-gradient(135deg, #4a7c59, #009961);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 153, 97, 0.2);
+    }
+
+    .payment-success {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .payment-success .bi {
+      font-size: 60px;
+      color: #009961;
+      margin-bottom: 20px;
+    }
+
+    .payment-success h3 {
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .payment-success p {
+      color: #555;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body class="payment-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+        <h1 class="sitename">PorterIn</h1>
+      </a>
+      <nav id="navmenu" class="navmenu mx-auto order-2 order-xl-2">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li class="dropdown"><a href="#"><span>Produk</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="katalog-gunung.html">Katalog Gunung</a></li>
+              <li><a href="katalog-porter.html">Porter</a></li>
+              <li><a href="katalog-gear.html">Sewa Gear Pendakian</a></li>
+              <li><a href="#">Simulasi Pendakian</a></li>
+            </ul>
+          </li>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="index.html#history">History</a></li>
+        </ul>
+      </nav>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/img/gunung.jpg);">
+      <div class="container position-relative">
+        <h1>Pembayaran</h1>
+        <p>Periksa kembali pesanan Anda dan selesaikan pembayaran untuk memulai petualangan Anda bersama PorterIn.</p>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="cart.html">Keranjang Belanja</a></li>
+            <li class="current">Pembayaran</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <section class="payment-container">
+      <div class="container">
+        <div class="row">
+          <!-- Ringkasan Pesanan & Billing Details -->
+          <div class="col-lg-7 mb-4">
+            <div class="payment-summary" id="payment-summary">
+              <h4>Ringkasan Pesanan</h4>
+              <div id="payment-items"></div>
+              <div class="d-flex justify-content-between align-items-center mt-3">
+                <div>
+                  <strong>Total Estimasi:</strong>
+                </div>
+                <div class="payment-total" id="total-estimate">Rp 0</div>
+              </div>
+            </div>
+
+            <!-- Form Billing Details -->
+            <div class="payment-form mb-4" data-aos="fade-up" data-aos-delay="300">
+              <h5>Billing Details</h5>
+              <form id="billing-form">
+                <div class="mb-3">
+                  <label for="billing-name" class="form-label">Nama Lengkap</label>
+                  <input type="text" class="form-control" id="billing-name" name="billing-name" required>
+                </div>
+                <div class="mb-3">
+                  <label for="billing-email" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="billing-email" name="billing-email" required>
+                </div>
+                <div class="mb-3">
+                  <label for="billing-phone" class="form-label">Nomor HP</label>
+                  <input type="tel" class="form-control" id="billing-phone" name="billing-phone" required>
+                </div>
+                <div class="mb-3">
+                  <label for="billing-address" class="form-label">Alamat</label>
+                  <textarea class="form-control" id="billing-address" name="billing-address" rows="2" required></textarea>
+                </div>
+                <div class="row">
+                  <div class="col-md-7 mb-3">
+                    <label for="billing-city" class="form-label">Kota</label>
+                    <input type="text" class="form-control" id="billing-city" name="billing-city" required>
+                  </div>
+                  <div class="col-md-5 mb-3">
+                    <label for="billing-postal" class="form-label">Kode Pos</label>
+                    <input type="text" class="form-control" id="billing-postal" name="billing-postal" required>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Metode Pembayaran & Konfirmasi -->
+          <div class="col-lg-5">
+            <div class="payment-form" data-aos="fade-up" data-aos-delay="400">
+              <h5>Pilih Metode Pembayaran</h5>
+              <div class="payment-methods mb-3">
+                <label class="d-block mb-2">
+                  <input type="radio" name="payment-method" value="bank-transfer" checked onchange="togglePaymentOptions()"> Transfer Bank
+                </label>
+                <div id="bank-options" class="ms-4 mb-2">
+                  <label class="d-block"><input type="radio" name="bank-option" value="BCA" checked> BCA</label>
+                  <label class="d-block"><input type="radio" name="bank-option" value="BNI"> BNI</label>
+                  <label class="d-block"><input type="radio" name="bank-option" value="Mandiri"> Mandiri</label>
+                </div>
+                <label class="d-block mb-2">
+                  <input type="radio" name="payment-method" value="credit-card" onchange="togglePaymentOptions()"> Kartu Kredit/Debit
+                </label>
+                <div id="credit-card-options" class="ms-4 mb-2" style="display:none;">
+                  <span class="text-muted">Masukkan detail kartu pada langkah selanjutnya.</span>
+                </div>
+                <label class="d-block mb-2">
+                  <input type="radio" name="payment-method" value="e-wallet" onchange="togglePaymentOptions()"> E-Wallet
+                </label>
+                <div id="ewallet-options" class="ms-4 mb-2" style="display:none;">
+                  <label class="d-block"><input type="radio" name="ewallet-option" value="DANA" checked> DANA</label>
+                  <label class="d-block"><input type="radio" name="ewallet-option" value="Gopay"> Gopay</label>
+                </div>
+              </div>
+              <button class="btn-pay w-100" onclick="completePayment(event)">
+                <i class="bi bi-check-circle"></i> Selesaikan Pembayaran
+              </button>
+            </div>
+            <div class="payment-success" id="payment-success" style="display: none;">
+              <i class="bi bi-check-circle"></i>
+              <h3>Pembayaran Berhasil!</h3>
+              <p>Terima kasih telah melakukan pembayaran. Pesanan Anda sedang diproses.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="footer" class="footer dark-background">
+    <div class="container">
+      <h3 class="sitename">PorterIn</h3>
+      <p>Platform terpercaya untuk petualangan pendakian gunung di Indonesia. Wujudkan impian mendaki Anda bersama kami.</p>
+      <div class="social-links d-flex justify-content-center">
+        <a href=""><i class="bi bi-twitter-x"></i></a>
+        <a href=""><i class="bi bi-facebook"></i></a>
+        <a href=""><i class="bi bi-instagram"></i></a>
+        <a href=""><i class="bi bi-youtube"></i></a>
+        <a href=""><i class="bi bi-linkedin"></i></a>
+      </div>
+      <div class="container">
+        <div class="copyright">
+          <span>Copyright</span> <strong class="px-1 sitename">PorterIn</strong> <span>All Rights Reserved</span>
+        </div>
+        <div class="credits">
+          Designed with <i class="bi bi-heart-fill text-danger"></i> for Mountain Lovers
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <script>
+    function togglePaymentOptions() {
+      const method = document.querySelector('input[name="payment-method"]:checked').value;
+      document.getElementById('bank-options').style.display = method === 'bank-transfer' ? 'block' : 'none';
+      document.getElementById('credit-card-options').style.display = method === 'credit-card' ? 'block' : 'none';
+      document.getElementById('ewallet-options').style.display = method === 'e-wallet' ? 'block' : 'none';
+    }
+
+    function completePayment(e) {
+      e.preventDefault();
+      // Validasi form billing
+      const form = document.getElementById('billing-form');
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      // Simulate payment processing
+      setTimeout(() => {
+        document.getElementById('payment-summary').style.display = 'none';
+        document.querySelector('.payment-form').style.display = 'none';
+        document.getElementById('payment-success').style.display = 'block';
+      }, 1500);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      togglePaymentOptions();
+      // Ambil data cart dari localStorage
+      const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      const cartPorters = JSON.parse(localStorage.getItem('cartPorters')) || [];
+      const cartGears = JSON.parse(localStorage.getItem('cartGears')) || [];
+      const paymentItems = document.getElementById('payment-items');
+      let total = 0;
+      let delay = 100;
+
+      function formatRupiah(num) {
+        return 'Rp ' + (num || 0).toLocaleString('id-ID');
+      }
+
+      // Helper untuk render satu item
+      function renderItem({image, name, price, quantity, category, duration, date, specs, brand}, subtitle, delay, totalPrice) {
+        return `
+          <div class="payment-item" data-aos="fade-up" data-aos-delay="${delay}">
+            <div class="payment-item-image" style="background-image: url('${image || 'assets/img/icon-lagi1.png'}');"></div>
+            <div class="payment-item-details">
+              <h6>${name}${quantity && quantity > 1 ? ' x' + quantity : ''}</h6>
+              <small>${subtitle || ''}</small>
+            </div>
+            <div class="payment-item-price">${formatRupiah(totalPrice)}</div>
+          </div>
+        `;
+      }
+
+      // Render Gunung
+      cartItems.forEach(item => {
+        const qty = item.quantity || 1;
+        const dur = item.duration ? ` (${item.duration} hari)` : '';
+        const subtitle = (item.date ? `Tanggal: ${item.date}` : '') + dur;
+        const totalPrice = (item.price || 0) * qty;
+        total += totalPrice;
+        paymentItems.innerHTML += renderItem(
+          {
+            image: item.image || item.photo,
+            name: item.name,
+            quantity: qty,
+            price: item.price
+          },
+          subtitle,
+          delay,
+          totalPrice
+        );
+        delay += 100;
+      });
+
+      // Render Porter
+      cartPorters.forEach(item => {
+        const qty = item.quantity || 1;
+        const dur = item.duration ? ` (${item.duration} hari)` : '';
+        const subtitle = (item.category || 'Porter') + dur + (item.date ? `, Tanggal: ${item.date}` : '');
+        const totalPrice = (item.price || 0) * qty;
+        total += totalPrice;
+        paymentItems.innerHTML += renderItem(
+          {
+            image: item.image || item.photo,
+            name: item.name,
+            quantity: qty,
+            price: item.price
+          },
+          subtitle,
+          delay,
+          totalPrice
+        );
+        delay += 100;
+      });
+
+      // Render Gear
+      cartGears.forEach(item => {
+        const qty = item.quantity || 1;
+        const subtitle = (item.brand ? item.brand + ', ' : '') + (item.specs || '');
+        const totalPrice = (item.price || 0) * qty;
+        total += totalPrice;
+        paymentItems.innerHTML += renderItem(
+          {
+            image: item.image,
+            name: item.name,
+            quantity: qty,
+            price: item.price
+          },
+          subtitle,
+          delay,
+          totalPrice
+        );
+        delay += 100;
+      });
+
+      // Jika kosong
+      if (cartItems.length + cartPorters.length + cartGears.length === 0) {
+        paymentItems.innerHTML = `<div class="text-center text-muted py-4">Keranjang kosong.</div>`;
+      }
+
+      // Set total
+      document.getElementById('total-estimate').textContent = formatRupiah(total);
+    });
+  </script>
+
+</body>
+
+</html>

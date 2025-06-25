@@ -411,11 +411,11 @@
       
        <!-- Wishlist & Cart icons moved before navmenu -->
     <div class="d-flex align-items-center order-2 order-xl-3 me-2">
-      <a href="#" class="me-2 position-relative wishlist-icon" onclick="toggleWishlist(event)">
+      <a href="wishlist.html" class="me-2 position-relative wishlist-icon">
         <i class="bi bi-heart-fill fs-5"></i>
         <span class="wishlist-count" id="wishlist-count-header">0</span>
       </a>
-      <a href="#" class="me-2 position-relative cart-icon" onclick="toggleCart(event)">
+      <a href="cart.html" class="me-2 position-relative cart-icon">
         <i class="bi bi-bag-check-fill fs-5"></i>
         <span class="cart-count" id="cart-count-header">0</span>
       </a>
@@ -580,8 +580,47 @@
   <script src="assets/js/main.js"></script>
 
   <script>
-    // Hapus semua data dummy
-    // let reviews = [ ... ]; // HAPUS INI
+    // Dummy gear hanya akan muncul jika data admin kosong (tidak ada data di localStorage 'gears' atau array kosong)
+(function injectDummyGearsIfNeeded() {
+  let gears = [];
+  try {
+    gears = JSON.parse(localStorage.getItem('gears')) || [];
+  } catch (e) {
+    gears = [];
+  }
+  if (!Array.isArray(gears) || gears.length === 0) {
+    const dummyGears = [
+      {
+        id: 'gear001',
+        name: 'Tenda Eiger Adventure',
+        brand: 'Eiger',
+        type: 'Individu',
+        price: 75000,
+        image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
+        specs: 'Kapasitas 2 orang\nWaterproof\nRingan',
+      },
+      {
+        id: 'gear002',
+        name: 'Carrier Consina 60L',
+        brand: 'Consina',
+        type: 'Individu',
+        price: 50000,
+        image: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80',
+        specs: 'Kapasitas 60L\nNyaman dipunggung\nBanyak kantong',
+      },
+      {
+        id: 'gear003',
+        name: 'Sleeping Bag Rei',
+        brand: 'Rei',
+        type: 'Individu',
+        price: 30000,
+        image: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=600&q=80',
+        specs: 'Hangat\nRingan\nMudah dibersihkan',
+      }
+    ];
+    localStorage.setItem('gears', JSON.stringify(dummyGears));
+  }
+})();
 
     let cartCount = 0;
     let cartItems = [];
@@ -672,6 +711,12 @@
         };
         cartItems.push(item);
         cartCount++;
+        
+        // Tambahkan item ke cartGears di localStorage
+        let cartGears = JSON.parse(localStorage.getItem('cartGears')) || [];
+        cartGears.push(item);
+        localStorage.setItem('cartGears', JSON.stringify(cartGears));
+
         updateCartCount();
 
         showMountainNotification('add', `${currentProduct.name} berhasil ditambahkan ke keranjang untuk ${duration} hari! Total: Rp ${total.toLocaleString('id-ID')}`);
@@ -867,7 +912,12 @@
     }
 
     function updateCartCount() {
-      document.getElementById('cart-count-header').textContent = cartCount;
+      const cartGunung = JSON.parse(localStorage.getItem('cartItems')) || [];
+      const cartPorter = JSON.parse(localStorage.getItem('cartPorters')) || [];
+      const cartGear = JSON.parse(localStorage.getItem('cartGears')) || [];
+      const total = cartGunung.length + cartPorter.length + cartGear.length;
+      const cartCountHeader = document.getElementById('cart-count-header');
+      if (cartCountHeader) cartCountHeader.textContent = total;
     }
 
     function toggleWishlist(event) {
@@ -1070,7 +1120,7 @@
     // Panggil di DOMContentLoaded
     document.addEventListener('DOMContentLoaded', function() {
       // ...existing code...
-      initializeCalendar(currentProduct);
+      updateCartCount();
       // ...existing code...
     });
   </script>

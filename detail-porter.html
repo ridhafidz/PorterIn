@@ -458,22 +458,65 @@
     document.addEventListener('DOMContentLoaded', () => {
       try {
         const getQueryParam = (param) => new URLSearchParams(window.location.search).get(param);
-        const porterId = parseInt(getQueryParam('id'));
+        const porterId = getQueryParam('id');
 
-        if (isNaN(porterId)) {
-            renderNotFound(document.getElementById('porter-details-container'), "ID Porter tidak valid di URL.");
-            return;
+        // Inject dummy jika data kosong
+        let porters = [];
+        try {
+          porters = JSON.parse(localStorage.getItem('porters')) || [];
+        } catch (e) {
+          porters = [];
+        }
+        if (!Array.isArray(porters) || porters.length === 0) {
+          porters = [
+            {
+              id: 'prt001',
+              name: 'John Doe',
+              photo: 'https://randomuser.me/api/portraits/men/32.jpg',
+              price: 350000,
+              rating: 4.8,
+              experience: 5,
+              specialty: 'Gunung Ekstrem',
+              skills: 'Navigasi, Survival, Rescue',
+              condition: 'Fit',
+              duration: 1
+            },
+            {
+              id: 'prt002',
+              name: 'Budi Santoso',
+              photo: 'https://randomuser.me/api/portraits/men/45.jpg',
+              price: 300000,
+              rating: 4.5,
+              experience: 3,
+              specialty: 'Gunung Pemula',
+              skills: 'Motivator, Fotografi',
+              condition: 'Fit',
+              duration: 1
+            },
+            {
+              id: 'prt003',
+              name: 'Siti Aminah',
+              photo: 'https://randomuser.me/api/portraits/women/65.jpg',
+              price: 400000,
+              rating: 4.9,
+              experience: 7,
+              specialty: 'Gunung Wanita',
+              skills: 'Medis, Logistik, Memasak',
+              condition: 'Fit',
+              duration: 1
+            }
+          ];
+          localStorage.setItem('porters', JSON.stringify(porters));
         }
 
-        const porters = JSON.parse(localStorage.getItem('porters')) || [];
-        const porter = porters.find(p => p.id === porterId); 
-        
+        // Cari porter berdasarkan id (string/number)
+        const porter = porters.find(p => String(p.id) === String(porterId));
         const container = document.getElementById('porter-details-container');
         if (!container) return;
 
         if (porter) {
           renderPorterDetails(porter, container);
-          initializeCalendar(porter.price, porter); // tambahkan porter sebagai argumen kedua
+          initializeCalendar(porter.price, porter);
           initializeEventListeners(porter);
         } else {
           renderNotFound(container);
@@ -779,9 +822,12 @@
                     id: porter.id,
                     name: porter.name,
                     photo: porter.photo,
+                    image: porter.photo, // agar kompatibel dengan render cart
                     price: porter.price,
                     date: selectedDate,
-                    duration: parseInt(document.getElementById('duration-select').value) || 1
+                    duration: parseInt(document.getElementById('duration-select').value) || 1,
+                    quantity: 1, // <-- tambahkan quantity
+                    category: 'Porter'
                 });
                 localStorage.setItem('cartPorters', JSON.stringify(cart));
                 updateCartCount();
@@ -889,8 +935,11 @@
     }
 
     function updateCartCount() {
-        const cart = JSON.parse(localStorage.getItem('cartPorters')) || [];
-        document.getElementById('cart-count-header').textContent = cart.length;
+        const cartGunung = JSON.parse(localStorage.getItem('cartItems')) || [];
+        const cartPorter = JSON.parse(localStorage.getItem('cartPorters')) || [];
+        const cartGear = JSON.parse(localStorage.getItem('cartGear')) || [];
+        const total = cartGunung.length + cartPorter.length;
+        document.getElementById('cart-count-header').textContent = total;
     }
 
     let notificationTimeout;
